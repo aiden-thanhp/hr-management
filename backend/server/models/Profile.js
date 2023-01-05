@@ -43,6 +43,11 @@ const ProfileSchema = new Schema({
             message: props => `${props.value} is not a valid phone number!`
         }
     },
+    car: {
+        make: String,
+        model: String,
+        color: String
+    },
     email: { 
         type: String, 
         required: [true, 'Profile email required'],
@@ -78,11 +83,14 @@ const ProfileSchema = new Schema({
         enum: ['Citizen', 'GC', 'Non-resident']
     },
     workAuthorization: {
-        type: String
+        type: String,
+        startDate: Date,
+        endDate: Date
     },
     driverLicense: {
-        type: String,
-        required: [true, 'Profile DL required'],
+        number: String,
+        expiration: Date,
+        file: String
     },
     reference: {
         firstName: String,
@@ -100,7 +108,12 @@ const ProfileSchema = new Schema({
         email: String,
         relationship: String
     }],
+    onboardingStatus: {
+        type: String,
+        enum: ['Pending', 'Approved', 'Rejected', 'Never Submitted']
+    },
     optFiles: {
+        optReceipt: String,
         optEAD: String,
         optI983: String,
         optI20: String

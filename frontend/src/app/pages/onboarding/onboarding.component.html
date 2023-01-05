@@ -1,0 +1,230 @@
+<form>
+    <div>
+        <label>First name <span class="text-danger">*</span></label>
+        <input type="text" id="firstName" required >
+    </div>
+    <div>
+        <label>Last name <span class="text-danger">*</span></label>
+        <input type="text" id="lastName" required >
+    </div>
+    <div>
+        <label>Middle name</label>
+        <input type="text" id="middleName" >
+    </div>
+    <div>
+        <label>Preferred name</label>
+        <input type="text" id="preferredName" >
+    </div>
+
+    <div>
+        <label>Profile picture</label>
+        <input type="file" id="profilePicutre" accept="image/png, image/jpeg">
+        <button (click)="getS3Url()">Upload</button>
+    </div>
+
+    <div>
+        <div>
+            <label>Current address <span class="text-danger">*</span></label>
+            <input type="text" id="street" required >
+        </div>
+        <div>
+            <label>Building/Apt #</label>
+            <input type="text" id="apartment" >
+        </div>
+        <div>
+            <label>City <span class="text-danger">*</span></label>
+            <input type="text" id="street" required >
+        </div>
+        <div>
+            <label>State <span class="text-danger">*</span></label>
+            <select id="state">
+                <option value="choose-a-state">- Choose a state -</option>
+                <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+            </select>
+        </div>
+        <div>
+            <label>Zipcode <span class="text-danger">*</span></label>
+            <input type="text" id="zipcode" required >
+        </div>
+    </div>
+
+    <div>
+        <label>Cell phone number <span class="text-danger">*</span></label>
+        <input type="text" id="phone" required >
+    </div>
+    <div>
+        <label>Work phone number</label>
+        <input type="text" id="workPhone" >
+    </div>
+
+    <div>
+        <p>Car information:</p>
+        <div>
+            <label>Make</label>
+            <input type="text" id="make">
+        </div>
+        <div>
+            <label>Model</label>
+            <input type="text" id="model">
+        </div>
+        <div>
+            <label>Color</label>
+            <input type="text" id="color">
+        </div>
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input type="email" value="a@gmail.com" readonly>
+    </div>
+
+    <div>
+        <label>SSN <span class="text-danger">*</span></label>
+        <input type="text" id="ssn" required >
+    </div>
+
+    <div>
+        <label>Date of birth <span class="text-danger">*</span></label>
+        <input type="date" id="dob" required >
+    </div>
+
+    <div>
+        <label>Gender <span class="text-danger">*</span></label>
+        <select id="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="NA">I do not wish to answer</option>
+        </select>
+    </div>
+
+    <div>
+        <div>
+            <label>Are you a citizen or permanent resident of the U.S? <span class="text-danger">*</span></label>
+            <select id="isResident" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+        <div>
+            <label>Are you a US Citizen or Green Card Holder? <span class="text-danger">*</span></label>
+            <div>
+                <input name="residency" type="radio" id="citizen" value="Citizen">
+                <label for="citizen">US Citizen</label>
+                <input name="residency" type="radio" id="GC" value="GC">
+                <label for="GC">Green Card Holder</label>
+            </div>
+        </div>
+
+        <div>
+            <label>What is your work authorization? <span class="text-danger">*</span></label>
+            <div>
+                <input name="workAuthorization" type="radio" id="h1b" value="H1B">
+                <label for="h1b">H1-B</label>
+                <input name="workAuthorization" type="radio" id="l2" value="L2">
+                <label for="l2">L2</label>
+                <input name="workAuthorization" type="radio" id="h4" value="H4">
+                <label for="h4">H4</label>
+                <input name="workAuthorization" type="radio" id="other" value="Other">
+                <label for="other">Other</label>
+            </div>
+
+            <div>
+                <label>Please upload your OPT Receipt: <span class="text-danger">*</span></label>
+                <input type="file" id="optReceipt" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps">
+                <button>Upload</button>
+            </div>
+            <div>
+                <label>Start date <span class="text-danger">*</span></label>
+                <input type="date" id="startDate" required >
+            </div>
+            <div>
+                <label>End date <span class="text-danger">*</span></label>
+                <input type="date" id="endDate" required >
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <label>Do you have a driver's license? <span class="text-danger">*</span></label>
+                <select id="hasDL" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div>
+                <label>Driver's license number <span class="text-danger">*</span></label>
+                <input type="text" id="number" required >
+            </div>
+            <div>
+                <label>Expiration date <span class="text-danger">*</span></label>
+                <input type="date" id="expiration" required >
+            </div>
+            <div>
+                <label>Upload a copy of your driver's license <span class="text-danger">*</span></label>
+                <input type="file" id="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" required >
+                <button>Upload</button>
+            </div>
+        </div>
+
+        <div>
+            <p>Who referred you to this company?</p>
+            <div>
+                <div>
+                    <label>First Name</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Last Name</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Middle Name</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Relationship</label>
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-contact">
+            <p>Emergency Contact</p>
+            <div class="emergency-contant--form">
+                <div>
+                    <label>First Name</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Last Name</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Middle Name</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text">
+                </div>
+                <div>
+                    <label>Relationship</label>
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
