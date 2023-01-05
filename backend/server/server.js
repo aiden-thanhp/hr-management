@@ -4,8 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-
-const userRoutes = require('./routes/users');
+const routes = require('./routes');
 
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
@@ -21,7 +20,7 @@ app.use(passport.session());
 require('./middleware/passport')(passport);
 
 // Define your back-end routes here:
-app.use('/users', userRoutes);
+app.use('/users', routes.userRouter);
 
 // When a request is sent to an invalid route,
 // a 404 status with the message will be sent back
