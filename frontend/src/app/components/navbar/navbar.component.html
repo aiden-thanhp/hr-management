@@ -1,0 +1,59 @@
+<header
+  class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+>
+  <a
+    routerLink="/register"
+    class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+  >
+    <img
+      src="https://i.pinimg.com/originals/4c/44/b8/4c44b875ab67c7292e0f3781c3e61c13.jpg"
+      width="160"
+      height="100"
+      alt="logo"
+    />
+  </a>
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <!-- Employee navbar -->
+    <li *ngIf="(user$ | async).isLoggedIn && !(user$ | async).isHR">
+      <a routerLink="/personalInformation" class="nav-link px-2 link-secondary"
+        >Personal Information</a
+      >
+    </li>
+    <li *ngIf="(user$ | async).isLoggedIn && !(user$ | async).isHR">
+      <a routerLink="" class="nav-link px-2 link-secondary"
+        >Visa Status Management</a
+      >
+    </li>
+    <li *ngIf="(user$ | async).isLoggedIn && !(user$ | async).isHR">
+      <a routerLink="" class="nav-link px-2 link-secondary">Home</a>
+    </li>
+    <!-- HR navbar -->
+    <li *ngIf="(user$ | async).isLoggedIn && (user$ | async).isHR">
+      <a routerLink="" class="nav-link px-2 link-secondary"
+        >Employees Profiles</a
+      >
+    </li>
+    <li *ngIf="(user$ | async).isLoggedIn && (user$ | async).isHR">
+      <a routerLink="" class="nav-link px-2 link-secondary"
+        >Visa Status Management</a
+      >
+    </li>
+    <li *ngIf="(user$ | async).isLoggedIn && (user$ | async).isHR">
+      <a routerLink="" class="nav-link px-2 link-secondary"
+        >Hiring Management</a
+      >
+    </li>
+    <li *ngIf="(user$ | async).isLoggedIn && (user$ | async).isHR">
+      <a routerLink="" class="nav-link px-2 link-secondary"
+        >Housing Management</a
+      >
+    </li>
+    <li *ngIf="(user$ | async).isLoggedIn">
+      <a routerLink="" class="nav-link px-2 link-secondary" (click)="logout()"
+        >Logout</a
+      >
+    </li>
+  </ul>
+
+  <div class="col-md-3 text-end"></div>
+</header>

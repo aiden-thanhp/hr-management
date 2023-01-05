@@ -1,0 +1,149 @@
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Register</h1>
+  <div class="col lg-6 mx-auto">
+    <p class="lead">Welcome to HR Management System</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form [formGroup]="registerForm">
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="
+              (registerForm.get('email')?.touched ||
+                registerForm.get('email')?.dirty) &&
+              registerForm.get('email')?.hasError('required')
+                ? 'is-invalid'
+                : '' || registerForm.get('email')?.hasError('emailValidator')
+                ? 'is-invalid'
+                : '' || registerForm.get('email')?.hasError('pattern')
+                ? 'is-invalid'
+                : ''
+            "
+            formControlName="email"
+          />
+          <div class="invalid-feedback">
+            {{
+              registerForm.get("email")?.hasError("required")
+                ? "Email is required"
+                : ""
+            }}
+            {{
+              registerForm.get("email")?.hasError("emailValidator")
+                ? "Email must be greater than 10 and less than 40 characters"
+                : ""
+            }}
+            {{
+              registerForm.get("email")?.hasError("pattern")
+                ? "Input must be email type"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="
+              (registerForm.get('username')?.touched ||
+                registerForm.get('username')?.dirty) &&
+              registerForm.get('username')?.hasError('required')
+                ? 'is-invalid'
+                : '' ||
+                  registerForm.get('username')?.hasError('usernameValidator')
+                ? 'is-invalid'
+                : ''
+            "
+            formControlName="username"
+          />
+          <div class="invalid-feedback">
+            {{
+              registerForm.get("username")?.hasError("required")
+                ? "Username is required"
+                : ""
+            }}
+            {{
+              registerForm.get("username")?.hasError("usernameValidator")
+                ? "Username must be greater than 4 and less than 10 characters with no special characters"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            [ngClass]="
+              (registerForm.get('password')?.touched ||
+                registerForm.get('password')?.dirty) &&
+              registerForm.get('password')?.hasError('required')
+                ? 'is-invalid'
+                : '' ||
+                  registerForm.get('password')?.hasError('passwordValidator')
+                ? 'is-invalid'
+                : ''
+            "
+            formControlName="password"
+          />
+          <div class="invalid-feedback">
+            {{
+              registerForm.get("password")?.hasError("required")
+                ? "Password is required"
+                : ""
+            }}
+            {{
+              registerForm.get("password")?.hasError("passwordValidator")
+                ? "Password must contain upper and lowercase, number, and special
+            characters: length should be between 4 and 12"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="password" class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            [ngClass]="
+              (registerForm.get('confirmPassword')?.touched ||
+                registerForm.get('confirmPassword')?.dirty) &&
+              registerForm.get('confirmPassword')?.hasError('required')
+                ? 'is-invalid'
+                : '' ||
+                  registerForm
+                    .get('confirmPassword')
+                    ?.hasError('passwordValidator')
+                ? 'is-invalid'
+                : ''
+            "
+            formControlName="confirmPassword"
+          />
+          <div class="invalid-feedback">
+            {{
+              registerForm.get("confirmPassword")?.hasError("required")
+                ? "Password is required"
+                : ""
+            }}
+            {{
+              registerForm
+                .get("confirmPassword")
+                ?.hasError("confirmPasswordValidator")
+                ? "Password doesn't match"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <button (click)="register()" class="btn btn-primary">Sign in</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

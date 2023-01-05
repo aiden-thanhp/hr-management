@@ -1,0 +1,77 @@
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Sign in</h1>
+  <div class="col lg-6 mx-auto">
+    <p class="lead">Welcome to HR Management System</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form [formGroup]="loginForm">
+      <div class="row g-3">
+        <div class="col-12">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngClass]="
+              (loginForm.get('username')?.touched ||
+                loginForm.get('username')?.dirty) &&
+              loginForm.get('username')?.hasError('required')
+                ? 'is-invalid'
+                : '' || loginForm.get('username')?.hasError('usernameValidator')
+                ? 'is-invalid'
+                : ''
+            "
+            formControlName="username"
+          />
+          <div class="invalid-feedback">
+            {{
+              loginForm.get("username")?.hasError("required")
+                ? "Username is required"
+                : ""
+            }}
+            {{
+              loginForm.get("username")?.hasError("usernameValidator")
+                ? "Username must be greater than 4 and less than 10 characters with no special characters"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            [ngClass]="
+              (loginForm.get('password')?.touched ||
+                loginForm.get('password')?.dirty) &&
+              loginForm.get('password')?.hasError('required')
+                ? 'is-invalid'
+                : '' || loginForm.get('password')?.hasError('passwordValidator')
+                ? 'is-invalid'
+                : ''
+            "
+            formControlName="password"
+          />
+          <div class="invalid-feedback">
+            {{
+              loginForm.get("password")?.hasError("required")
+                ? "Password is required"
+                : ""
+            }}
+            {{
+              loginForm.get("password")?.hasError("passwordValidator")
+                ? "Password must contain upper and lowercase, number, and special
+            characters: length should be between 4 and 12"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <button (click)="login()" class="btn btn-primary">Sign in</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
