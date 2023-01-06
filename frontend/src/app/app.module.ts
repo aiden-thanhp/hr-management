@@ -14,8 +14,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { userReducer } from './store/user/user.reducer';
+import { regisTokenReducer } from './store/regisToken/regisToken.reducer';
 import { RegisterComponent } from './components/register/register.component';
 import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
+import { HiringManagementComponent } from './pages/hiringManagement/hiring-management.component';
+import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
+import { RegisTokenGuard } from './guards/regisToken.guard';
+import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
@@ -26,8 +31,11 @@ import { FooterComponent } from './components/footer/footer.component';
     LoginComponent,
     RegisterComponent,
     PersonalInformationComponent,
+    HiringManagementComponent,
+    NoTokenFoundComponent,
+    NoPagesFoundComponent,
     FooterComponent,
-  ],
+Hi   ],
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -39,11 +47,12 @@ import { FooterComponent } from './components/footer/footer.component';
     StoreModule.forRoot(
       {
         user: userReducer,
+        regisToken: regisTokenReducer,
       },
       {}
     ),
   ],
-  providers: [],
+  providers: [RegisTokenGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
