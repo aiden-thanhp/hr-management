@@ -5,7 +5,7 @@ const RegistrationToken = require("../models/RegistrationToken");
 
 exports.get_tokens = async (req, res) => {
   try {
-    const regisTokens = await RegistrationToken.find();
+    const regisTokens = await RegistrationToken.find().populate("user");
     res.status(202).json(regisTokens);
   } catch (error) {
     res.status(404).json({ message: "Can't find the tokens" });
