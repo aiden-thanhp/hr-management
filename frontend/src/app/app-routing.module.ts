@@ -4,7 +4,7 @@ import { OnboardingComponent } from './pages/onboarding/onboarding.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
-import { HiringManagementComponent } from './pages/hiringManagement/hiring-management/hiring-management.component';
+import { HiringManagementComponent } from './pages/hiringManagement/hiring-management.component';
 import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
