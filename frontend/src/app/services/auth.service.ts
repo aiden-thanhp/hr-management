@@ -22,6 +22,8 @@ export class AuthService {
     private router: Router
   ) {}
 
+  isLoggedIn(): any {}
+
   getUser(authHeader: any): void {
     this.http
       .get('http://localhost:3000/users', authHeader)
@@ -58,6 +60,8 @@ export class AuthService {
           this.toastr.error(data.msg);
         } else {
           localStorage.setItem('token', data.token);
+          localStorage.setItem('isHR', data.user.isHR);
+          
           this.store.dispatch(UserAction.logInUser({ data }));
           this.router.navigate(['/personalInformation']);
           this.toastr.success('You are successfully logged in!');

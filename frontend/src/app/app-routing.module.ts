@@ -8,17 +8,23 @@ import { HiringManagementComponent } from './pages/hiringManagement/hiring-manag
 import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
+import { AuthGuard } from './services/auth.guard';
+import { AuthEmployeesGuard } from './services/auth-employees.guard';
+import { AuthHRGuard } from './services/auth-hr.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'register', component: NoPagesFoundComponent},
   { path: 'register/:email', component: RegisterComponent, canActivate:[RegisTokenGuard] },
-  { path: 'personalInformation', component: PersonalInformationComponent },
+  {
+    path: 'personalInformation',
+    component: PersonalInformationComponent,
+    canActivate: [AuthGuard, AuthEmployeesGuard],
+  },
   { path: 'onboarding', component: OnboardingComponent },
   { path: 'hiringManagement', component: HiringManagementComponent },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
-];
-
+  
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

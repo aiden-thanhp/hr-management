@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+
 
 import { AppComponent } from './app.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
@@ -20,6 +21,7 @@ import { HiringManagementComponent } from './pages/hiringManagement/hiring-manag
 import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-fo
     HiringManagementComponent,
     NoTokenFoundComponent,
     NoPagesFoundComponent,
-  ],
+    FooterComponent,
+Hi   ],
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -40,6 +43,7 @@ import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-fo
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     StoreModule.forRoot(
       {
         user: userReducer,
