@@ -91,7 +91,8 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ username })
       .populate("profile")
-      .populate("house");
+      .populate("house")
+      .populate("regisToken");
     if (!user) {
       return res.json({ success: false, msg: "User not found", status: 401 });
     }

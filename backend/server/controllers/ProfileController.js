@@ -14,8 +14,12 @@ exports.put_updateProfile = async (req, res) => {
 
 exports.post_createProfile = async (req, res) => {
     try {
-        const { newProfile } = req.body;
+        const { newProfile, userId } = req.body;
         const createdProfile = await Profile.create(newProfile)
+
+        // add the Profile ref to User model
+        // add the User to Profile
+        
         res.status(201).send({ message: "Profile creation success.", data: createdProfile })
     } catch (error) {
         console.log(error);
