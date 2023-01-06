@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) {}
   ngOnInit(): void {}
 
@@ -40,7 +42,16 @@ export class RegisterComponent implements OnInit {
       this.toastr.error('Inputs are invalid!');
       return;
     }
-    this.authService.register(this.registerForm.getRawValue());
+    const {email, username, password} = this.registerForm.getRawValue();
+    const regisTokenEmail = this.route.snapshot.url[1].path;
+    console.log(regisTokenEmail)
+    const user = {
+      email: email,
+      username: username,
+      password: password,
+      regisTokenEmail: regisTokenEmail
+    }
+    this.authService.register(user);
     this.registerForm.reset({
       email: '',
       username: '',

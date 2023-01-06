@@ -1,0 +1,62 @@
+<div class="hiring-container" id="">
+  <div class="card generateToken-container">
+    <div class="card-header generateToken-header" id="">
+      <h5 class="mb-0">
+        <button class="btn" type="button">Generate Token and Send Email</button>
+      </h5>
+    </div>
+
+    <div class="generateToken-body mx-2">
+      <div class="card-body">
+        <form class="generateToken-body-form" [formGroup]="inputForm">
+          <input
+            class=""
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Please enter email..."
+            formControlName="email"
+          />
+          <input
+            class="mx-3"
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Please enter name..."
+            formControlName="name"
+          />
+          <button class="mb-1 btn btn-primary rounded" (click)="sendEmail()">
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="registrationTable-container mx-5">
+    <h2 class="text-center">Sent Tokens</h2>
+      <hr />
+      <table class="registrationTable text-center w-100 my-4">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Registration Link</th>
+            <th>Time Created/Updated</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let regisToken of regisTokens$ |async" class=>
+                <td>{{regisToken.email}}</td>
+                <td>{{regisToken.name}}</td>
+                <td>{{regisToken.registrationLink}}</td>
+                <td>{{regisToken.timeStamp}}</td>
+                <td *ngIf="regisToken.user" class="text-success fw-bold">user created</td>
+                <td *ngIf="!regisToken.user" class="text-danger fw-bold">user not activate</td>
+                <br><br>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

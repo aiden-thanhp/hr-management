@@ -13,17 +13,25 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { userReducer } from './store/user/user.reducer';
+import { regisTokenReducer } from './store/regisToken/regisToken.reducer';
 import { RegisterComponent } from './components/register/register.component';
 import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
+import { HiringManagementComponent } from './pages/hiringManagement/hiring-management/hiring-management.component';
+import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
+import { RegisTokenGuard } from './guards/regisToken.guard';
+import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OnboardingComponent
+    OnboardingComponent,
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
     PersonalInformationComponent,
+    HiringManagementComponent,
+    NoTokenFoundComponent,
+    NoPagesFoundComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -35,11 +43,12 @@ import { PersonalInformationComponent } from './components/personal-information/
     StoreModule.forRoot(
       {
         user: userReducer,
+        regisToken: regisTokenReducer,
       },
       {}
     ),
   ],
-  providers: [],
+  providers: [RegisTokenGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

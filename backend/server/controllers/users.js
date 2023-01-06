@@ -2,6 +2,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const House = require('../models/House');
+const RegistrationToken = require('../models/RegistrationToken')
 const bcrypt = require('bcryptjs');
 
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
@@ -25,22 +26,50 @@ exports.getUser = (req, res) => {
 // Register
 exports.register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, regisTokenEmail } = req.body;
     const hash = await bcrypt.hash(password, parseInt(process.env.SALT));
     const houses = await House.find();
     const randomHouse = houses[Math.floor(Math.random() * houses.length)];
-    await User.create({
+    const userCreated = await User.create({
       username: username,
       email: email,
       password: hash,
       house: randomHouse._id,
     });
+    await RegistrationToken.findOneAndUpdate({email:regisTokenEmail}, {user: userCreated})
     res.status(201).json({ success: true, msg: 'User registered' });
   } catch (e) {
     console.error(e);
     res.json({ success: false, msg: 'Email or username already exist!' });
   }
 };
+
+exports.verify_regis_token = async(req, res) => {
+  try {
+    const email = req.query.email;
+    const regisToken = await RegistrationToken.findOne({email: email});
+    if (regisToken) {
+      if(regisToken.registrationToken) {
+        try {
+          const verifyToken = jwt.verify(regisToken.registrationToken, process.env.JWT_KEY);
+          if (!verifyToken) {
+            res.status(401).json({message: 'The token is not valid'})
+          } else {
+            res.status(200).json({message: 'The registration token is verified'});
+          }
+        } catch (err) {
+          res.status(401).json({message: 'Token expired'})
+        }
+      } else {
+        res.status(404).json({message: 'Token Not Found'})
+      }
+    } else {
+      res.status(404).json({message: 'Email Not Found.'})
+    }
+  } catch(err) {
+    console.log(err);
+  }
+}
 
 // Login
 exports.login = async (req, res) => {

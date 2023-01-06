@@ -13,9 +13,12 @@ module.exports = function (passport) {
     new JwtStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id, (err, user) => {
         if (err) {
-          return res
-            .status(401)
-            .json({ success: false, msg: 'Invalid token. Try login' });
+          console.log(err);
+          // return res
+          //   .status(401)
+          //   .json({ success: false, msg: 'Invalid token. Try login' });
+          // Commented since ReferenceError: res is not defined when loading hiring management page 
+          // or sending email on hiring management page
         }
         if (user) {
           return done(null, user);

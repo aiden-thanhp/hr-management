@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 const token = localStorage.getItem('token');
 const httpOptionsWithToken = {
