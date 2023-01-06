@@ -51,7 +51,7 @@ exports.login = async (req, res) => {
       .populate('profile')
       .populate('house');
     if (!user) {
-      return res.json({ success: false, msg: 'User not found', status: 401 });
+      return res.json({ success: false, msg: 'User not found' });
     }
 
     const hasedPassword = user.password;

@@ -1,5 +1,6 @@
 const aws = require('aws-sdk');
 const path = require('path');
+
 require('dotenv').config({ path: path.join(__dirname, '../../.env')});
 
 // const region = "us-east-1";
@@ -55,5 +56,5 @@ async function generateUploadURL(fileName, fileType) {
 }
 
 module.exports = {
-    generateUploadURL
-}
+  generateUploadURL,
+};

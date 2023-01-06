@@ -1,1 +1,298 @@
-<p>personal-information works!</p>
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Personal Information</h1>
+  <div class="col lg-6 mx-auto">
+    <p class="lead">Check the follwing sections</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-6">
+    <form [formGroup]="profileForm">
+      <div class="row g-3">
+        <h3 class="fw-bold">Name</h3>
+        <div class="col-12">
+          <button
+            *ngIf="nameEdit"
+            (click)="edit('name')"
+            class="btn btn-primary"
+          >
+            Edit
+          </button>
+          <button
+            *ngIf="!nameEdit"
+            (click)="edit('name')"
+            class="btn btn-danger"
+          >
+            Cancel
+          </button>
+          <button *ngIf="!nameEdit" class="btn btn-success mx-2">Save</button>
+        </div>
+        <div class="col-12">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="firstName"
+            [readonly]="nameEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="middleName" class="form-label">Middle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="middleName"
+            [readonly]="nameEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="lastName"
+            [readonly]="nameEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="preferredName" class="form-label">preferred Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="preferredName"
+            [readonly]="nameEdit"
+          />
+        </div>
+        <h3 class="fw-bold">Address</h3>
+        <div class="col-12">
+          <button
+            *ngIf="addressEdit"
+            (click)="edit('address')"
+            class="btn btn-primary"
+          >
+            Edit
+          </button>
+          <button
+            *ngIf="!addressEdit"
+            (click)="edit('address')"
+            class="btn btn-danger"
+          >
+            Cancel
+          </button>
+          <button *ngIf="!addressEdit" class="btn btn-success mx-2">
+            Save
+          </button>
+        </div>
+        <div class="col-12">
+          <label for="streetName" class="form-label">Street Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="streetName"
+            [readonly]="addressEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="buildingAptNum" class="form-label"
+            >Building / Apt #</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="buildingAptNum"
+            [readonly]="addressEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="city" class="form-label">City</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="city"
+            [readonly]="addressEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="state" class="form-label">State</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="state"
+            [readonly]="addressEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="zip" class="form-label">Zip</label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="zip"
+            [readonly]="addressEdit"
+          />
+        </div>
+        <h3 class="fw-bold">Contact Info</h3>
+        <div class="col-12">
+          <button
+            *ngIf="contactEdit"
+            (click)="edit('contact')"
+            class="btn btn-primary"
+          >
+            Edit
+          </button>
+          <button
+            *ngIf="!contactEdit"
+            (click)="edit('contact')"
+            class="btn btn-danger"
+          >
+            Cancel
+          </button>
+          <button *ngIf="!contactEdit" class="btn btn-success mx-2">
+            Save
+          </button>
+        </div>
+        <div class="col-12">
+          <label for="cellPhoneNum" class="form-label">Cell Phone Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="cellPhoneNum"
+            [readonly]="contactEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="workPhoneNum" class="form-label">Work Phone Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="workPhoneNum"
+            [readonly]="contactEdit"
+          />
+        </div>
+        <h3 class="fw-bold">Employment</h3>
+        <div class="col-12">
+          <button
+            *ngIf="employmentEdit"
+            (click)="edit('employment')"
+            class="btn btn-primary"
+          >
+            Edit
+          </button>
+          <button
+            *ngIf="!employmentEdit"
+            (click)="edit('employment')"
+            class="btn btn-danger"
+          >
+            Cancel
+          </button>
+          <button *ngIf="!employmentEdit" class="btn btn-success mx-2">
+            Save
+          </button>
+        </div>
+        <div class="col-12">
+          <label for="visaTitle" class="form-label">Visa Title</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="visaTitle"
+            [readonly]="employmentEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="startDate" class="form-label">Start Date</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="startDate"
+            [readonly]="employmentEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="endDate" class="form-label">End Date</label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="endDate"
+            [readonly]="employmentEdit"
+          />
+        </div>
+        <h3 class="fw-bold">Emgergency Contact</h3>
+        <div class="col-12">
+          <button
+            *ngIf="emergencyEdit"
+            (click)="edit('emergency')"
+            class="btn btn-primary"
+          >
+            Edit
+          </button>
+          <button
+            *ngIf="!emergencyEdit"
+            (click)="edit('emergency')"
+            class="btn btn-danger"
+          >
+            Cancel
+          </button>
+          <button *ngIf="!emergencyEdit" class="btn btn-success mx-2">
+            Save
+          </button>
+        </div>
+        <div class="col-12">
+          <label for="efirstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="efirstName"
+            [readonly]="emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="emiddleName" class="form-label">Middle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="emiddleName"
+            [readonly]="emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="elastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="elastName"
+            [readonly]="emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="ecellPhoneNum" class="form-label"
+            >Cell Phone Number</label
+          >
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="ecellPhoneNum"
+            [readonly]="emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [readonly]="emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="relationship" class="form-label">Relationship</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="relationship"
+            [readonly]="emergencyEdit"
+          />
+        </div>
+        <h3 class="fw-bold">Documents</h3>
+      </div>
+    </form>
+  </div>
+</div>
