@@ -34,10 +34,13 @@ exports.send_token = async (req, res) => {
     };
     const registrationToken = await RegistrationToken.findOneAndUpdate(
       {
-        $set: { email: email, timeStamp: timeStamp },
+        email: email,
       },
-      { name: name, registrationToken: regisToken, timeStamp: timeStamp
-        , user: null 
+      {
+        name: name,
+        registrationToken: regisToken,
+        timeStamp: timeStamp,
+        user: null,
       },
       { new: true }
     );

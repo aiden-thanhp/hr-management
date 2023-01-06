@@ -13,7 +13,7 @@ module.exports = function (passport) {
     new JwtStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id, (err, user) => {
         if (err) {
-          console.log(err);
+          console.log('line17',err);
           // return res
           //   .status(401)
           //   .json({ success: false, msg: 'Invalid token. Try login' });
@@ -23,9 +23,10 @@ module.exports = function (passport) {
         if (user) {
           return done(null, user);
         } else {
-          return res
-            .status(401)
-            .json({ success: false, msg: 'Invalid token. Try login' });
+          console.log('line27',err)
+          // return res
+          //   .status(401)
+          //   .json({ success: false, msg: 'Invalid token. Try login' });
         }
       })
         .populate('house')

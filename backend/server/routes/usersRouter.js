@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/users");
 const passport = require("passport");
-// const { auth_regis_token } = require("../middleware/regisTokenVerify");
 
 router.get(
   "/",

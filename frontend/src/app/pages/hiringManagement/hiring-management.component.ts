@@ -6,13 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { RegisTokenAction } from 'src/app/store/regisToken/regisToken.action';
 import { selectRegisToken } from 'src/app/store/regisToken/regisToken.selector';
-const token = localStorage.getItem('token');
-const httpOptionsWithToken = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `${token}`,
-  }),
-};
+
 @Component({
   selector: 'app-hiring-management',
   templateUrl: './hiring-management.component.html',
@@ -27,10 +21,19 @@ export class HiringManagementComponent implements OnInit {
   ) { }
   regisTokens$: Observable<any> = this.store.select(selectRegisToken);
   ngOnInit(): void {
+    this.token = localStorage.getItem('token');
+    this.httpOptionsWithToken = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `${this.token}`,
+      }),
+    };
     this.getRegistrationTokens();
   }
+  token: any;
+  httpOptionsWithToken: any;
   getRegistrationTokens() {
-    this.http.get('http://localhost:3000/hr/regisTokens', httpOptionsWithToken).subscribe({
+    this.http.get('http://localhost:3000/hr/regisTokens', this.httpOptionsWithToken).subscribe({
       next: (data) => {
         this.store.dispatch(RegisTokenAction.getRegistrationtoken({ data }));
       },
@@ -57,7 +60,7 @@ export class HiringManagementComponent implements OnInit {
         email: emailValue,
         name: nameValue
       }
-      , httpOptionsWithToken)
+      , this.httpOptionsWithToken)
       .subscribe({
         next: (data: any) => {
           console.log(data)
