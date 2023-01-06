@@ -103,6 +103,10 @@ export class OnboardingComponent {
   });
 
   onSubmit(): void {
+    // Get the email from registration >> get User info from the Ngrx Store
+
+    // Add the user email into the profile Form
+
     let hasError = false;
     Object.keys(this.onboardingForm.controls).forEach(field => {
       if (this.onboardingForm.get(field)?.errors) {
@@ -186,6 +190,9 @@ export class OnboardingComponent {
         }
       }
       console.log(newProfile)
+
+      // Make a request to create a new Profile;
+      // req.body : { newProfile, userId }
     } else {
       console.log("error")
     }
