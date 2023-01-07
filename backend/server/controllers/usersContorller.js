@@ -14,11 +14,12 @@ exports.getUser = (req, res) => {
     success: true,
     user: {
       id: user._id,
-      username: user.name,
-      email: user.username,
+      username: user.username,
+      email: user.email,
       isHR: user.isHR,
       profile: user.profile,
       house: user.house,
+      registerToken: user.regisToken
     },
   });
 };
@@ -109,17 +110,17 @@ exports.login = async (req, res) => {
           expiresIn: 604800,
         }
       );
-
       res.json({
         success: true,
         token: "JWT " + token,
         user: {
           id: user._id,
-          username: user.name,
-          email: user.username,
+          username: user.username,
+          email: user.email,
           isHR: user.isHR,
           profile: user.profile,
           house: user.house,
+          registerToken: user.regisToken
         },
       });
     }

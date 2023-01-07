@@ -6,20 +6,17 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env')});
 // const region = "us-east-1";
 const bucketName = "hr-management-jay1423";
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const secretAcessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 // aws.config.update({
-//     signatureVersion: 'v4',
-//     apiVersion: 'latest',
-//     credentials: {
-//         accessKeyId,
-//         secretAcessKey,
-//     }
+//     accessKeyId: "AKIA6GMCDQGN2SDOY37M",
+//     secretAccessKey: "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",
+//     // "region": "us-east-1"
 // });
 
 aws.config.update({
-    accessKeyId: "AKIA6GMCDQGNSCUXLSG6",
-    secretAccessKey: "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",
+    accessKeyId,
+    secretAccessKey,
     // "region": "us-east-1"
 });
 
