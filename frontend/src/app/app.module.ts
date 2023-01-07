@@ -35,7 +35,7 @@ import { FooterComponent } from './components/footer/footer.component';
     NoTokenFoundComponent,
     NoPagesFoundComponent,
     FooterComponent,
-Hi   ],
+],
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

@@ -1,4 +1,5 @@
-const Profile = require('../models/Profile')
+const Profile = require('../models/Profile');
+const User = require('../models/User');
 
 // When user saves or submits:
 exports.put_updateProfile = async (req, res) => {
@@ -16,11 +17,10 @@ exports.post_createProfile = async (req, res) => {
     try {
         const { newProfile, userId } = req.body;
         const createdProfile = await Profile.create(newProfile)
-
-        // add the Profile ref to User model
-        // add the User to Profile
+        const foundUser = await User.findByIdAndUpdate(userId, { profile: createdProfile._id }, { new: true });
+        const updatedProfile = await Profile.findByIdAndUpdate(createdProfile._id, { user: foundUser._id }, { new: true });
         
-        res.status(201).send({ message: "Profile creation success.", data: createdProfile })
+        res.status(201).send({ message: "Profile creation success.", data: updatedProfile })
     } catch (error) {
         console.log(error);
         res.status(400).send({ message: error })

@@ -2,6 +2,6 @@ const router = require('express').Router();
 
 const ProfileController = require('../controllers/ProfileController');
 
-router.put('/', ProfileController.put_updateProfile);
+router.post('/', ProfileController.post_createProfile);
 
 module.exports = router

@@ -1,5 +1,5 @@
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+const path = require('path');
+require('dotenv').config(path.join(__dirname, '../.env'));
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 const { DATABASE_URL } = process.env;
@@ -10,6 +10,7 @@ const House = require("../models/House");
 const RegistrationToken = require("../models/RegistrationToken");
 
 async function run() {
+  console.log(DATABASE_URL)
   try {
     await mongoose.connect(DATABASE_URL);
     console.log("Connected to DB.");

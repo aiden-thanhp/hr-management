@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'onboarding', component: OnboardingComponent },
   { path: 'hiringManagement', component: HiringManagementComponent },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
-  
+  { path: '**', component: NoPagesFoundComponent},
+]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
