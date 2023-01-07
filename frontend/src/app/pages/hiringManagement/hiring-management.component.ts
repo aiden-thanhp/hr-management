@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { selectProfiles } from 'src/app/store/profiles/profiles.selector';
 import { RegisTokenAction } from 'src/app/store/regisToken/regisToken.action';
 import { selectRegisToken } from 'src/app/store/regisToken/regisToken.selector';
 
@@ -17,9 +19,12 @@ export class HiringManagementComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) { }
   regisTokens$: Observable<any> = this.store.select(selectRegisToken);
+  profiles$: Observable<any> = this.store.select(selectProfiles)
+
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
     this.httpOptionsWithToken = {
@@ -29,6 +34,11 @@ export class HiringManagementComponent implements OnInit {
       }),
     };
     this.getRegistrationTokens();
+
+    // this.store.select(selectProfiles)
+    //   .subscribe((data: any) => {
+    //     console.log(data)
+    //   })
   }
   token: any;
   httpOptionsWithToken: any;
@@ -84,5 +94,9 @@ export class HiringManagementComponent implements OnInit {
     } else {
       return null;
     }
+  }
+  
+  viewProfile(profileId: string): void {
+    window.open(`/profile/${profileId}`, '_blank')
   }
 }

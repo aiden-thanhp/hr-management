@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -22,6 +22,7 @@ export class OnboardingComponent implements OnInit {
   driverLicense: String = '';
   profilePicture: String = '';
   regEmail: String = '';
+  disableSelect = false;
 
   onboardingForm = new FormBuilder().group({
     firstName: '',
@@ -255,8 +256,14 @@ export class OnboardingComponent implements OnInit {
         }
       }
       // Make a request to create a new Profile;
-      this.profileService.createProfile(newProfile, this.user.id)
+
+      if (this.user.profile.onboardingStatus == 'Rejected') {
+        this.profileService.updateProfile(newProfile, this.user.profile._id)
         .subscribe((response: any) => console.log(response))
+      } else {
+        this.profileService.createProfile(newProfile, this.user.id)
+          .subscribe((response: any) => console.log(response))
+      }
     } else {
       console.log("error")
     }

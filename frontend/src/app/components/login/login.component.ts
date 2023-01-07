@@ -20,13 +20,17 @@ export class LoginComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     if (localStorage.getItem('token')) {
-      this.store.select(selectUser)
+      if (localStorage.getItem('isHR')) {
+        this.router.navigate(['/hiringManagement'])
+      } else {
+        this.store.select(selectUser)
         .subscribe((user: any) => {
           if (user.id) {
             if (user.profile.onboardingStatus != "Approved") this.router.navigate(['/onboarding'])
             else this.router.navigate(['/personalInformation'])
           }
         })
+      }
     }
   }
 

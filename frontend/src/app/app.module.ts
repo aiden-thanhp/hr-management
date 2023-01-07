@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
-
 import { AppComponent } from './app.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,6 +21,9 @@ import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-fo
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { profileReducer } from './store/profile/profile.reducer';
+import { profilesReducer } from './store/profiles/profiles.reducer';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { FooterComponent } from './components/footer/footer.component';
     NoTokenFoundComponent,
     NoPagesFoundComponent,
     FooterComponent,
+    ProfilePageComponent,
 ],
   imports: [
     BrowserAnimationsModule,
@@ -48,6 +51,8 @@ import { FooterComponent } from './components/footer/footer.component';
       {
         user: userReducer,
         regisToken: regisTokenReducer,
+        profile: profileReducer,
+        profiles: profilesReducer
       },
       {}
     ),
