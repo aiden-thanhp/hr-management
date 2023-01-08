@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { selectUser } from 'src/app/store/user/user.selector';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +14,21 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+    private store: Store
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (localStorage.getItem('token')) {
+      this.store.select(selectUser)
+        .subscribe((user: any) => {
+          if (user.id) {
+            if (user.profile.onboardingStatus != "Approved") this.router.navigate(['/onboarding'])
+            else this.router.navigate(['/personalInformation'])
+          }
+        })
+    }
+  }
 
   loginForm = new FormGroup({
     username: new FormControl('', [

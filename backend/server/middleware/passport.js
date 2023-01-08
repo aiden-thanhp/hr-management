@@ -30,7 +30,8 @@ module.exports = function (passport) {
         }
       })
         .populate('house')
-        .populate('profile');
+        .populate('profile')
+        .populate('regisToken')
     })
   );
 };

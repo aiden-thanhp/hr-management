@@ -19,7 +19,7 @@ const ProfileSchema = new Schema({
         required: [true, 'House address required'],
         validate: {
             validator: function(v) {
-                return /^[0-9a-zA-Z ,-]+$/.test(v);
+                return /^[0-9a-zA-Z ,-/]+$/.test(v);
             },
             message: props => `${props.value} is not a valid address!`
         }
@@ -35,13 +35,7 @@ const ProfileSchema = new Schema({
         }
     },
     workPhone: {
-        type: String, 
-        validate: {
-            validator: function(v) {
-                return /^[0-9]{10}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid phone number!`
-        }
+        type: String
     },
     car: {
         make: String,
@@ -83,7 +77,7 @@ const ProfileSchema = new Schema({
         enum: ['Citizen', 'GC', 'Non-resident']
     },
     workAuthorization: {
-        type: String,
+        visaType: String,
         startDate: Date,
         endDate: Date
     },

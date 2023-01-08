@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { selectUser } from 'src/app/store/user/user.selector';
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -74,34 +76,76 @@ export class PersonalInformationComponent implements OnInit {
   contactEdit: boolean = false;
   employmentEdit: boolean = false;
   emergencyEdit: boolean = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
+  user: any;
   profileForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     middleName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     preferredName: new FormControl('', [Validators.required]),
-    streetName: new FormControl('', [Validators.required]),
-    buildingAptNum: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
+    apartment: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
-    zip: new FormControl('', [Validators.required]),
-    cellPhoneNum: new FormControl('', [Validators.required]),
-    workPhoneNum: new FormControl('', [Validators.required]),
+    zipcode: new FormControl('', [Validators.required]),
+    cellphone: new FormControl('', [Validators.required]),
+    workphone: new FormControl('', [Validators.required]),
     visaTitle: new FormControl('', [Validators.required]),
     startDate: new FormControl('', [Validators.required]),
     endDate: new FormControl('', [Validators.required]),
-    efirstName: new FormControl('', [Validators.required]),
-    emiddleName: new FormControl('', [Validators.required]),
-    elastName: new FormControl('', [Validators.required]),
-    ecellPhoneNum: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required]),
-    relationship: new FormControl('', [Validators.required]),
+    emergencyFirstName: new FormControl('', [Validators.required]),
+    emergencyMiddleName: new FormControl('', [Validators.required]),
+    emergencyLastName: new FormControl('', [Validators.required]),
+    emergencyPhone: new FormControl('', [Validators.required]),
+    emergencyEmail: new FormControl('', [Validators.required]),
+    emergencyRelationship: new FormControl('', [Validators.required]),
+    emergency2FirstName: new FormControl('', [Validators.required]),
+    emergency2MiddleName: new FormControl('', [Validators.required]),
+    emergency2LastName: new FormControl('', [Validators.required]),
+    emergency2Phone: new FormControl('', [Validators.required]),
+    emergency2Email: new FormControl('', [Validators.required]),
+    emergency2Relationship: new FormControl('', [Validators.required]),
   });
 
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.store.select(selectUser).subscribe((user) => {
+      this.user = user;
+      console.log(this.user.profile);
+      if (this.user.profile) {
+        const addresses = this.user.profile.address.split('/');
+        this.profileForm.patchValue({
+          firstName: this.user.profile.firstName,
+          middleName: this.user.profile.middleName,
+          lastName: this.user.profile.lastName,
+          preferredName: this.user.profile.preferredName,
+          address: addresses[0],
+          apartment: addresses[1] || '',
+          city: addresses[2],
+          state: addresses[3],
+          zipcode: addresses[4],
+          cellphone: this.user.profile.phone,
+          workphone: this.user.profile.workPhone,
+          emergencyFirstName: this.user.profile.emergencyContacts[0].firstName,
+          emergencyMiddleName:
+            this.user.profile.emergencyContacts[0].middleName,
+          emergencyLastName: this.user.profile.emergencyContacts[0].lastName,
+          emergencyPhone: this.user.profile.emergencyContacts[0].phone,
+          emergencyEmail: this.user.profile.emergencyContacts[0].email,
+          emergencyRelationship:
+            this.user.profile.emergencyContacts[0].relationship,
+          emergency2FirstName: this.user.profile.emergencyContacts[1].firstName,
+          emergency2MiddleName:
+            this.user.profile.emergencyContacts[1].middleName,
+          emergency2LastName: this.user.profile.emergencyContacts[1].lastName,
+          emergency2Phone: this.user.profile.emergencyContacts[1].phone,
+          emergency2Email: this.user.profile.emergencyContacts[1].email,
+          emergency2Relationship:
+            this.user.profile.emergencyContacts[1].relationship,
+        });
+      }
+    });
+  }
   // Store input value when click edit button
 
   nameValues = {
@@ -112,16 +156,16 @@ export class PersonalInformationComponent implements OnInit {
   };
 
   addressValues = {
-    streetName: '',
-    buildingAptNum: '',
+    address: '',
+    apartment: '',
     city: '',
     state: '',
-    zip: '',
+    zipcode: '',
   };
 
   contactValues = {
-    cellPhoneNum: '',
-    workPhoneNum: '',
+    cellphone: '',
+    workphone: '',
   };
 
   employmentValues = {
@@ -131,12 +175,18 @@ export class PersonalInformationComponent implements OnInit {
   };
 
   emgencyValues = {
-    efirstName: '',
-    emiddleName: '',
-    elastName: '',
-    ecellPhoneNum: '',
-    email: '',
-    relationship: '',
+    emergencyFirstName: '',
+    emergencyMiddleName: '',
+    emergencyLastName: '',
+    emergencyPhone: '',
+    emergencyEmail: '',
+    emergencyRelationship: '',
+    emergency2FirstName: '',
+    emergency2MiddleName: '',
+    emergency2LastName: '',
+    emergency2Phone: '',
+    emergency2Email: '',
+    emergency2Relationship: '',
   };
 
   edit(section: string): void {
@@ -154,20 +204,21 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'address':
         this.addressEdit = true;
-        this.addressValues.streetName =
-          this.profileForm.get('streetName')?.value || '';
-        this.addressValues.buildingAptNum =
-          this.profileForm.get('buildingAptNum')?.value || '';
+        this.addressValues.address =
+          this.profileForm.get('address')?.value || '';
+        this.addressValues.apartment =
+          this.profileForm.get('apartment')?.value || '';
         this.addressValues.city = this.profileForm.get('city')?.value || '';
         this.addressValues.state = this.profileForm.get('state')?.value || '';
-        this.addressValues.zip = this.profileForm.get('zip')?.value || '';
+        this.addressValues.zipcode =
+          this.profileForm.get('zipcode')?.value || '';
         break;
       case 'contact':
         this.contactEdit = true;
-        this.contactValues.cellPhoneNum =
+        this.contactValues.cellphone =
           this.profileForm.get('cellPhoneNum')?.value || '';
-        this.contactValues.workPhoneNum =
-          this.profileForm.get('workPhoneNum')?.value || '';
+        this.contactValues.workphone =
+          this.profileForm.get('workphone')?.value || '';
         break;
       case 'employment':
         this.employmentEdit = true;
@@ -180,25 +231,41 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'emergency':
         this.emergencyEdit = true;
-        this.emgencyValues.efirstName =
-          this.profileForm.get('efirstName')?.value || '';
-        this.emgencyValues.emiddleName =
-          this.profileForm.get('emiddleName')?.value || '';
-        this.emgencyValues.elastName =
-          this.profileForm.get('elastName')?.value || '';
-        this.emgencyValues.ecellPhoneNum =
-          this.profileForm.get('ecellPhoneNum')?.value || '';
-        this.emgencyValues.email = this.profileForm.get('email')?.value || '';
-        this.emgencyValues.relationship =
-          this.profileForm.get('relationship')?.value || '';
+        this.emgencyValues.emergencyFirstName =
+          this.profileForm.get('emergencyFirstName')?.value || '';
+        this.emgencyValues.emergencyMiddleName =
+          this.profileForm.get('emergencyMiddleName')?.value || '';
+        this.emgencyValues.emergencyLastName =
+          this.profileForm.get('emergencyLastName')?.value || '';
+        this.emgencyValues.emergencyPhone =
+          this.profileForm.get('emergencyPhone')?.value || '';
+        this.emgencyValues.emergencyEmail =
+          this.profileForm.get('emergencyEmail')?.value || '';
+        this.emgencyValues.emergencyRelationship =
+          this.profileForm.get('emergencyRelationship')?.value || '';
+        this.emgencyValues.emergency2FirstName =
+          this.profileForm.get('emergency2FirstName')?.value || '';
+        this.emgencyValues.emergency2MiddleName =
+          this.profileForm.get('emergency2MiddleName')?.value || '';
+        this.emgencyValues.emergency2LastName =
+          this.profileForm.get('emergency2LastName')?.value || '';
+        this.emgencyValues.emergency2Phone =
+          this.profileForm.get('emergency2Phone')?.value || '';
+        this.emgencyValues.emergency2Email =
+          this.profileForm.get('emergency2Email')?.value || '';
+        this.emgencyValues.emergency2Relationship =
+          this.profileForm.get('emergency2Relationship')?.value || '';
         break;
     }
   }
+
+  // restore to the inital value
 
   cancel(section: string): void {
     switch (section) {
       case 'name':
         this.nameEdit = false;
+        alert('discard all changes?');
         this.profileForm.patchValue({
           firstName: this.nameValues.firstName,
           middleName: this.nameValues.middleName,
@@ -208,23 +275,26 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'address':
         this.addressEdit = false;
+        alert('discard all changes?');
         this.profileForm.patchValue({
-          streetName: this.addressValues.streetName,
-          buildingAptNum: this.addressValues.buildingAptNum,
+          address: this.addressValues.address,
+          apartment: this.addressValues.apartment,
           city: this.addressValues.city,
           state: this.addressValues.state,
-          zip: this.addressValues.zip,
+          zipcode: this.addressValues.zipcode,
         });
         break;
       case 'contact':
         this.contactEdit = false;
+        alert('discard all changes?');
         this.profileForm.patchValue({
-          cellPhoneNum: this.contactValues.cellPhoneNum,
-          workPhoneNum: this.contactValues.workPhoneNum,
+          cellphone: this.contactValues.cellphone,
+          workphone: this.contactValues.workphone,
         });
         break;
       case 'employment':
         this.employmentEdit = false;
+        alert('discard all changes?');
         this.profileForm.patchValue({
           visaTitle: this.employmentValues.visaTitle,
           startDate: this.employmentValues.startDate,
@@ -233,13 +303,20 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'emergency':
         this.emergencyEdit = false;
+        alert('discard all changes?');
         this.profileForm.patchValue({
-          efirstName: this.emgencyValues.efirstName,
-          emiddleName: this.emgencyValues.emiddleName,
-          elastName: this.emgencyValues.elastName,
-          ecellPhoneNum: this.emgencyValues.ecellPhoneNum,
-          email: this.emgencyValues.email,
-          relationship: this.emgencyValues.relationship,
+          emergencyFirstName: this.emgencyValues.emergencyFirstName,
+          emergencyMiddleName: this.emgencyValues.emergencyMiddleName,
+          emergencyLastName: this.emgencyValues.emergencyLastName,
+          emergencyPhone: this.emgencyValues.emergencyPhone,
+          emergencyEmail: this.emgencyValues.emergencyEmail,
+          emergencyRelationship: this.emgencyValues.emergencyRelationship,
+          emergency2FirstName: this.emgencyValues.emergency2FirstName,
+          emergency2MiddleName: this.emgencyValues.emergency2MiddleName,
+          emergency2LastName: this.emgencyValues.emergency2LastName,
+          emergency2Phone: this.emgencyValues.emergency2Phone,
+          emergency2Email: this.emgencyValues.emergency2Email,
+          emergency2Relationship: this.emgencyValues.emergency2Relationship,
         });
         break;
     }
