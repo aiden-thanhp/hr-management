@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
 
 import { AppComponent } from './app.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
@@ -35,7 +34,7 @@ import { FooterComponent } from './components/footer/footer.component';
     NoTokenFoundComponent,
     NoPagesFoundComponent,
     FooterComponent,
-Hi   ],
+  ],
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

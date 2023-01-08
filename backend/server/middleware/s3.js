@@ -5,8 +5,6 @@ require('dotenv').config({ path: path.join(__dirname, '../../.env')});
 
 // const region = "us-east-1";
 const bucketName = "hr-management-jay1423";
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const secretAcessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 // aws.config.update({
 //     signatureVersion: 'v4',
@@ -36,7 +34,7 @@ async function generateUploadURL(fileName, fileType) {
         ContentType: fileType
     };
 
-    // s3.getSignedUrl('putObject', params, async (error, url) => { 
+    // s3.getSignedUrl('putObject', params, async (error, url) => {
     //     if (error) {
     //         console.log("S3 error = ", error)
     //         return error
@@ -45,7 +43,7 @@ async function generateUploadURL(fileName, fileType) {
     //         return url
     //     }
     // })
-    try {   
+    try {
         const url = await s3.getSignedUrl('putObject', params);
         console.log("S3 url = ", url);
         return url

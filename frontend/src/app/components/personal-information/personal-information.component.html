@@ -12,28 +12,30 @@
         <h3 class="fw-bold">Name</h3>
         <div class="col-12">
           <button
-            *ngIf="nameEdit"
+            *ngIf="!nameEdit"
             (click)="edit('name')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!nameEdit"
-            (click)="edit('name')"
+            *ngIf="nameEdit"
+            (click)="cancel('name')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!nameEdit" class="btn btn-success mx-2">Save</button>
+          <button *ngIf="nameEdit" class="btn btn-success mx-2">Save</button>
         </div>
         <div class="col-12">
-          <label for="firstName" class="form-label">First Name</label>
+          <label for="firstName" class="form-label"
+            >First Name <span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="firstName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
           />
         </div>
         <div class="col-12">
@@ -42,16 +44,18 @@
             type="text"
             class="form-control"
             formControlName="middleName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
           />
         </div>
         <div class="col-12">
-          <label for="lastName" class="form-label">Last Name</label>
+          <label for="lastName" class="form-label"
+            >Last Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="lastName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
           />
         </div>
         <div class="col-12">
@@ -60,36 +64,36 @@
             type="text"
             class="form-control"
             formControlName="preferredName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
           />
         </div>
         <h3 class="fw-bold">Address</h3>
         <div class="col-12">
           <button
-            *ngIf="addressEdit"
+            *ngIf="!addressEdit"
             (click)="edit('address')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!addressEdit"
-            (click)="edit('address')"
+            *ngIf="addressEdit"
+            (click)="cancel('address')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!addressEdit" class="btn btn-success mx-2">
-            Save
-          </button>
+          <button *ngIf="addressEdit" class="btn btn-success mx-2">Save</button>
         </div>
         <div class="col-12">
-          <label for="streetName" class="form-label">Street Name</label>
+          <label for="streetName" class="form-label"
+            >Street Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="streetName"
-            [readonly]="addressEdit"
+            [readonly]="!addressEdit"
           />
         </div>
         <div class="col-12">
@@ -100,63 +104,68 @@
             type="text"
             class="form-control"
             formControlName="buildingAptNum"
-            [readonly]="addressEdit"
+            [readonly]="!addressEdit"
           />
         </div>
         <div class="col-12">
-          <label for="city" class="form-label">City</label>
+          <label for="city" class="form-label"
+            >City<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="city"
-            [readonly]="addressEdit"
+            [readonly]="!addressEdit"
           />
         </div>
         <div class="col-12">
-          <label for="state" class="form-label">State</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="state"
-            [readonly]="addressEdit"
-          />
+          <label for="state" class="form-label"
+            >State<span class="text-danger">*</span></label
+          >
+          <select class="form-control" formControlName="state">
+            <option *ngFor="let state of states" [ngValue]="state">
+              {{ state }}
+            </option>
+          </select>
         </div>
         <div class="col-12">
-          <label for="zip" class="form-label">Zip</label>
+          <label for="zip" class="form-label"
+            >Zip<span class="text-danger">*</span></label
+          >
           <input
             type="number"
             class="form-control"
             formControlName="zip"
-            [readonly]="addressEdit"
+            [readonly]="!addressEdit"
           />
         </div>
         <h3 class="fw-bold">Contact Info</h3>
         <div class="col-12">
           <button
-            *ngIf="contactEdit"
+            *ngIf="!contactEdit"
             (click)="edit('contact')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!contactEdit"
-            (click)="edit('contact')"
+            *ngIf="contactEdit"
+            (click)="cancel('contact')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!contactEdit" class="btn btn-success mx-2">
-            Save
-          </button>
+          <button *ngIf="contactEdit" class="btn btn-success mx-2">Save</button>
         </div>
         <div class="col-12">
-          <label for="cellPhoneNum" class="form-label">Cell Phone Number</label>
+          <label for="cellPhoneNum" class="form-label"
+            >Cell Phone Number<span class="text-danger">*</span></label
+          >
           <input
             type="tel"
             class="form-control"
             formControlName="cellPhoneNum"
-            [readonly]="contactEdit"
+            [readonly]="!contactEdit"
           />
         </div>
         <div class="col-12">
@@ -165,26 +174,26 @@
             type="tel"
             class="form-control"
             formControlName="workPhoneNum"
-            [readonly]="contactEdit"
+            [readonly]="!contactEdit"
           />
         </div>
         <h3 class="fw-bold">Employment</h3>
         <div class="col-12">
           <button
-            *ngIf="employmentEdit"
+            *ngIf="!employmentEdit"
             (click)="edit('employment')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!employmentEdit"
-            (click)="edit('employment')"
+            *ngIf="employmentEdit"
+            (click)="cancel('employment')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!employmentEdit" class="btn btn-success mx-2">
+          <button *ngIf="employmentEdit" class="btn btn-success mx-2">
             Save
           </button>
         </div>
@@ -194,7 +203,7 @@
             type="text"
             class="form-control"
             formControlName="visaTitle"
-            [readonly]="employmentEdit"
+            [readonly]="!employmentEdit"
           />
         </div>
         <div class="col-12">
@@ -203,7 +212,7 @@
             type="date"
             class="form-control"
             formControlName="startDate"
-            [readonly]="employmentEdit"
+            [readonly]="!employmentEdit"
           />
         </div>
         <div class="col-12">
@@ -212,36 +221,38 @@
             type="date"
             class="form-control"
             formControlName="endDate"
-            [readonly]="employmentEdit"
+            [readonly]="!employmentEdit"
           />
         </div>
         <h3 class="fw-bold">Emgergency Contact</h3>
         <div class="col-12">
           <button
-            *ngIf="emergencyEdit"
+            *ngIf="!emergencyEdit"
             (click)="edit('emergency')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!emergencyEdit"
-            (click)="edit('emergency')"
+            *ngIf="emergencyEdit"
+            (click)="cancel('emergency')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!emergencyEdit" class="btn btn-success mx-2">
+          <button *ngIf="emergencyEdit" class="btn btn-success mx-2">
             Save
           </button>
         </div>
         <div class="col-12">
-          <label for="efirstName" class="form-label">First Name</label>
+          <label for="efirstName" class="form-label"
+            >First Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="efirstName"
-            [readonly]="emergencyEdit"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
@@ -250,45 +261,51 @@
             type="text"
             class="form-control"
             formControlName="emiddleName"
-            [readonly]="emergencyEdit"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="elastName" class="form-label">Last Name</label>
+          <label for="elastName" class="form-label"
+            >Last Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="elastName"
-            [readonly]="emergencyEdit"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
           <label for="ecellPhoneNum" class="form-label"
-            >Cell Phone Number</label
+            >Cell Phone Number<span class="text-danger">*</span></label
           >
           <input
             type="tel"
             class="form-control"
             formControlName="ecellPhoneNum"
-            [readonly]="emergencyEdit"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label"
+            >Email<span class="text-danger">*</span></label
+          >
           <input
             type="email"
             class="form-control"
             formControlName="email"
-            [readonly]="emergencyEdit"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="relationship" class="form-label">Relationship</label>
+          <label for="relationship" class="form-label"
+            >Relationship<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="relationship"
-            [readonly]="emergencyEdit"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <h3 class="fw-bold">Documents</h3>

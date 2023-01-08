@@ -14,8 +14,12 @@ import { AuthHRGuard } from './services/auth-hr.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'register', component: NoPagesFoundComponent},
-  { path: 'register/:email', component: RegisterComponent, canActivate:[RegisTokenGuard] },
+  { path: 'register', component: NoPagesFoundComponent },
+  {
+    path: 'register/:email',
+    component: RegisterComponent,
+    canActivate: [RegisTokenGuard],
+  },
   {
     path: 'personalInformation',
     component: PersonalInformationComponent,
@@ -24,9 +28,10 @@ const routes: Routes = [
   { path: 'onboarding', component: OnboardingComponent },
   { path: 'hiringManagement', component: HiringManagementComponent },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
-  
+];
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
