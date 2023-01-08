@@ -29,7 +29,7 @@ export class AuthService {
       .get('http://localhost:3000/users', authHeader)
       .subscribe((data: any) => {
         if (!data.success) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
           this.toastr.error(data.msg);
         } else {
           this.store.dispatch(UserAction.getUser({ data }));
@@ -63,9 +63,14 @@ export class AuthService {
           localStorage.setItem('isHR', data.user.isHR);
           
           this.store.dispatch(UserAction.logInUser({ data }));
-          if (!data.user.profile) this.router.navigate(['/onboarding']);
-          else if (data.user.profile.onboardingStatus != "Approved") this.router.navigate(['/onboarding']);
-          else this.router.navigate(['/personalInformation']);
+          if (!data.user.isHR) {
+            if (!data.user.profile) this.router.navigate(['/onboarding']);
+            else if (data.user.profile.onboardingStatus != "Approved") this.router.navigate(['/onboarding']);
+            else this.router.navigate(['/personalInformation']);
+          } else if (data.user.isHR) {
+            this.router.navigate(['/hiringManagement']);
+          }
+          
           this.toastr.success('You are successfully logged in!');
         }
       });

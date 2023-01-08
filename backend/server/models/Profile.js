@@ -118,6 +118,7 @@ const ProfileSchema = new Schema({
         optI983: Boolean,
         optI20: Boolean
     },
+    comment: String,
     user: { type: refType, ref: "User" }
 });
 

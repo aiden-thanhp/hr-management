@@ -1,0 +1,178 @@
+<div class="px-3">
+    <h1 class="text-center mt-5">Onboarding Application for {{ profile.firstName }}</h1>
+    <h4 class='text-center mb-5' [class]="profile.onboardingStatus == 'Pending' ? 'text-primary' : profile.onboardingStatus == 'Rejected' ? 'text-danger' : 'text-success'">Status: {{profile.onboardingStatus}}</h4>
+    <form *ngIf="profile.onboardingStatus == 'Pending'" [formGroup]="approvalForm">
+        <textarea placeholder="Enter any message here" class="form-control" rows="3" formControlName="message"></textarea>
+        <div class="row my-4">
+            <div class="col-6 d-flex justify-content-center">
+                <button class="btn btn-success w-75" (click)="onApprove()">Approve</button>
+            </div>
+            <div class="col-6 d-flex justify-content-center">
+                <button class="btn btn-danger w-75" (click)="onReject()">Reject</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="w-100 border rounded mt-5 p-4">
+        <div class="row">
+            <p class="col-12 fw-bold">Email:
+                <span class="fw-normal">{{ profile.email }}</span>
+            </p>
+            <p class="col-6 col-md-3 fw-bold">First Name:
+                <span class="fw-normal">{{ profile.firstName }}</span>
+            </p>
+            <p class="col-6 col-md-3 fw-bold">Middle Name:
+                <span class="fw-normal">{{ profile.middleName || "NA" }}</span>
+            </p>
+            <p class="col-6 col-md-3 fw-bold">Last Name:
+                <span class="fw-normal">{{ profile.lastName }}</span>
+            </p>
+            <p class="col-6 col-md-3 fw-bold">Preferred Name:
+                <span class="fw-normal">{{ profile.preferred || "NA" }}</span>
+            </p>
+            <hr> 
+            <p class="col-12 col-sm-6 fw-bold">Address:
+                <span class="fw-normal">{{ profile.address.split('/')[0] }}</span>
+            </p>
+            <p class="col-12 col-sm-6 fw-bold">Apartment/Building #:
+                <span class="fw-normal">{{ profile.address.split('/')[1] || "NA" }}</span>
+            </p>
+            <p class="col-12 col-sm-4 fw-bold">City:
+                <span class="fw-normal">{{ profile.address.split('/')[2] }}</span>
+            </p>
+            <p class="col-12 col-sm-4 fw-bold">State:
+                <span class="fw-normal">{{ profile.address.split('/')[3] }}</span>
+            </p>
+            <p class="col-12 col-sm-4 fw-bold">Zipcode:
+                <span class="fw-normal">{{ profile.address.split('/')[4] }}</span>
+            </p>
+            <p class="col-12 col-sm-6 fw-bold">Cell phone:
+                <span class="fw-normal">{{ profile.phone }}</span>
+            </p>
+            <p class="col-12 col-sm-6 fw-bold">Work phone:
+                <span class="fw-normal">{{ profile.workPhone || "NA" }}</span>
+            </p>
+            <hr>
+            <p class="col-12 col-sm-4 fw-bold">Car Make:
+                <span class="fw-normal">{{ profile.car.make || "NA" }}</span>
+            </p>
+            <p class="col-12 col-sm-4 fw-bold">Car Model:
+                <span class="fw-normal">{{ profile.car.model || "NA" }}</span>
+            </p>
+            <p class="col-12 col-sm-4 fw-bold">Car Color:
+                <span class="fw-normal">{{ profile.car.color || "NA" }}</span>
+            </p>
+            <hr>
+            <p class="col-12 col-sm-6 fw-bold">SSN:
+                <span class="fw-normal">{{ profile.ssn }}</span>
+            </p>
+            <p class="col-12 col-sm-6 fw-bold">Date of birth:
+                <span class="fw-normal">{{ profile.dob.split('T')[0] }}</span>
+            </p>
+            <p class="col-12 col-sm-6 fw-bold">Gender:
+                <span class="fw-normal">{{ profile.gender }}</span>
+            </p>
+            <p class="col-12 col-sm-6 fw-bold">Residency:
+                <span class="fw-normal">{{ profile.residency }}</span>
+            </p>
+            <hr>
+            <div *ngIf="profile.residency == 'Non-resident'" class="row">
+                <p class="col-12 fw-bold">Visa Type:
+                    <span class="fw-normal">{{ profile.workAuthorization.visaType }}</span>
+                </p>
+                <p class="col-12 col-sm-6 fw-bold">Start Date:
+                    <span class="fw-normal">{{ profile.workAuthorization.startDate.split("T")[0] }}</span>
+                </p>
+                <p class="col-12 col-sm-6 fw-bold">End Date:
+                    <span class="fw-normal">{{ profile.workAuthorization.endDate.split("T")[0] }}</span>
+                </p>
+                <hr>
+            </div>
+            <div *ngIf="profile.driverLicense.number" class="row">
+                <p class="col-12 col-sm-6 fw-bold">Driver License:
+                    <span class="fw-normal">{{ profile.driverLicense.number }}</span>
+                </p>
+                <p class="col-12 col-sm-6 fw-bold">Expiration Date:
+                    <span class="fw-normal">{{ profile.driverLicense.expiration.split("T")[0] }}</span>
+                </p>
+                <hr>
+            </div>
+            <div *ngIf="profile.reference.firstName" class="row">
+                <p class="fw-bold">Reference:</p>
+                <p class="col-12 col-md-4 fw-bold">First Name:
+                    <span class="fw-normal">{{ profile.reference.firstName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-4 fw-bold">Middle Name:
+                    <span class="fw-normal">{{ profile.reference.middleName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-4 fw-bold">Last Name:
+                    <span class="fw-normal">{{ profile.reference.lastName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-6 fw-bold">Email:
+                    <span class="fw-normal">{{ profile.reference.email || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-6 fw-bold">Phone:
+                    <span class="fw-normal">{{ profile.reference.phone || "NA" }}</span>
+                </p>
+                <p class="col-12 fw-bold">Relationship:
+                    <span class="fw-normal">{{ profile.reference.relationship || "NA" }}</span>
+                </p>
+                <hr>
+            </div>
+            <p class="fw-bold">Emergency Contact:</p>
+            <div class="row">
+                <p class="col-12 col-md-4 fw-bold">First Name:
+                    <span class="fw-normal">{{ profile.emergencyContacts[0].firstName }}</span>
+                </p>
+                <p class="col-12 col-md-4 fw-bold">Middle Name:
+                    <span class="fw-normal">{{ profile.emergencyContacts[0].middleName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-4 fw-bold">Last Name:
+                    <span class="fw-normal">{{ profile.emergencyContacts[0].lastName }}</span>
+                </p>
+                <p class="col-12 col-md-6 fw-bold">Email:
+                    <span class="fw-normal">{{ profile.emergencyContacts[0].email }}</span>
+                </p>
+                <p class="col-12 col-md-6 fw-bold">Phone:
+                    <span class="fw-normal">{{ profile.emergencyContacts[0].phone }}</span>
+                </p>
+                <p class="col-12 fw-bold">Relationship:
+                    <span class="fw-normal">{{ profile.emergencyContacts[0].relationship }}</span>
+                </p>
+            </div>
+            <div *ngIf="profile.emergencyContacts[1].firstName" class="row">
+                <p class="col-12 col-md-4 fw-bold">First Name:
+                    <span class="fw-normal">{{ profile.emergencyContacts[1].firstName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-4 fw-bold">Middle Name:
+                    <span class="fw-normal">{{ profile.emergencyContacts[1].middleName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-4 fw-bold">Last Name:
+                    <span class="fw-normal">{{ profile.emergencyContacts[1].lastName || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-6 fw-bold">Email:
+                    <span class="fw-normal">{{ profile.emergencyContacts[1].email || "NA" }}</span>
+                </p>
+                <p class="col-12 col-md-6 fw-bold">Phone:
+                    <span class="fw-normal">{{ profile.emergencyContacts[1].phone || "NA" }}</span>
+                </p>
+                <p class="col-12 fw-bold">Relationship:
+                    <span class="fw-normal">{{ profile.emergencyContacts[1].relationship || "NA" }}</span>
+                </p>
+            </div>
+            <hr>
+        </div>
+        <div>
+            <p class="fw-bold">Uploaded Files:</p>
+            <ul>
+                <li *ngIf="profile.driverLicense.file"><a [href]="profile.driverLicense.file" target="_blank">Driver License</a></li>
+                <li *ngIf="profile.profilePicture"><a [href]="profile.profilePicture" target="_blank">Profile Picture</a></li>
+                <li *ngIf="profile.optFiles.optReceipt"><a [href]="profile.optFiles.optReceipt" target="_blank">OPT Receipt</a></li>
+                <li *ngIf="profile.optFiles.optEAD"><a [href]="profile.optFiles.optEAD" target="_blank">EAD</a></li>
+                <li *ngIf="profile.optFiles.optI983"><a [href]="profile.optFiles.optI983" target="_blank">I-983</a></li>
+                <li *ngIf="profile.optFiles.optI20"><a [href]="profile.optFiles.optI20" target="_blank">I-20</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+

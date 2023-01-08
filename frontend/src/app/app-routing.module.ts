@@ -11,6 +11,7 @@ import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-fo
 import { AuthGuard } from './services/auth.guard';
 import { AuthEmployeesGuard } from './services/auth-employees.guard';
 import { AuthHRGuard } from './services/auth-hr.guard';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -21,9 +22,10 @@ const routes: Routes = [
     component: PersonalInformationComponent,
     canActivate: [AuthGuard, AuthEmployeesGuard],
   },
-  { path: 'onboarding', component: OnboardingComponent },
-  { path: 'hiringManagement', component: HiringManagementComponent },
+  { path: 'onboarding', component: OnboardingComponent, canActivate: [AuthGuard, AuthEmployeesGuard] },
+  { path: 'hiringManagement', component: HiringManagementComponent, canActivate: [AuthGuard, AuthHRGuard] },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
+  { path: 'profile/:profileId', component: ProfilePageComponent, canActivate: [AuthGuard, AuthHRGuard]},
   { path: '**', component: NoPagesFoundComponent},
 ]
 @NgModule({
