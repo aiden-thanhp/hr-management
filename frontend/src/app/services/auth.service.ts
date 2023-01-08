@@ -29,7 +29,7 @@ export class AuthService {
       .get('http://localhost:3000/users', authHeader)
       .subscribe((data: any) => {
         if (!data.success) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/']);
           this.toastr.error(data.msg);
         } else {
           this.store.dispatch(UserAction.getUser({ data }));
