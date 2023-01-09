@@ -1,0 +1,56 @@
+<div class="housing-container" id="">
+    <div class="card housing-container">
+      <div class="card-header housing-header" id="">
+        <h5 class="mb-0">
+          <button class="btn" type="button">Housing Details</button>
+        </h5>
+      </div>
+  
+      <div class="housing-body mx-2">
+        <div class="card-body">
+          <div class="housing-body-details" >
+            <h2>Address: {{userHouse.address}}</h2>
+            <h3>List of Roomates:</h3>
+            <p *ngFor="let resident of userHouse.residents">{{resident.username}}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="housingTable-container mx-5">
+        <div class="addReport-box w-25 mx-auto my-2">
+            <h4 class="text-center">Create New Facility Report</h4>
+            <form action="" [formGroup]="reportForm">
+                <input class="w-100 my-1" type="text" placeholder="title" formControlName="title">
+                <input class="w-100 my-1" type="text" placeholder="description" formControlName="description">
+                <button class="w-100 mx-auto btn btn-info my-1" (click)="createReport()">Create</button>
+            </form>
+        </div>
+      <h2 class="text-center">Submitted Reports</h2>
+        <hr />
+        <table class="housingTable text-center w-100 my-4">
+          <thead>
+            <tr>
+              <th>Titles</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Time Created/Updated</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let report of userHouse.reports">
+                <ng-container *ngIf="report.createdBy._id == (user$|async)?.id" class=>
+                    <td>{{report.title}}</td>
+                    <td>{{report.description}}</td>
+                    <td>{{report.status}}</td>
+                    <td>{{report.createdAt}}</td>
+                    <td><a routerLink="/report/{{report._id}}"><button class="btn btn-secondary">View</button></a></td>
+                    <br><br>
+                </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

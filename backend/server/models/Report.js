@@ -16,7 +16,7 @@ const ReportSchema = new Schema({
         enum: ['Open', 'In Progress', 'Closed']
     },
     createdBy: { type: refType, ref: "User" },
-    comment: [{ type: refType, ref: "Comment" }]
+    comments: [{ type: refType, ref: "Comment" }]
 }, {
     timestamps: true
 });

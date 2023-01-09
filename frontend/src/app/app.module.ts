@@ -21,6 +21,13 @@ import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-fo
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HousingComponent } from './pages/housing/housing.component';
+import { HouseReducer } from './store/house/house.reducer';
+import { ReportComponent } from './pages/report/report.component';
+import { HousingManagementComponent } from './pages/housing-management/housing-management.component';
+import { HouseSummaryComponent } from './pages/house-summary/house-summary.component';
+import { ReportHRComponent } from './pages/report-hr/report-hr.component';
+import { ReportReducer } from './store/report/report.reducer';
 import { profileReducer } from './store/profile/profile.reducer';
 import { profilesReducer } from './store/profiles/profiles.reducer';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
@@ -41,13 +48,17 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
     NoTokenFoundComponent,
     NoPagesFoundComponent,
     FooterComponent,
+    HousingComponent,
+    ReportComponent,
+    HousingManagementComponent,
+    HouseSummaryComponent,
+    ReportHRComponent,
     ProfilePageComponent,
     EmployeesProfileComponent,
     SearchPipe,
     VisaStatusManagementComponent,
     HrVisaManagementPageComponent,
 ],
-
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -60,6 +71,8 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
       {
         user: userReducer,
         regisToken: regisTokenReducer,
+        house: HouseReducer,
+        report: ReportReducer
         profile: profileReducer,
         profiles: profilesReducer,
       },
@@ -69,4 +82,4 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
   providers: [RegisTokenGuard],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -8,9 +8,14 @@ import { HiringManagementComponent } from './pages/hiringManagement/hiring-manag
 import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
-import { AuthGuard } from './guards/auth.guard';
-import { AuthEmployeesGuard } from './guards/auth-employees.guard';
-import { AuthHRGuard } from './guards/auth-hr.guard';
+import { AuthGuard } from './services/auth.guard';
+import { AuthEmployeesGuard } from './services/auth-employees.guard';
+import { AuthHRGuard } from './services/auth-hr.guard';
+import { HousingComponent } from './pages/housing/housing.component';
+import { ReportComponent } from './pages/report/report.component';
+import { HousingManagementComponent } from './pages/housing-management/housing-management.component';
+import { HouseSummaryComponent } from './pages/house-summary/house-summary.component';
+import { ReportHRComponent } from './pages/report-hr/report-hr.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
 import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
@@ -30,19 +35,15 @@ const routes: Routes = [
     component: PersonalInformationComponent,
     canActivate: [AuthGuard, AuthEmployeesGuard],
   },
-  {
-    path: 'onboarding',
-    component: OnboardingComponent,
-    canActivate: [AuthGuard, AuthEmployeesGuard],
-  },
-  {
-    path: 'hiringManagement',
-    component: HiringManagementComponent,
-    canActivate: [AuthGuard, AuthHRGuard],
-  },
+  { path: 'onboarding', component: OnboardingComponent },
+  { path: 'hiringManagement', component: HiringManagementComponent, canActivate: [AuthGuard, AuthHRGuard], },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
-
-
+  { path: 'housing', component: HousingComponent, canActivate: [AuthGuard, AuthEmployeesGuard] },
+  { path: 'report/:id', component: ReportComponent, canActivate: [AuthGuard, AuthEmployeesGuard] },
+  { path: 'report/HR/:id', component: ReportHRComponent, canActivate: [AuthGuard, AuthHRGuard] },
+  { path: 'notFound', component: NoPagesFoundComponent },
+  { path: 'housingManagement', component: HousingManagementComponent, canActivate: [AuthGuard, AuthHRGuard]},
+  { path: 'housingManagement/:id', component: HouseSummaryComponent, canActivate: [AuthGuard, AuthHRGuard]},
   {
     path: 'profile/:profileId',
     component: ProfilePageComponent,

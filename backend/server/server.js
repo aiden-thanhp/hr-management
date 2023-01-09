@@ -24,6 +24,7 @@ app.use('/profile', routes.ProfileRouter);
 app.use('/s3Url', routes.S3Router);
 app.use('/users', routes.userRouter);
 app.use('/hr', routes.hrRouter);
+app.use('/house', routes.houseRouter);
 
 // When a request is sent to an invalid route,
 // a 404 status with the message will be sent back

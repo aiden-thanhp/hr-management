@@ -1,0 +1,129 @@
+<div class="houseSummary-container" id="">
+  <div class="card houseSummary-container">
+    <div class="card-header houseSummary-header" id="">
+      <h5 class="mb-0">
+        <button class="btn" type="button">House Details</button>
+      </h5>
+    </div>
+    <div class="houseSummary-body mx-2">
+      <div class="card-body">
+        <div class="houseSummary-body-details row">
+          <div class="basicInfo p-2 col-2">
+            <h3 class="py-2">Basic Info</h3>
+            <span class="fw-bold">Address: </span>
+            <span>{{ (house$ | async).address }}</span>
+            <br />
+            <span class="fw-bold">Landlord Name: </span>
+            <span>{{ (house$ | async).landlord.name }}</span>
+            <br />
+            <span class="fw-bold">Landlord Phone: </span>
+            <span>{{ (house$ | async).landlord.phone }}</span>
+            <br />
+            <span class="fw-bold">Landlord Email: </span>
+            <span>{{ (house$ | async).landlord.email }}</span>
+            <br />
+            <span class="fw-bold">Number of Residents: </span>
+            <span>{{ (house$ | async).residents.length }}</span>
+          </div>
+          <div class="FacilityInfo p-2 col-2">
+            <h3 class="py-2">Facility Info</h3>
+            <span class="fw-bold">Beds: </span>
+            <span>{{ (house$ | async).facility.beds }}</span>
+            <br />
+            <span class="fw-bold">Mattress: </span>
+            <span>{{ (house$ | async).facility.mattress }}</span>
+            <br />
+            <span class="fw-bold">Tables: </span>
+            <span>{{ (house$ | async).facility.tables }}</span>
+            <br />
+            <span class="fw-bold">Chairs: </span>
+            <span>{{ (house$ | async).facility.chairs }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card houseSummary-employees-container my-2">
+    <div class="card-header houseSummary-employees-header" id="">
+      <h5 class="mb-0">
+        <button class="btn" type="button">Employee Details</button>
+      </h5>
+    </div>
+    <div class="houseSummary-employees-body mx-2">
+      <div class="card-body">
+        <div class="houseSummary-body-details row">
+          <div
+            *ngFor="let resident of (house$ | async).residents"
+            class="basicInfo p-2 col-2"
+          >
+            <span class="fw-bold">Name: </span>
+            <a href="#">{{ resident.username }}</a>
+            <br />
+            <span class="fw-bold">Phone: </span>
+            <span>asd</span>
+            <br />
+            <span class="fw-bold">Email: </span>
+            <span>{{ resident.email }}</span>
+            <br />
+            <span class="fw-bold">Car: </span>
+            <span>asd</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card houseSummaryReports-container my-2">
+    <div class="card-header houseSummaryReports-header" id="">
+      <h5 class="mb-0">
+        <button class="btn" type="button">Reports</button>
+      </h5>
+    </div>
+
+    <div class="houseSummaryReports-body mx-2">
+      <div class="card-body">
+        <div class="houseSummaryTable-container mx-5">
+          <table class="houseSummaryTable text-center w-100 my-4">
+            <thead>
+              <tr>
+                <th>Titles</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Created By</th>
+                <th>Time Created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                <tr *ngFor="let report of (house$ | async).reports">
+                  <td>{{ report.title }}</td>
+                  <td>{{ report.description }}</td>
+                  <td>
+                    <select
+                      name="status"
+                      id="status{{report._id}}"
+                      value="{{ report.status }}"
+                    >
+                      <option value="Open">Open</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Closed">Closed</option>
+                    </select>
+                  </td>
+                  <td>{{ report.createdBy.username }}</td>
+                  <td>{{ report.createdAt }}</td>
+                  <td>
+                    <a routerLink="/report/HR/{{report._id}}"
+                      ><button class="btn btn-secondary">View</button></a
+                    >
+                    <button class="btn btn-info mx-2" (click)="changeStatusClick(report._id)">Change Status</button>
+                  </td>
+                  <br /><br />
+                </tr>
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

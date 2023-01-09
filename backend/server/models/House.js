@@ -45,8 +45,8 @@ const HouseSchema = new Schema({
         tables: Number,
         chairs: Number
     },
-    user: { type: refType, ref: "User" },
-    report: { type: refType, ref: "Report" }
+    residents: [{ type: refType, ref: "User" }],
+    reports: [{ type: refType, ref: "Report" }]
 });
 
 const House = mongoose.model("House", HouseSchema, "House");
