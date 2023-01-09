@@ -72,7 +72,7 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
         user: userReducer,
         regisToken: regisTokenReducer,
         house: HouseReducer,
-        report: ReportReducer
+        report: ReportReducer,
         profile: profileReducer,
         profiles: profilesReducer,
       },
