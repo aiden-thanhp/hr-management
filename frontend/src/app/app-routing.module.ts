@@ -11,20 +11,31 @@ import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-fo
 import { AuthGuard } from './services/auth.guard';
 import { AuthEmployeesGuard } from './services/auth-employees.guard';
 import { AuthHRGuard } from './services/auth-hr.guard';
+import { HousingComponent } from './pages/housing/housing.component';
+import { ReportComponent } from './pages/report/report.component';
+import { HousingManagementComponent } from './pages/housing-management/housing-management.component';
+import { HouseSummaryComponent } from './pages/house-summary/house-summary.component';
+import { ReportHRComponent } from './pages/report-hr/report-hr.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'register', component: NoPagesFoundComponent},
-  { path: 'register/:email', component: RegisterComponent, canActivate:[RegisTokenGuard] },
+  { path: 'register', component: NoPagesFoundComponent },
+  { path: 'register/:email', component: RegisterComponent, canActivate: [RegisTokenGuard] },
   {
     path: 'personalInformation',
     component: PersonalInformationComponent,
     canActivate: [AuthGuard, AuthEmployeesGuard],
   },
   { path: 'onboarding', component: OnboardingComponent },
-  { path: 'hiringManagement', component: HiringManagementComponent },
+  { path: 'hiringManagement', component: HiringManagementComponent, canActivate: [AuthGuard, AuthHRGuard], },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
-  
+  { path: 'housing', component: HousingComponent, canActivate: [AuthGuard, AuthEmployeesGuard] },
+  { path: 'report/:id', component: ReportComponent, canActivate: [AuthGuard, AuthEmployeesGuard] },
+  { path: 'report/HR/:id', component: ReportHRComponent, canActivate: [AuthGuard, AuthHRGuard] },
+  { path: 'notFound', component: NoPagesFoundComponent },
+  { path: 'housingManagement', component: HousingManagementComponent, canActivate: [AuthGuard, AuthHRGuard]},
+  { path: 'housingManagement/:id', component: HouseSummaryComponent, canActivate: [AuthGuard, AuthHRGuard]}
+]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

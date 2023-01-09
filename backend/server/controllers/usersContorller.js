@@ -30,12 +30,17 @@ exports.register = async (req, res) => {
     const hash = await bcrypt.hash(password, parseInt(process.env.SALT));
     const houses = await House.find();
     const randomHouse = houses[Math.floor(Math.random() * houses.length)];
+    // const randomHouse = houses[0];
     const userCreated = await User.create({
       username: username,
       email: email,
       password: hash,
       house: randomHouse._id,
     });
+    const houseToUpdate = await House.findOne({_id: randomHouse._id});
+    const houseResidents = houseToUpdate.residents ? houseToUpdate.residents : [];
+    houseResidents.push(userCreated);
+    await House.findOneAndUpdate({_id: randomHouse.id}, {residents: houseResidents});
     const updatedRegisToken = await RegistrationToken.findOneAndUpdate(
       { email: regisTokenEmail },
       { user: userCreated },

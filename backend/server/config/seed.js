@@ -8,6 +8,8 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const House = require("../models/House");
 const RegistrationToken = require("../models/RegistrationToken");
+const Report = require("../models/Report");
+const Comment = require("../models/Comment");
 
 async function run() {
   try {
@@ -18,15 +20,24 @@ async function run() {
       User.collection.drop(),
       House.collection.drop(),
       RegistrationToken.collection.drop(),
+      Comment.collection.drop(),
+      Report.collection.drop(),
     ]);
 
     const pass = await bcrypt.hash("admin1Pass@", Number(process.env.SALT));
+    const pass2 = await bcrypt.hash("Asd111...", Number(process.env.SALT));
     const users = [
       {
         username: "admin1",
         password: pass,
         email: "admin1@gmail.com",
         isHR: true,
+      },
+      {
+        username: "user1",
+        password: pass2,
+        email: "user1@gmail.com",
+        isHR: false,
       },
     ];
     const createdUsers = await User.create(users);
@@ -46,6 +57,8 @@ async function run() {
           tables: 3,
           chairs: 6,
         },
+        residents: [],
+        reports: []
       },
       {
         address: "321 Another Street, Different City, NA, 54321",
@@ -60,11 +73,65 @@ async function run() {
           tables: 8,
           chairs: 12,
         },
+        residents: [],
+        reports: []
       },
     ];
 
     const createdHouse = await House.create(houses);
     console.log("createdHouse = ", createdHouse);
+
+    const comments = [
+      {
+        description: "Desciption Test1 by user1",
+        createdBy:'user1'
+      },
+      {
+        description: "This report is now working",
+        createdBy:'admin1'
+      },
+      {
+        description: "Description Test2 by user1",
+        createdBy:'user1'
+      },
+    ];
+    await Comment.create(comments);
+    const user1 = await User.findOne({ username: "user1" });
+    const comment1 = await Comment.findOne({
+      description: "Desciption Test1 by user1",
+    });
+    const comment1_1 = await Comment.findOne({
+      description: "This report is now working",
+    })
+    const comment2 = await Comment.findOne({
+      description: "Description Test2 by user1",
+    });
+    const reports = [
+      {
+        title: "Bed is broken",
+        description: "Bed is broken is now working",
+        status: "Open",
+        createdBy: user1,
+        comments: [comment1, comment1_1],
+      },
+      {
+        title: "Table is broken",
+        description: "Table is broken description test",
+        status: "Open",
+        createdBy: user1,
+        comments: [comment2],
+      },
+    ];
+    await Report.create(reports);
+    const report1 = await Report.findOne({title: "Bed is broken"});
+    const report2 = await Report.findOne({title: "Table is broken"});
+    const house1 = await House.findOneAndUpdate({
+      address: "123 This Street, That City, AB, 12345",
+    }, {
+      reports: [report1, report2],
+      residents: [user1]
+    });
+    await User.findOneAndUpdate({username: "user1"}, {house: house1});
   } catch (error) {
     console.log("seed.js error = ", error);
   } finally {

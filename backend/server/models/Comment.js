@@ -1,16 +1,20 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const refType = Schema.Types.ObjectId;
 
-const CommentSchema = new Schema({
+const CommentSchema = new Schema(
+  {
     description: {
-        type: String, 
-        required: [true, 'Report description required']
+      type: String,
+      required: [true, "Report description required"],
     },
-    report: { type: refType, ref: "Report" }
-}, {
-    timestamps: true
-});
+    report: { type: refType, ref: "Report" },
+    createdBy: { type: String },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Comment = mongoose.model("Comment", CommentSchema, "Comment");
 
