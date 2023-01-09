@@ -8,9 +8,9 @@ import { HiringManagementComponent } from './pages/hiringManagement/hiring-manag
 import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
 import { RegisTokenGuard } from './guards/regisToken.guard';
 import { NoPagesFoundComponent } from './pages/errors/no-pages-found/no-pages-found.component';
-import { AuthGuard } from './services/auth.guard';
-import { AuthEmployeesGuard } from './services/auth-employees.guard';
-import { AuthHRGuard } from './services/auth-hr.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthEmployeesGuard } from './guards/auth-employees.guard';
+import { AuthHRGuard } from './guards/auth-hr.guard';
 import { HousingComponent } from './pages/housing/housing.component';
 import { ReportComponent } from './pages/report/report.component';
 import { HousingManagementComponent } from './pages/housing-management/housing-management.component';
