@@ -12,10 +12,16 @@ import { Router } from '@angular/router';
 export class EmployeesProfileComponent implements OnInit {
   constructor(private store: Store, private router: Router) {}
 
-  profiles$: Observable<any> = this.store.select(selectProfiles);
   searchText: string = '';
+  users: any;
   
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select(selectProfiles)
+      .subscribe((data: any) => {
+        console.log(data)
+        this.users = data
+      })
+  }
 
   viewProfile(profileId: string): void {
     window.open(`/profile/${profileId}`, '_blank');
