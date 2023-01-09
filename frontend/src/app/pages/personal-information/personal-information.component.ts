@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { selectUser } from 'src/app/store/user/user.selector';
 import { Store } from '@ngrx/store';
+import { ProfileService } from 'src/app/services/profile.service';
 import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { UserAction } from 'src/app/store/user/user.actions';
 
 @Component({
   selector: 'app-personal-information',
@@ -79,39 +82,44 @@ export class PersonalInformationComponent implements OnInit {
   user: any;
   profileForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
-    middleName: new FormControl('', [Validators.required]),
+    middleName: new FormControl(''),
     lastName: new FormControl('', [Validators.required]),
-    preferredName: new FormControl('', [Validators.required]),
+    preferredName: new FormControl(''),
     address: new FormControl('', [Validators.required]),
-    apartment: new FormControl('', [Validators.required]),
+    apartment: new FormControl(''),
     city: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
     zipcode: new FormControl('', [Validators.required]),
-    cellphone: new FormControl('', [Validators.required]),
-    workphone: new FormControl('', [Validators.required]),
-    visaTitle: new FormControl('', [Validators.required]),
-    startDate: new FormControl('', [Validators.required]),
-    endDate: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
+    workPhone: new FormControl(''),
+    visaTitle: new FormControl(''),
+    startDate: new FormControl(''),
+    endDate: new FormControl(''),
     emergencyFirstName: new FormControl('', [Validators.required]),
     emergencyMiddleName: new FormControl('', [Validators.required]),
     emergencyLastName: new FormControl('', [Validators.required]),
     emergencyPhone: new FormControl('', [Validators.required]),
     emergencyEmail: new FormControl('', [Validators.required]),
     emergencyRelationship: new FormControl('', [Validators.required]),
-    emergency2FirstName: new FormControl('', [Validators.required]),
-    emergency2MiddleName: new FormControl('', [Validators.required]),
-    emergency2LastName: new FormControl('', [Validators.required]),
-    emergency2Phone: new FormControl('', [Validators.required]),
-    emergency2Email: new FormControl('', [Validators.required]),
-    emergency2Relationship: new FormControl('', [Validators.required]),
+    emergency2FirstName: new FormControl(''),
+    emergency2MiddleName: new FormControl(''),
+    emergency2LastName: new FormControl(''),
+    emergency2Phone: new FormControl(''),
+    emergency2Email: new FormControl(''),
+    emergency2Relationship: new FormControl(''),
+    driverLicense: new FormControl(''),
   });
 
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private profileService: ProfileService,
+    private httpClient: HttpClient,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.store.select(selectUser).subscribe((user) => {
       this.user = user;
-      console.log(this.user.profile);
       if (this.user.profile) {
         const addresses = this.user.profile.address.split('/');
         this.profileForm.patchValue({
@@ -124,8 +132,8 @@ export class PersonalInformationComponent implements OnInit {
           city: addresses[2],
           state: addresses[3],
           zipcode: addresses[4],
-          cellphone: this.user.profile.phone,
-          workphone: this.user.profile.workPhone,
+          phone: this.user.profile.phone,
+          workPhone: this.user.profile.workPhone,
           emergencyFirstName: this.user.profile.emergencyContacts[0].firstName,
           emergencyMiddleName:
             this.user.profile.emergencyContacts[0].middleName,
@@ -142,6 +150,7 @@ export class PersonalInformationComponent implements OnInit {
           emergency2Email: this.user.profile.emergencyContacts[1].email,
           emergency2Relationship:
             this.user.profile.emergencyContacts[1].relationship,
+          driverLicense: this.user.profile.driverLicense.file,
         });
       }
     });
@@ -164,8 +173,8 @@ export class PersonalInformationComponent implements OnInit {
   };
 
   contactValues = {
-    cellphone: '',
-    workphone: '',
+    phone: '',
+    workPhone: '',
   };
 
   employmentValues = {
@@ -188,6 +197,27 @@ export class PersonalInformationComponent implements OnInit {
     emergency2Email: '',
     emergency2Relationship: '',
   };
+
+  download(url: string): void {
+    this.httpClient
+      .get(url, { responseType: 'blob' as 'json' })
+      .subscribe((res: any) => {
+        const file = new Blob([res], { type: res.type });
+
+        const blob = window.URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = blob;
+        link.download = url;
+
+        link.dispatchEvent(
+          new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          })
+        );
+      });
+  }
 
   edit(section: string): void {
     switch (section) {
@@ -215,10 +245,9 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'contact':
         this.contactEdit = true;
-        this.contactValues.cellphone =
-          this.profileForm.get('cellPhoneNum')?.value || '';
-        this.contactValues.workphone =
-          this.profileForm.get('workphone')?.value || '';
+        this.contactValues.phone = this.profileForm.get('phone')?.value || '';
+        this.contactValues.workPhone =
+          this.profileForm.get('workPhone')?.value || '';
         break;
       case 'employment':
         this.employmentEdit = true;
@@ -288,8 +317,8 @@ export class PersonalInformationComponent implements OnInit {
         this.contactEdit = false;
         alert('discard all changes?');
         this.profileForm.patchValue({
-          cellphone: this.contactValues.cellphone,
-          workphone: this.contactValues.workphone,
+          phone: this.contactValues.phone,
+          workPhone: this.contactValues.workPhone,
         });
         break;
       case 'employment':
@@ -318,6 +347,121 @@ export class PersonalInformationComponent implements OnInit {
           emergency2Email: this.emgencyValues.emergency2Email,
           emergency2Relationship: this.emgencyValues.emergency2Relationship,
         });
+        break;
+    }
+  }
+
+  save(section: string): void {
+    switch (section) {
+      case 'name':
+        this.nameEdit = false;
+        const nameProfile = { ...this.user.profile };
+        nameProfile.firstName = this.profileForm.get('firstName')?.value;
+        nameProfile.middleName = this.profileForm.get('middleName')?.value;
+        nameProfile.lastName = this.profileForm.get('lastName')?.value;
+        nameProfile.preferredName =
+          this.profileForm.get('preferredName')?.value;
+        this.profileService
+          .updateProfile(nameProfile, this.user.profile._id)
+          .subscribe((data) => {
+            if (data.success) {
+              this.toastr.success('Name field successfully updated');
+              const user = { ...this.user };
+              user.profile = nameProfile;
+              this.store.dispatch(UserAction.updateUser({ user }));
+            }
+          });
+        break;
+      case 'address':
+        this.addressEdit = false;
+        const addressProfile = { ...this.user.profile };
+        const address = `${this.profileForm.get('address')?.value}/${
+          this.profileForm.get('apartment')?.value
+        }/${this.profileForm.get('city')?.value}/${
+          this.profileForm.get('state')?.value
+        }/${this.profileForm.get('zipcode')?.value}`;
+        addressProfile.address = address;
+        this.profileService
+          .updateProfile(addressProfile, this.user.profile._id)
+          .subscribe((data) => {
+            if (data.success) {
+              this.toastr.success('Address field successfully updated');
+              const user = { ...this.user };
+              user.profile = addressProfile;
+              this.store.dispatch(UserAction.updateUser({ user }));
+            }
+          });
+        break;
+      case 'contact':
+        this.contactEdit = false;
+        const contactProfile = { ...this.user.profile };
+        contactProfile.phone = this.profileForm.get('phone')?.value;
+        contactProfile.workPhone = this.profileForm.get('workPhone')?.value;
+        this.profileService
+          .updateProfile(contactProfile, this.user.profile._id)
+          .subscribe((data) => {
+            if (data.success) {
+              this.toastr.success('Contact field successfully updated');
+              const user = { ...this.user };
+              user.profile = contactProfile;
+              this.store.dispatch(UserAction.updateUser({ user }));
+            }
+          });
+        break;
+      case 'employment':
+        this.employmentEdit = false;
+        const employmentProfile = { ...this.user.profile };
+        employmentProfile.visaTitle = this.profileForm.get('visaTitle')?.value;
+        employmentProfile.startDate = this.profileForm.get('startDate')?.value;
+        employmentProfile.startDate = this.profileForm.get('endDate')?.value;
+        this.profileService
+          .updateProfile(employmentProfile, this.user.profile._id)
+          .subscribe((data) => {
+            if (data.success) {
+              this.toastr.success('Employment field successfully updated');
+              const user = { ...this.user };
+              user.profile = employmentProfile;
+              this.store.dispatch(UserAction.updateUser({ user }));
+            }
+          });
+        break;
+      case 'emergency':
+        this.emergencyEdit = false;
+        const emergencyProfile = { ...this.user.profile };
+        emergencyProfile.emergencyContacts = [
+          ...this.user.profile.emergencyContacts,
+        ];
+        const emergency1 = {
+          firstName: this.profileForm.get('emergencyFirstName')?.value,
+          middleName: this.profileForm.get('emergencyMiddleName')?.value,
+          lastName: this.profileForm.get('emergencyLastName')?.value,
+          phone: this.profileForm.get('emergencyPhone')?.value,
+          email: this.profileForm.get('emergencyEmail')?.value,
+          relationship: this.profileForm.get('emergencyRelationship')?.value,
+        };
+        const emergency2 = {
+          firstName: this.profileForm.get('emergency2FirstName')?.value,
+          middleName: this.profileForm.get('emergency2MiddleName')?.value,
+          lastName: this.profileForm.get('emergency2LastName')?.value,
+          phone: this.profileForm.get('emergency2Phone')?.value,
+          email: this.profileForm.get('emergency2Email')?.value,
+          relationship: this.profileForm.get('emergency2Relationship')?.value,
+        };
+        emergencyProfile.emergencyContacts[0] = emergency1;
+        emergencyProfile.emergencyContacts[1] = emergency2;
+
+        this.profileService
+          .updateProfile(emergencyProfile, this.user.profile._id)
+          .subscribe((data) => {
+            if (data.success) {
+              this.toastr.success(
+                'Emergency contact field successfully updated'
+              );
+              const user = { ...this.user };
+              user.profile = emergencyProfile;
+              this.store.dispatch(UserAction.updateUser({ user }));
+            }
+          });
         break;
     }
   }

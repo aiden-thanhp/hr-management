@@ -22,11 +22,15 @@ export class ProfileService {
     );
   }
 
-  updateProfile(newProfile: any, userId: any): Observable<any> {
-    return this.http.put(
-      'http://localhost:3000/profile',
-      { newProfile, userId },
-      httpOptions
-    );
+  getAllProfiles(): Observable<any> {
+    return this.http.get("http://localhost:3000/profile");
+  }
+
+  getProfileById(profileId: string): Observable<any> {
+    return this.http.get(`http://localhost:3000/profile/${profileId}`);
+  }
+
+  updateProfile(newProfile: any, profileId: string): Observable<any> {
+    return this.http.put(`http://localhost:3000/profile/${profileId}`, { newProfile: newProfile }, httpOptions);
   }
 }

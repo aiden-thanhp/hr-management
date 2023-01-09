@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -22,6 +22,7 @@ export class OnboardingComponent implements OnInit {
   driverLicense: String = '';
   profilePicture: String = '';
   regEmail: String = '';
+  disableSelect = false;
 
   onboardingForm = new FormBuilder().group({
     firstName: '',
@@ -102,8 +103,8 @@ export class OnboardingComponent implements OnInit {
               dob: this.user.profile.dob?.split('T')[0],
               gender: this.user.profile.gender,
               residentType: this.user.profile.residency == "Non-resident" ? "" : this.user.profile.residency,
-              nonResidentType: ["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "Other",
-              otherVisaType: !["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "",
+              nonResidentType: this.user.profile.residency != "Non-resident" ? "NA" : ["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "Other",
+              otherVisaType: this.user.profile.residency != "Non-resident" ? "NA" : !["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "",
               optReceipt: '',
               visaStartDate: this.user.profile.workAuthorization.startDate?.split('T')[0] || Date,
               visaEndDate: this.user.profile.workAuthorization.endDate?.split('T')[0] || Date,
@@ -176,7 +177,7 @@ export class OnboardingComponent implements OnInit {
     Object.keys(this.onboardingForm.controls).forEach(field => {
       if (this.onboardingForm.get(field)?.errors) {
         hasError = true;
-        // console.log(field, this.onboardingForm.get(field)?.errors)
+        console.log(field, this.onboardingForm.get(field)?.errors)
       };
     })
 
@@ -255,8 +256,18 @@ export class OnboardingComponent implements OnInit {
         }
       }
       // Make a request to create a new Profile;
-      this.profileService.createProfile(newProfile, this.user.id)
-        .subscribe((response: any) => console.log(response))
+
+      if (this.user.profile && this.user.profile.onboardingStatus == 'Rejected') {
+        this.profileService.updateProfile(newProfile, this.user.profile._id)
+        .subscribe((response: any) => {
+          console.log(response)
+        })
+      } else {
+        this.profileService.createProfile(newProfile, this.user.id)
+          .subscribe((response: any) => {
+            console.log(response);
+          })
+      }
     } else {
       console.log("error")
     }

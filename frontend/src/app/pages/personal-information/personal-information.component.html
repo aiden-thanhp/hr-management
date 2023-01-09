@@ -25,7 +25,13 @@
           >
             Cancel
           </button>
-          <button *ngIf="nameEdit" class="btn btn-success mx-2">Save</button>
+          <button
+            (click)="save('name')"
+            *ngIf="nameEdit"
+            class="btn btn-success mx-2"
+          >
+            Save
+          </button>
         </div>
         <div class="col-12">
           <label for="firstName" class="form-label"
@@ -113,7 +119,13 @@
           >
             Cancel
           </button>
-          <button *ngIf="addressEdit" class="btn btn-success mx-2">Save</button>
+          <button
+            (click)="save('address')"
+            *ngIf="addressEdit"
+            class="btn btn-success mx-2"
+          >
+            Save
+          </button>
         </div>
         <div class="col-12">
           <label for="address" class="form-label"
@@ -213,7 +225,7 @@
             >Zip<span class="text-danger">*</span></label
           >
           <input
-            type="number"
+            type="text"
             class="form-control"
             formControlName="zipcode"
             [readonly]="!addressEdit"
@@ -250,21 +262,27 @@
           >
             Cancel
           </button>
-          <button *ngIf="contactEdit" class="btn btn-success mx-2">Save</button>
+          <button
+            (click)="save('contact')"
+            *ngIf="contactEdit"
+            class="btn btn-success mx-2"
+          >
+            Save
+          </button>
         </div>
         <div class="col-12">
-          <label for="cellphone" class="form-label"
+          <label for="phone" class="form-label"
             >Cell Phone Number<span class="text-danger">*</span></label
           >
           <input
             type="tel"
             class="form-control"
-            formControlName="cellphone"
+            formControlName="phone"
             [readonly]="!contactEdit"
             [ngClass]="
-              (profileForm.get('cellphone')?.touched ||
-                profileForm.get('cellphone')?.dirty) &&
-              profileForm.get('cellphone')?.hasError('required') &&
+              (profileForm.get('phone')?.touched ||
+                profileForm.get('phone')?.dirty) &&
+              profileForm.get('phone')?.hasError('required') &&
               contactEdit
                 ? 'is-invalid'
                 : ''
@@ -272,18 +290,18 @@
           />
           <div class="invalid-feedback">
             {{
-              profileForm.get("cellphone")?.hasError("required")
-                ? "Cell phone is required"
+              profileForm.get("phone")?.hasError("required")
+                ? "Phone is required"
                 : ""
             }}
           </div>
         </div>
         <div class="col-12">
-          <label for="workphone" class="form-label">Work Phone Number</label>
+          <label for="workPhone" class="form-label">Work Phone Number</label>
           <input
             type="tel"
             class="form-control"
-            formControlName="workphone"
+            formControlName="workPhone"
             [readonly]="!contactEdit"
           />
         </div>
@@ -303,7 +321,11 @@
           >
             Cancel
           </button>
-          <button *ngIf="employmentEdit" class="btn btn-success mx-2">
+          <button
+            (click)="save('employment')"
+            *ngIf="employmentEdit"
+            class="btn btn-success mx-2"
+          >
             Save
           </button>
         </div>
@@ -350,7 +372,11 @@
           >
             Cancel
           </button>
-          <button *ngIf="emergencyEdit" class="btn btn-success mx-2">
+          <button
+            (click)="save('emergency')"
+            *ngIf="emergencyEdit"
+            class="btn btn-success mx-2"
+          >
             Save
           </button>
         </div>
@@ -558,6 +584,96 @@
           />
         </div>
         <h3 class="fw-bold">Documents</h3>
+        <label class="form-label" *ngIf="user?.profile?.driverLicense?.file"
+          >Driver License :
+          <a
+            href="{{ user?.profile?.driverLicense?.file }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.driverLicense?.file)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.profilePicture"
+          >Profile Picture :
+          <a
+            href="{{ user?.profile?.profilePicture }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.profilePicture)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optReceipt"
+          >OPT Reciept :
+          <a
+            href="{{ user?.profile?.optFiles?.optReceipt }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.optFiles?.optReceipt)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optEAD"
+          >OPT EAD :
+          <a
+            href="{{ user?.profile?.optFiles?.optEAD }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.optFiles?.optEAD)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optEAD"
+          >OPT I-983 :
+          <a
+            href="{{ user?.profile?.optFiles?.optI983 }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            href="{{ user?.profile?.optFiles?.optI983 }}"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optI20"
+          >OPT I-20 :
+          <a
+            href="{{ user?.profile?.optFiles?.optI20 }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.optFiles?.optI20)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
       </div>
     </form>
   </div>
