@@ -27,6 +27,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
+import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/hr-visa-management-page.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,9 @@ import { VisaStatusManagementComponent } from './pages/visa-status-management/vi
     EmployeesProfileComponent,
     SearchPipe,
     VisaStatusManagementComponent,
-  ],
+    HrVisaManagementPageComponent,
+],
+
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

@@ -22,9 +22,9 @@ async function run() {
       User.collection.drop(),
       House.collection.drop(),
       RegistrationToken.collection.drop(),
-      Comment.collection.drop(),
+      // Comment.collection.drop(),
       Profile.collection.drop(),
-      Report.collection.drop(),
+      // Report.collection.drop(),
     ]);
 
     const pass = await bcrypt.hash("admin1Pass@", Number(process.env.SALT));

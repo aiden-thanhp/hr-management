@@ -14,6 +14,8 @@ import { AuthHRGuard } from './guards/auth-hr.guard';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
 import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
+import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/hr-visa-management-page.component';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -40,6 +42,7 @@ const routes: Routes = [
   },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
 
+
   {
     path: 'profile/:profileId',
     component: ProfilePageComponent,
@@ -55,8 +58,10 @@ const routes: Routes = [
     component: VisaStatusManagementComponent,
     canActivate: [AuthGuard, AuthEmployeesGuard],
   },
+  { path: 'hr/visaManagement', component: HrVisaManagementPageComponent, canActivate: [AuthGuard, AuthHRGuard] },
   { path: '**', component: NoPagesFoundComponent },
 ];
+
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],

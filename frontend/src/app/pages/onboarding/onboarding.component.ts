@@ -23,10 +23,10 @@ export class OnboardingComponent implements OnInit {
   user: any;
   fileObj: File | undefined;
   fileUrl: string = '';
-  optReceipt: String = '';
-  driverLicense: String = '';
-  profilePicture: String = '';
-  regEmail: String = '';
+  optReceipt: string = '';
+  driverLicense: string = '';
+  profilePicture: string = '';
+  regEmail: string = '';
   disableSelect = false;
 
   onboardingForm = new FormBuilder().group({
@@ -83,10 +83,14 @@ export class OnboardingComponent implements OnInit {
     this.store.select(selectUser)
       .subscribe((user: any) => {
         if (user.id) {
-          console.log(user)
+          console.log(user);
           this.user = user;
+
           this.regEmail = this.user.registerToken.email;
           if (this.user?.profile?._id) {
+            this.optReceipt = this.user.profile.optFiles.optReceipt || "";
+            this.driverLicense = this.user.profile.driverLicense.driverLicenseFile || "";
+            this.profilePicture = this.user.profile.profilePicture || "";
             const addresses = this.user.profile.address.split('/');
             this.onboardingForm.setValue({
               firstName: this.user.profile.firstName,
@@ -111,13 +115,13 @@ export class OnboardingComponent implements OnInit {
               residentType: this.user.profile.residency == "Non-resident" ? "" : this.user.profile.residency,
               nonResidentType: this.user.profile.residency != "Non-resident" ? "NA" : ["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "Other",
               otherVisaType: this.user.profile.residency != "Non-resident" ? "NA" : !["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "",
-              optReceipt: this.user.profile.optFiles.optReceipt,
+              optReceipt: "",
               visaStartDate: this.user.profile.workAuthorization.startDate?.split('T')[0] || Date,
               visaEndDate: this.user.profile.workAuthorization.endDate?.split('T')[0] || Date,
               hasDriverLicense: this.user.profile.driverLicense.number != "" ? "Yes" : "No",
               driverLicense: this.user.profile.driverLicense.number,
               driverLicenseExp: this.user.profile.driverLicense.expiration?.split('T')[0] || Date,
-              driverLicenseFile: '',
+              driverLicenseFile: "",
               referenceFirstName: this.user.profile.reference.firstName,
               referenceMiddleName: this.user.profile.reference.middleName,
               referenceLastName: this.user.profile.reference.lastName,
@@ -259,6 +263,12 @@ export class OnboardingComponent implements OnInit {
           optEAD: 'Never Submitted',
           optI983: 'Never Submitted',
           optI20: 'Never Submitted'
+        },
+        optComments: {
+          optReceipt: "",
+          optEAD: "",
+          optI983: "",
+          optI20: ""
         }
       }
       // Make a request to create a new Profile;

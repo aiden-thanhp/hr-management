@@ -29,6 +29,9 @@ export class ProfilePageComponent implements OnInit {
   onApprove(): void {
     this.profile.comment = this.approvalForm.get('message')?.value;
     this.profile.onboardingStatus = "Approved";
+    if (this.profile.nonResidentType == "H1B") {
+      this.profile.optStatus.optReceipt = "Approved";
+    }
 
     this.profileService.updateProfile(this.profile, this.profile._id)
       .subscribe((data: any) => {})
