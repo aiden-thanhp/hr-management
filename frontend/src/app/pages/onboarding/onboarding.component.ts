@@ -78,9 +78,10 @@ export class OnboardingComponent implements OnInit {
     this.store.select(selectUser)
       .subscribe((user: any) => {
         if (user.id) {
+          console.log(user)
           this.user = user;
           this.regEmail = this.user.registerToken.email;
-          if (this.user.profile._id) {
+          if (this.user?.profile?._id) {
             const addresses = this.user.profile.address.split('/');
             this.onboardingForm.setValue({
               firstName: this.user.profile.firstName,
@@ -249,21 +250,21 @@ export class OnboardingComponent implements OnInit {
           optI20: ""
         },
         optStatus: {
-          optReceipt: false,
-          optEAD: false,
-          optI983: false,
-          optI20: false
+          optReceipt: this.optReceipt ? 'Pending' : 'Never Submitted',
+          optEAD: 'Never Submitted',
+          optI983: 'Never Submitted',
+          optI20: 'Never Submitted'
         }
       }
       // Make a request to create a new Profile;
 
-      if (this.user.profile && this.user.profile.onboardingStatus == 'Rejected') {
-        this.profileService.updateProfile(newProfile, this.user.profile._id)
+      if (this.user?.profile && this.user?.profile?.onboardingStatus == 'Rejected') {
+        this.profileService.updateProfile(newProfile, this.user?.profile?._id)
         .subscribe((response: any) => {
           console.log(response)
         })
       } else {
-        this.profileService.createProfile(newProfile, this.user.id)
+        this.profileService.createProfile(newProfile, this.user?.id)
           .subscribe((response: any) => {
             console.log(response);
           })

@@ -1,11 +1,11 @@
 <h2 class="display-5 fw-bold text-center mt-5">Onboarding Application</h2>
-<p [class]="!user.profile ? 'lead text-center mb-5' : 'd-none' ">Complete this form before accessing your portal.</p>
-<p [class]="user.profile ? 'lead text-center mb-5' : 'd-none' ">Your application is sent to HR, and awaiting review. Please check back later.</p>
+<p [class]="!user?.profile ? 'lead text-center mb-5' : 'd-none' ">Complete this form before accessing your portal.</p>
+<p [class]="user?.profile ? 'lead text-center mb-5' : 'd-none' ">Your application is sent to HR, and awaiting review. Please check back later.</p>
 
-<div *ngIf="user.profile" class="fw-bold text-center my-5">
-    <h4 [class]="user.profile && user.profile.onboardingStatus == 'Pending' ? 'text-primary' : user.profile && user.profile.onboardingStatus == 'Rejected' ? 'text-danger' : 'text-success'"
-        >Status: {{ user.profile && user.profile.onboardingStatus }}</h4>
-    <h5 *ngIf="user.profile && user.profile.comment">Feedback: <span class="fw-normal">{{ user.profile && user.profile.comment }}</span></h5>
+<div *ngIf="user?.profile" class="fw-bold text-center my-5">
+    <h4 [class]="user?.profile && user.profile.onboardingStatus == 'Pending' ? 'text-primary' : user?.profile && user.profile.onboardingStatus == 'Rejected' ? 'text-danger' : 'text-success'"
+        >Status: {{ user?.profile && user.profile.onboardingStatus }}</h4>
+    <h5 *ngIf="user?.profile && user.profile.comment">Feedback: <span class="fw-normal">{{ user?.profile && user.profile.comment }}</span></h5>
 </div>
 
 <!-- <div *ngIf="user.profile" ></div> -->
@@ -22,8 +22,8 @@
                             ? 'is-invalid' : ''
                     "
                     class="form-control" type="text" id="firstName" required formControlName="firstName"
-                    [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
-                    [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"
+                    [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
+                    [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"
                     >
                 <p [class]="
                     (onboardingForm.get('firstName')?.touched ||
@@ -34,13 +34,13 @@
             </div>
             <div class="mb-2">
                 <label class="form-label">Middle name</label> <br />
-                <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''" [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="middleName" formControlName="middleName">
+                <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''" [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="middleName" formControlName="middleName">
             </div>
             <div class="mb-2">
                 <label class="form-label">Last name <span class="text-danger">*</span></label> <br />
                 <input 
-                    [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''" 
-                    [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
+                    [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''" 
+                    [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
                     [ngClass]="
                         (onboardingForm.get('lastName')?.touched ||
                         onboardingForm.get('lastName')?.dirty) 
@@ -57,13 +57,13 @@
             </div>
             <div class="mb-2">
                 <label class="form-label">Preferred name</label> <br />
-                <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="preferredName" formControlName="preferredName" >
+                <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="preferredName" formControlName="preferredName" >
             </div>
 
             <div class="mb-2">
                 <label class="form-label">Profile picture:</label>
                 <div class="d-flex justify-content-between">
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" (change)="onFilePicked($event)" type="file" id="profilePicture" accept="image/png, image/jpeg" formControlName="profilePicture" >
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" (change)="onFilePicked($event)" type="file" id="profilePicture" accept="image/png, image/jpeg" formControlName="profilePicture" >
                     <button class="mx-2 btn btn-primary" (click)="onFileUpload($event)" id="profilePicture">Upload</button>
                 </div>
                 <p id="pp-success" class="mt-2 d-none text-success">Your file has been successfully uploaded</p>
@@ -74,7 +74,7 @@
             <div class="row">
                 <div class="mb-2 col-8">
                     <label class="form-label">Current address <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
                         [ngClass]="
                             (onboardingForm.get('address')?.touched ||
                             onboardingForm.get('address')?.dirty) 
@@ -91,13 +91,13 @@
                 </div>
                 <div class="mb-2 col-4"> 
                     <label class="form-label">Building/Apt #</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="apartment" formControlName="apartment" >
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="apartment" formControlName="apartment" >
                 </div>
             </div>
             <div class="row">
                 <div class="mb-2 col-6">
                     <label class="form-label">City <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"   [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"   [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
                         [ngClass]="
                             (onboardingForm.get('city')?.touched ||
                             onboardingForm.get('city')?.dirty) 
@@ -114,7 +114,7 @@
                 </div>
                 <div class="mb-2 col-2">
                     <label class="form-label">State <span class="text-danger">*</span></label> <br />
-                    <select [disabled]="disableSelect"
+                    <select 
                         [ngClass]="
                             (onboardingForm.get('state')?.touched ||
                             onboardingForm.get('state')?.dirty) 
@@ -133,7 +133,7 @@
                 </div>
                 <div class="mb-2 col-4">
                     <label class="form-label">Zipcode <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
                         [ngClass]="
                             (onboardingForm.get('zipcode')?.touched ||
                             onboardingForm.get('zipcode')?.dirty) 
@@ -154,7 +154,7 @@
             <div class="row">
                 <div class="mb-2 col-6">
                     <label class="form-label">Cell phone number <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
                         pattern="^[0-9]{10}$"
                         [ngClass]="
                             (onboardingForm.get('cellphone')?.touched ||
@@ -172,7 +172,7 @@
                 </div>
                 <div class="mb-2 col-6">
                     <label class="form-label">Work phone number</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" pattern="^[0-9]{10}$" class="form-control" type="text" id="workPhone" formControlName="workphone" >
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" pattern="^[0-9]{10}$" class="form-control" type="text" id="workPhone" formControlName="workphone" >
                     <p [class]="
                         (onboardingForm.get('workphone')?.touched ||
                         onboardingForm.get('workphone')?.dirty) 
@@ -188,28 +188,28 @@
             <div class="row mb-2">
                 <div class="col-4">
                     <label class="form-label">Make</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="make" formControlName="carMake">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="make" formControlName="carMake">
                 </div>
                 <div class="col-4"> 
                     <label class="form-label">Model</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="model" formControlName="carModel">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="model" formControlName="carModel">
                 </div>
                 <div class="col-4">
                     <label class="form-label">Color</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="color" formControlName="carColor">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" id="color" formControlName="carColor">
                 </div>
             </div>
         </div>
         
         <div class="mb-2">
             <label class="form-label">Email</label> <br />
-            <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''" class="form-control bg-gray shadow-none" type="email" [value]="regEmail" readonly >
+            <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''" class="form-control bg-gray shadow-none" type="email" [value]="regEmail" readonly >
         </div>
 
         <div class="row mb-2">
             <div class="col-4">
                 <label class="form-label">SSN <span class="text-danger">*</span></label> <br />
-                <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
+                <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
                     pattern="^[0-9]{10}$"
                     [ngClass]="
                         (onboardingForm.get('ssn')?.touched ||
@@ -227,7 +227,7 @@
             </div>
             <div class="col-4">
                 <label class="form-label">Date of birth <span class="text-danger">*</span></label>
-                <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
+                <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" 
                     [ngClass]="
                         (onboardingForm.get('dob')?.touched ||
                         onboardingForm.get('dob')?.dirty) 
@@ -294,11 +294,11 @@
                 <label class="form-label">Are you a US Citizen or Green Card Holder? <span class="text-danger">*</span></label>
                 <div class="row">
                     <div class="col-6">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="residentType" type="radio" id="citizen" value="Citizen" formControlName="residentType" [required]="onboardingForm.get('isResident')?.value == 'Yes' ? 'true' : 'false' ">
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="residentType" type="radio" id="citizen" value="Citizen" formControlName="residentType" [required]="onboardingForm.get('isResident')?.value == 'Yes' ? 'true' : 'false' ">
                         <label class="mx-2 form-label" for="citizen">US Citizen</label>
                     </div>
                     <div class="col-6">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="residentType" type="radio" id="GC" value="GC" formControlName="residentType">
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="residentType" type="radio" id="GC" value="GC" formControlName="residentType">
                         <label class="mx-2 form-label" for="GC">Green Card Holder</label>
                     </div>
                 </div>
@@ -316,19 +316,19 @@
                 <label class="form-label">What is your work authorization? <span class="text-danger">*</span></label>
                 <div class="row mb-2">
                     <div class="col-3">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="h1b" value="H1B" formControlName="nonResidentType" [required]="onboardingForm.get('isResident')?.value == 'No' ? 'true' : 'false' ">
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="h1b" value="H1B" formControlName="nonResidentType" [required]="onboardingForm.get('isResident')?.value == 'No' ? 'true' : 'false' ">
                         <label class="mx-2 form-label" for="h1b">H1-B</label>
                     </div>
                     <div class="col-3">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="l2" value="L2" formControlName="nonResidentType">
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="l2" value="L2" formControlName="nonResidentType">
                         <label class="mx-2 form-label" for="l2">L2</label>
                     </div>
                     <div class="col-3">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="h4" value="H4" formControlName="nonResidentType">
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="h4" value="H4" formControlName="nonResidentType">
                         <label class="mx-2 form-label" for="h4">H4</label>
                     </div>
                     <div class="col-3">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="other" value="Other" formControlName="nonResidentType">
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" name="nonResidentType" type="radio" id="other" value="Other" formControlName="nonResidentType">
                         <label class="mx-2 form-label" for="other">Other</label>
                     </div>
                 </div>
@@ -343,7 +343,7 @@
                 >
                     <label class="form-label">Please upload your OPT Receipt: <span class="text-danger">*</span></label>
                     <div class="d-flex justify-content-between">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" (change)="onFilePicked($event)" class='form-control' type="file" id="optReceipt" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" formControlName="optReceipt"
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" (change)="onFilePicked($event)" class='form-control' type="file" id="optReceipt" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" formControlName="optReceipt"
                             [required]="onboardingForm.get('nonResidentType')?.value == 'H1B' ? 'true' : 'false'">
                         <button (click)="onFileUpload($event)" class="mx-2 btn btn-primary" id="optReceipt">Upload</button>
                     </div>
@@ -353,7 +353,7 @@
                 [class]="onboardingForm.get('nonResidentType')?.value == 'Other' ? 'mb-2' : 'd-none'"
                 >
                     <label class="form-label">Please specify your visa type: <span class="text-danger">*</span></label>
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false"
                         [ngClass]="
                             (onboardingForm.get('otherVisaType')?.touched ||
                             onboardingForm.get('otherVisaType')?.dirty) 
@@ -373,7 +373,7 @@
                 <div class="row mb-2">
                     <div class="col-6">
                         <label class="form-label">Start date <span class="text-danger">*</span></label>
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                                 (onboardingForm.get('visaStartDate')?.touched ||
                                 onboardingForm.get('visaStartDate')?.dirty) 
                                 && onboardingForm.get('visaStartDate')?.errors
@@ -390,7 +390,7 @@
                     </div>
                     <div class="col-6">
                         <label class="form-label">End date <span class="text-danger">*</span></label>
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                                 (onboardingForm.get('visaEndDate')?.touched ||
                                 onboardingForm.get('visaEndDate')?.dirty) 
                                 && onboardingForm.get('visaEndDate')?.errors
@@ -433,7 +433,7 @@
                 <div class="row">
                     <div class="mb-2 col-7">
                         <label class="form-label">Driver's license number <span class="text-danger">*</span></label> <br />
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                             (onboardingForm.get('driverLicense')?.touched ||
                             onboardingForm.get('driverLicense')?.dirty) 
                             && onboardingForm.get('driverLicense')?.errors
@@ -450,7 +450,7 @@
                     </div>
                     <div class="mb-2 col-5">
                         <label class="form-label">Expiration date <span class="text-danger">*</span></label>
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                                 (onboardingForm.get('driverLicenseExp')?.touched ||
                                 onboardingForm.get('driverLicenseExp')?.dirty) 
                                 && onboardingForm.get('driverLicenseExp')?.errors
@@ -469,7 +469,7 @@
                 <div class="mb-2">
                     <label class="form-label">Upload a copy of your driver's license <span class="text-danger">*</span></label>
                     <div class="d-flex justify-content-between">
-                        <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" (change)="onFilePicked($event)" class="form-control" type="file" id="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" formControlName="driverLicenseFile" 
+                        <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" (change)="onFilePicked($event)" class="form-control" type="file" id="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" formControlName="driverLicenseFile" 
                         [required]="onboardingForm.get('hasDriverLicense')?.value == 'Yes' ? 'true' : 'false'"
                         >
                         <button (click)="onFileUpload($event)" class="mx-2 btn btn-primary" id="number">Upload</button>
@@ -484,27 +484,27 @@
             <div>
                 <div class="mb-2">
                     <label class="form-label">First Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceFirstName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceFirstName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Middle Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceMiddleName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceMiddleName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Last Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceLastName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceLastName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Phone</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referencePhone">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referencePhone">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Email</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceEmail">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceEmail">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Relationship</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceRelationship">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="referenceRelationship">
                 </div>
             </div>
         </div>
@@ -514,7 +514,7 @@
             <div class="emergency-contant--form">
                 <div class="mb-2">
                     <label class="form-label">First Name <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                         (onboardingForm.get('emergencyFirstName')?.touched ||
                         onboardingForm.get('emergencyFirstName')?.dirty) 
                         && onboardingForm.get('emergencyFirstName')?.errors
@@ -528,11 +528,11 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Middle Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergencyMiddleName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergencyMiddleName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Last Name <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                         (onboardingForm.get('emergencyLastName')?.touched ||
                         onboardingForm.get('emergencyLastName')?.dirty) 
                         && onboardingForm.get('emergencyLastName')?.errors
@@ -546,7 +546,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Phone <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                         (onboardingForm.get('emergencyPhone')?.touched ||
                         onboardingForm.get('emergencyPhone')?.dirty) 
                         && onboardingForm.get('emergencyPhone')?.errors
@@ -560,7 +560,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Email <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                         (onboardingForm.get('emergencyEmail')?.touched ||
                         onboardingForm.get('emergencyEmail')?.dirty) 
                         && onboardingForm.get('emergencyEmail')?.errors
@@ -574,7 +574,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Relationship <span class="text-danger">*</span></label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" [ngClass]="
                         (onboardingForm.get('emergencyRelationship')?.touched ||
                         onboardingForm.get('emergencyRelationship')?.dirty) 
                         && onboardingForm.get('emergencyRelationship')?.errors
@@ -595,31 +595,31 @@
             <div class="emergency-contant--form">
                 <div class="mb-2">
                     <label class="form-label">First Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2FirstName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2FirstName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Middle Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2MiddleName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2MiddleName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Last Name</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2LastName">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2LastName">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Phone</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2Phone">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2Phone">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Email</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2Email">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2Email">
                 </div>
                 <div class="mb-2">
                     <label class="form-label">Relationship</label> <br />
-                    <input [class]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2Relationship">
+                    <input [class]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" class="form-control" type="text" formControlName="emergency2Relationship">
                 </div>
             </div>
         </div>
-        <input [disabled]="user.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" type="submit" class="btn btn-primary w-100 mt-2" value="Submit">
+        <input [disabled]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? 'bg-gray' : ''"  [readOnly]="user?.profile && user.profile.onboardingStatus != 'Rejected' ? true : false" type="submit" class="btn btn-primary w-100 mt-2" value="Submit">
     </form>
 </div>
 

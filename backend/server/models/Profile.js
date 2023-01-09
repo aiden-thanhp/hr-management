@@ -106,17 +106,29 @@ const ProfileSchema = new Schema({
         type: String,
         enum: ['Pending', 'Approved', 'Rejected', 'Never Submitted']
     },
+    optStatus: {
+        optReceipt: {
+            type: String,
+            enum: ['Pending', 'Approved', 'Rejected', 'Never Submitted']
+        },
+        optEAD: {
+            type: String,
+            enum: ['Pending', 'Approved', 'Rejected', 'Never Submitted']
+        },
+        optI983: {
+            type: String,
+            enum: ['Pending', 'Approved', 'Rejected', 'Never Submitted']
+        },
+        optI20: {
+            type: String,
+            enum: ['Pending', 'Approved', 'Rejected', 'Never Submitted']
+        }
+    },
     optFiles: {
         optReceipt: String,
         optEAD: String,
         optI983: String,
         optI20: String
-    },
-    optStatus: {
-        optReceipt: Boolean,
-        optEAD: Boolean,
-        optI983: Boolean,
-        optI20: Boolean
     },
     comment: String,
     user: { type: refType, ref: "User" }
