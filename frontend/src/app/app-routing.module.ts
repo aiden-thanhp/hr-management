@@ -13,6 +13,7 @@ import { AuthEmployeesGuard } from './guards/auth-employees.guard';
 import { AuthHRGuard } from './guards/auth-hr.guard';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
+import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -37,11 +38,6 @@ const routes: Routes = [
     component: HiringManagementComponent,
     canActivate: [AuthGuard, AuthHRGuard],
   },
-  {
-    path: 'hiringManagement',
-    component: HiringManagementComponent,
-    canActivate: [AuthGuard, AuthHRGuard],
-  },
   { path: 'noTokenFound', component: NoTokenFoundComponent },
 
   {
@@ -53,6 +49,11 @@ const routes: Routes = [
     path: 'employeesProfiles',
     component: EmployeesProfileComponent,
     canActivate: [AuthGuard, AuthHRGuard],
+  },
+  {
+    path: 'visaStatusManagement',
+    component: VisaStatusManagementComponent,
+    canActivate: [AuthGuard, AuthEmployeesGuard],
   },
   { path: '**', component: NoPagesFoundComponent },
 ];

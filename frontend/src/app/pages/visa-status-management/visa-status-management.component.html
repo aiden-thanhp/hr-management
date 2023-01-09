@@ -1,0 +1,39 @@
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">Visa Status Management</h1>
+  <div class="col lg-6 mx-auto">
+    <p class="lead">Please follow the steps</p>
+  </div>
+</div>
+
+<div class="row justify-content-center text-center">
+  <div class="col-8">
+    <!-- Resident Type -->
+    <div
+      *ngIf="user?.profile?.residency !== 'Non-resident'"
+      class="card text-center"
+    >
+      <div class="card-header">Status : N/A</div>
+      <div class="card-body">
+        <h5 class="card-title">{{ user?.profile?.residency }}</h5>
+        <p class="card-text">" You are not required for this step "</p>
+      </div>
+    </div>
+    <!-- Non Resident Type -->
+    <div class="card text-center">
+      <div class="card-header">
+        Status: {{ user?.profile?.optStatus?.optReceipt }}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">OPT Receipt</h5>
+        <p
+          *ngIf="user?.profile?.optStatus?.optReceipt === false"
+          class="card-text"
+        >
+          " Waiting for HR to approve your OPT Reciept "
+        </p>
+        <a href="#" class="btn btn-primary">Button</a>
+      </div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div>
+  </div>
+</div>

@@ -26,6 +26,7 @@ import { profilesReducer } from './store/profiles/profiles.reducer';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
 import { SearchPipe } from './pipes/search.pipe';
+import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SearchPipe } from './pipes/search.pipe';
     ProfilePageComponent,
     EmployeesProfileComponent,
     SearchPipe,
+    VisaStatusManagementComponent,
   ],
   imports: [
     BrowserAnimationsModule,
