@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     if (token) {
       this.authService.getUser(httpOptionsWithToken);
       if (isHR) {
-        this.profileService.getAllProfiles()
+        this.profileService.getAllUsers()
           .subscribe((response: any) => {
             this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
           })

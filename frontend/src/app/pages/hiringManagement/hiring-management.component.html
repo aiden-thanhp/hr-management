@@ -69,16 +69,18 @@
   <table class="table text-center w-100 my-4 table-responsive">
     <thead>
       <tr>
-        <th>Full Name</th>
-        <th>Email</th>
+        <th>Full Name/Username</th>
+        <th>User Email</th>
         <th>View Application</th>
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let profile of profiles$ |async">
-            <td>{{profile.firstName}} {{profile.lastName}}</td>
-            <td>{{profile.email}}</td>
-            <td><button class="btn btn-primary" (click)="viewProfile(profile._id)">View Application</button></td>
+        <tr *ngFor="let user of profiles$ |async">
+            <td *ngIf="user.profile">{{user.profile?.firstName}} {{user.profile?.lastName}}</td>
+            <td *ngIf="!user.profile">{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td *ngIf="user.profile"><button class="btn btn-primary" (click)="viewProfile(user.profile._id)">View Application</button></td>
+            <td *ngIf="!user.profile" class="text-danger">Profile Not Submitted</td>
         </tr>
     </tbody>
   </table>

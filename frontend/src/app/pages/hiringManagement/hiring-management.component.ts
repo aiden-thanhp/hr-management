@@ -23,7 +23,7 @@ export class HiringManagementComponent implements OnInit {
     private router: Router
   ) { }
   regisTokens$: Observable<any> = this.store.select(selectRegisToken);
-  profiles$: Observable<any> = this.store.select(selectProfiles)
+  profiles$: Observable<any> = this.store.select(selectProfiles);
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');

@@ -130,6 +130,12 @@ const ProfileSchema = new Schema({
         optI983: String,
         optI20: String
     },
+    optComments: {
+        optReceipt: String,
+        optEAD: String,
+        optI983: String,
+        optI20: String
+    },
     comment: String,
     user: { type: refType, ref: "User" }
 });

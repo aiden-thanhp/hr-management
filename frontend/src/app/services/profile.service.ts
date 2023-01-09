@@ -23,6 +23,10 @@ export class ProfileService {
     return this.http.get("http://localhost:3000/profile");
   }
 
+  getAllUsers(): Observable<any> {
+    return this.http.get("http://localhost:3000/users/allUsers");
+  }
+
   getProfileById(profileId: string): Observable<any> {
     return this.http.get(`http://localhost:3000/profile/${profileId}`);
   }

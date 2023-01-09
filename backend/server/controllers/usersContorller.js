@@ -134,3 +134,8 @@ exports.login = async (req, res) => {
 exports.profile = async (req, res) => {
   res.json({ user: req.user });
 };
+
+exports.get_allUser = async (req, res) => {
+  const users = await User.find().populate("house").populate("profile").populate("regisToken");
+  res.status(200).send({ data: users })
+}

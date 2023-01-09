@@ -24,6 +24,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { profileReducer } from './store/profile/profile.reducer';
 import { profilesReducer } from './store/profiles/profiles.reducer';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/hr-visa-management-page.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     NoPagesFoundComponent,
     FooterComponent,
     ProfilePageComponent,
+    HrVisaManagementPageComponent,
 ],
   imports: [
     BrowserAnimationsModule,
