@@ -8,6 +8,9 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const House = require("../models/House");
 const RegistrationToken = require("../models/RegistrationToken");
+const Comment = require('../models/Comment');
+const Profile = require('../models/Profile');
+const Report = require('../models/Report');
 
 async function run() {
   console.log(DATABASE_URL)
@@ -19,6 +22,9 @@ async function run() {
       User.collection.drop(),
       House.collection.drop(),
       RegistrationToken.collection.drop(),
+      Comment.collection.drop(),
+      Profile.collection.drop(),
+      Report.collection.drop(),
     ]);
 
     const pass = await bcrypt.hash("admin1Pass@", Number(process.env.SALT));
