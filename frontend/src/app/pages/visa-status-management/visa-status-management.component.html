@@ -19,6 +19,7 @@
       </div>
     </div>
     <!-- Non Resident Type -->
+    <!-- OPT Receipt -->
     <div class="card text-center">
       <div class="card-header">
         Status: {{ user?.profile?.optStatus?.optReceipt }}
@@ -26,7 +27,7 @@
       <div class="card-body">
         <h5 class="card-title">OPT Receipt</h5>
         <p
-          *ngIf="user?.profile?.optStatus?.optReceipt === false"
+          *ngIf="user?.profile?.optStatus?.optReceipt === 'Pending'"
           class="card-text"
         >
           " Waiting for HR to approve your OPT Reciept "
@@ -35,5 +36,23 @@
       </div>
       <div class="card-footer text-muted">2 days ago</div>
     </div>
+
+    <!-- OPT Receipt -->
+    <!-- <div class="card text-center">
+      <div class="card-header">
+        Status: {{ user?.profile?.optStatus?.optReceipt }}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">OPT Receipt</h5>
+        <p
+          *ngIf="user?.profile?.optStatus?.optReceipt === 'Pending'"
+          class="card-text"
+        >
+          " Waiting for HR to approve your OPT Reciept "
+        </p>
+        <a href="#" class="btn btn-primary">Button</a>
+      </div>
+      <div class="card-footer text-muted">2 days ago</div>
+    </div> -->
   </div>
 </div>
