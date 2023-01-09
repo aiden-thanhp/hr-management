@@ -146,13 +146,13 @@ export class OnboardingComponent implements OnInit {
         }
       });
   }
-  
+
   onFilePicked(event: Event): void {
     const target = event.target as HTMLInputElement;
     const FILE = (target.files as FileList)[0];
     this.fileObj = FILE;
   }
-  
+
   onFileUpload(event: Event) {
     event.preventDefault();
     const name = (event.target as HTMLElement).getAttribute("id");
@@ -164,7 +164,7 @@ export class OnboardingComponent implements OnInit {
       .subscribe((res: any) => {
         const fileUploadUrl = res.data;
         this.fileUploadService.uploadfileAWSS3(fileUploadUrl, this.fileObj?.type, this.fileObj).subscribe()
-        
+
         if (name == "optReceipt") {
           this.optReceipt = fileUploadUrl.split('?')[0];
           document.getElementById("opt-success")?.classList.remove('d-none');
@@ -180,7 +180,7 @@ export class OnboardingComponent implements OnInit {
       })
   }
 
-  onSubmit(): void {    
+  onSubmit(): void {
     // console.log(this.user.profile.firstName)
 
     let hasError = false;

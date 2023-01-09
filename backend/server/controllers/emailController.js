@@ -1,13 +1,13 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const path = require("path");
-const nodemailer = require("nodemailer");
-const RegistrationToken = require("../models/RegistrationToken");
-const passwordForMAC = "pmsyvtqjtnrutlyg";
-const passwordForPC = "dzbbhumircagrgci";
+const User = require('../models/User');
+const jwt = require('jsonwebtoken');
+const path = require('path');
+const nodemailer = require('nodemailer');
+const RegistrationToken = require('../models/RegistrationToken');
+const passwordForMAC = 'pmsyvtqjtnrutlyg';
+const passwordForPC = 'dzbbhumircagrgci';
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL,
     pass: passwordForMAC,
@@ -59,7 +59,7 @@ exports.send_token = async (req, res) => {
         console.log(err);
         return;
       }
-      console.log("sent: " + info.response);
+      console.log('sent: ' + info.response);
     });
     res.json({ email: email });
   } catch (error) {

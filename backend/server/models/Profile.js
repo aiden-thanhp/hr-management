@@ -3,14 +3,92 @@ const Schema = mongoose.Schema;
 const refType = Schema.Types.ObjectId;
 
 const ProfileSchema = new Schema({
-    firstName: { 
-        type: String, 
-        required: [true, 'Profile firstName required']
+  firstName: {
+    type: String,
+    required: [true, 'Profile firstName required'],
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Profile lastName required'],
+  },
+  middleName: String,
+  preferredName: String,
+  profilePicture: String,
+  address: {
+    type: String,
+    required: [true, 'House address required'],
+    validate: {
+      validator: function (v) {
+        return /^[0-9a-zA-Z ,-/]+$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid address!`,
     },
-    lastName: { 
-        type: String, 
-        required: [true, 'Profile lastName required']
+  },
+  phone: {
+    type: String,
+    required: [true, 'Profile phone required'],
+    validate: {
+      validator: function (v) {
+        return /^[0-9]{10}$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid phone number!`,
     },
+  },
+  workPhone: {
+    type: String,
+  },
+  car: {
+    make: String,
+    model: String,
+    color: String,
+  },
+  email: {
+    type: String,
+    required: [true, 'Profile email required'],
+    validate: {
+      validator: function (v) {
+        return /^\S+@\S+\.\S+$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid email address!`,
+    },
+  },
+  ssn: {
+    type: String,
+    required: [true, 'Profile SSN required'],
+    validate: {
+      validator: function (v) {
+        return /^[0-9]{10}$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid SSN!`,
+    },
+  },
+  dob: {
+    type: Date,
+    required: [true, 'Profile DOB required'],
+  },
+  gender: {
+    type: String,
+    required: [true, 'Profile gender required'],
+    enum: ['Male', 'Female', 'NA'],
+  },
+  residency: {
+    type: String,
+    required: [true, 'Profile residency required'],
+    enum: ['Citizen', 'GC', 'Non-resident'],
+  },
+  workAuthorization: {
+    visaType: String,
+    startDate: Date,
+    endDate: Date,
+  },
+  driverLicense: {
+    number: String,
+    expiration: Date,
+    file: String,
+  },
+  reference: {
+    firstName: String,
+    lastName: String,
     middleName: String,
     preferredName: String,
     profilePicture: String,
@@ -140,6 +218,6 @@ const ProfileSchema = new Schema({
     user: { type: refType, ref: "User" }
 });
 
-const Profile = mongoose.model("Profile", ProfileSchema, "Profile");
+const Profile = mongoose.model('Profile', ProfileSchema, 'Profile');
 
 module.exports = Profile;

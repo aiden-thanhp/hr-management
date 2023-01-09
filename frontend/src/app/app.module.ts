@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { profileReducer } from './store/profile/profile.reducer';
 import { profilesReducer } from './store/profiles/profiles.reducer';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
+import { SearchPipe } from './pipes/search.pipe';
+import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
 import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/hr-visa-management-page.component';
 
 @NgModule({
@@ -39,8 +42,12 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
     NoPagesFoundComponent,
     FooterComponent,
     ProfilePageComponent,
+    EmployeesProfileComponent,
+    SearchPipe,
+    VisaStatusManagementComponent,
     HrVisaManagementPageComponent,
 ],
+
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -54,7 +61,7 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
         user: userReducer,
         regisToken: regisTokenReducer,
         profile: profileReducer,
-        profiles: profilesReducer
+        profiles: profilesReducer,
       },
       {}
     ),

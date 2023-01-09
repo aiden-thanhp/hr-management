@@ -95,7 +95,7 @@ export class HiringManagementComponent implements OnInit {
       return null;
     }
   }
-  
+
   viewProfile(profileId: string): void {
     window.open(`/profile/${profileId}`, '_blank')
   }

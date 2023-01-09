@@ -9,14 +9,17 @@ const httpOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   createProfile(newProfile: any, userId: any): Observable<any> {
-    return this.http.post("http://localhost:3000/profile", { newProfile, userId }, httpOptions)
+    return this.http.post(
+      'http://localhost:3000/profile',
+      { newProfile, userId },
+      httpOptions
+    );
   }
 
   getAllProfiles(): Observable<any> {
