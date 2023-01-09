@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
         this.store.select(selectUser)
           .subscribe((user: any) => {
             if (user.id) {
-              if (user.profile.onboardingStatus != "Approved") this.router.navigate(['/onboarding'])
+              if (user.profile?.onboardingStatus != "Approved") this.router.navigate(['/onboarding'])
               else this.router.navigate(['/personalInformation'])
             }
           })

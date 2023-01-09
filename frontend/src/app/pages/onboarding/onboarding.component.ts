@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { ToastrService } from 'ngx-toastr';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { selectUser } from 'src/app/store/user/user.selector';
@@ -13,7 +14,11 @@ import { selectUser } from 'src/app/store/user/user.selector';
 export class OnboardingComponent implements OnInit {
   states: String[] = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
-  constructor(private fileUploadService: FileUploadService, private store: Store, private profileService: ProfileService) { }
+  constructor(
+    private fileUploadService: FileUploadService, 
+    private store: Store, 
+    private profileService: ProfileService, 
+    private toastr: ToastrService) { }
 
   user: any;
   fileObj: File | undefined;
@@ -106,7 +111,7 @@ export class OnboardingComponent implements OnInit {
               residentType: this.user.profile.residency == "Non-resident" ? "" : this.user.profile.residency,
               nonResidentType: this.user.profile.residency != "Non-resident" ? "NA" : ["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "Other",
               otherVisaType: this.user.profile.residency != "Non-resident" ? "NA" : !["H1B", "L2", "H4"].includes(this.user.profile.workAuthorization.visaType) ? this.user.profile.workAuthorization.visaType : "",
-              optReceipt: '',
+              optReceipt: this.user.profile.optFiles.optReceipt,
               visaStartDate: this.user.profile.workAuthorization.startDate?.split('T')[0] || Date,
               visaEndDate: this.user.profile.workAuthorization.endDate?.split('T')[0] || Date,
               hasDriverLicense: this.user.profile.driverLicense.number != "" ? "Yes" : "No",
@@ -132,7 +137,7 @@ export class OnboardingComponent implements OnInit {
               emergency2Email: this.user.profile.emergencyContacts[1].email,
               emergency2Relationship:  this.user.profile.emergencyContacts[1].relationship
             });
-            console.log(this.onboardingForm.getRawValue())
+            if (this.user.profile.onboardingStatus != 'Rejected') this.onboardingForm.disable()
           }
         }
       });
@@ -270,6 +275,7 @@ export class OnboardingComponent implements OnInit {
           })
       }
     } else {
+      this.toastr.error('Please fill all the required fields.')
       console.log("error")
     }
   }
