@@ -16,5 +16,6 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   controller.profile
 );
+router.get('/allUsers', controller.get_allUser)
 
 module.exports = router;

@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
 
 import { AppComponent } from './app.component';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
@@ -29,6 +28,13 @@ import { HousingManagementComponent } from './pages/housing-management/housing-m
 import { HouseSummaryComponent } from './pages/house-summary/house-summary.component';
 import { ReportHRComponent } from './pages/report-hr/report-hr.component';
 import { ReportReducer } from './store/report/report.reducer';
+import { profileReducer } from './store/profile/profile.reducer';
+import { profilesReducer } from './store/profiles/profiles.reducer';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { EmployeesProfileComponent } from './pages/employees-profile/employees-profile.component';
+import { SearchPipe } from './pipes/search.pipe';
+import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
+import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/hr-visa-management-page.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +53,12 @@ import { ReportReducer } from './store/report/report.reducer';
     HousingManagementComponent,
     HouseSummaryComponent,
     ReportHRComponent,
-  ],
+    ProfilePageComponent,
+    EmployeesProfileComponent,
+    SearchPipe,
+    VisaStatusManagementComponent,
+    HrVisaManagementPageComponent,
+],
   imports: [
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -62,6 +73,8 @@ import { ReportReducer } from './store/report/report.reducer';
         regisToken: regisTokenReducer,
         house: HouseReducer,
         report: ReportReducer
+        profile: profileReducer,
+        profiles: profilesReducer,
       },
       {}
     ),

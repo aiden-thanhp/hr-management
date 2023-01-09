@@ -1,0 +1,48 @@
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-5 fw-bold">All employees</h1>
+  <div class="col lg-6 mx-auto">
+    <p class="lead">Total employees: {{ users?.length }}</p>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <input
+        type="text"
+        class="form-control mb-3"
+        placeholder="Search employees.."
+        [(ngModel)]="searchText"
+      />
+    </div>
+  </div>
+
+  <div class="mt-5 overflow-x-auto">
+    <hr />
+    <table class="table text-center w-100 my-4 table-responsive">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>SSN</th>
+          <th>Work Authorization</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | search : searchText">
+          <td *ngIf="user.profile" class="link" (click)="viewProfile(user.profile._id)">
+            {{ user.profile?.firstName }} {{ user.profile?.lastName }}
+          </td>
+          <td *ngIf="!user.profile" class="link">
+            {{ user.username }}
+          </td>
+          <td *ngIf="user.profile">{{ user.profile.ssn }}</td>
+          <td *ngIf="user.profile && user.profile.residency == 'Non-resident'">{{ user.profile.workAuthorization.visaType }}</td>
+          <td *ngIf="user.profile && user.profile.residency != 'Non-resident'">{{ user.profile.residency }}</td>
+          <td *ngIf="user.profile">{{ user.profile.phone }}</td>
+          <td *ngIf="user.profile">{{ user.profile.email }}</td>
+          <td *ngIf="!user.profile" class="text-danger" colspan="4">Profile has not beed created</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

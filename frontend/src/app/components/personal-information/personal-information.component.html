@@ -12,29 +12,52 @@
         <h3 class="fw-bold">Name</h3>
         <div class="col-12">
           <button
-            *ngIf="nameEdit"
+            *ngIf="!nameEdit"
             (click)="edit('name')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!nameEdit"
-            (click)="edit('name')"
+            *ngIf="nameEdit"
+            (click)="cancel('name')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!nameEdit" class="btn btn-success mx-2">Save</button>
+          <button
+            (click)="save('name')"
+            *ngIf="nameEdit"
+            class="btn btn-success mx-2"
+          >
+            Save
+          </button>
         </div>
         <div class="col-12">
-          <label for="firstName" class="form-label">First Name</label>
+          <label for="firstName" class="form-label"
+            >First Name <span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="firstName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
+            [ngClass]="
+              (profileForm.get('firstName')?.touched ||
+                profileForm.get('firstName')?.dirty) &&
+              profileForm.get('firstName')?.hasError('required') &&
+              nameEdit
+                ? 'is-invalid'
+                : ''
+            "
           />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("firstName")?.hasError("required")
+                ? "First name is required"
+                : ""
+            }}
+          </div>
         </div>
         <div class="col-12">
           <label for="middleName" class="form-label">Middle Name</label>
@@ -42,17 +65,34 @@
             type="text"
             class="form-control"
             formControlName="middleName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
           />
         </div>
         <div class="col-12">
-          <label for="lastName" class="form-label">Last Name</label>
+          <label for="lastName" class="form-label"
+            >Last Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="lastName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
+            [ngClass]="
+              (profileForm.get('lastName')?.touched ||
+                profileForm.get('lastName')?.dirty) &&
+              profileForm.get('lastName')?.hasError('required') &&
+              nameEdit
+                ? 'is-invalid'
+                : ''
+            "
           />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("lastName")?.hasError("required")
+                ? "Last name is required"
+                : ""
+            }}
+          </div>
         </div>
         <div class="col-12">
           <label for="preferredName" class="form-label">preferred Name</label>
@@ -60,131 +100,232 @@
             type="text"
             class="form-control"
             formControlName="preferredName"
-            [readonly]="nameEdit"
+            [readonly]="!nameEdit"
           />
         </div>
         <h3 class="fw-bold">Address</h3>
         <div class="col-12">
           <button
-            *ngIf="addressEdit"
+            *ngIf="!addressEdit"
             (click)="edit('address')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!addressEdit"
-            (click)="edit('address')"
+            *ngIf="addressEdit"
+            (click)="cancel('address')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!addressEdit" class="btn btn-success mx-2">
+          <button
+            (click)="save('address')"
+            *ngIf="addressEdit"
+            class="btn btn-success mx-2"
+          >
             Save
           </button>
         </div>
         <div class="col-12">
-          <label for="streetName" class="form-label">Street Name</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="streetName"
-            [readonly]="addressEdit"
-          />
-        </div>
-        <div class="col-12">
-          <label for="buildingAptNum" class="form-label"
-            >Building / Apt #</label
+          <label for="address" class="form-label"
+            >Street Name<span class="text-danger">*</span></label
           >
           <input
             type="text"
             class="form-control"
-            formControlName="buildingAptNum"
-            [readonly]="addressEdit"
+            formControlName="address"
+            [readonly]="!addressEdit"
+            [ngClass]="
+              (profileForm.get('address')?.touched ||
+                profileForm.get('address')?.dirty) &&
+              profileForm.get('address')?.hasError('required') &&
+              addressEdit
+                ? 'is-invalid'
+                : ''
+            "
+          />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("address")?.hasError("required")
+                ? "Street Name is required"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="apartment" class="form-label">Building / Apt #</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="apartment"
+            [readonly]="!addressEdit"
           />
         </div>
         <div class="col-12">
-          <label for="city" class="form-label">City</label>
+          <label for="city" class="form-label"
+            >City<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
             formControlName="city"
-            [readonly]="addressEdit"
+            [readonly]="!addressEdit"
+            [ngClass]="
+              (profileForm.get('city')?.touched ||
+                profileForm.get('city')?.dirty) &&
+              profileForm.get('city')?.hasError('required') &&
+              addressEdit
+                ? 'is-invalid'
+                : ''
+            "
           />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("city")?.hasError("required")
+                ? "City is required"
+                : ""
+            }}
+          </div>
         </div>
         <div class="col-12">
-          <label for="state" class="form-label">State</label>
+          <label for="state" class="form-label"
+            >State<span class="text-danger">*</span></label
+          >
+          <select
+            class="form-control"
+            formControlName="state"
+            [ngClass]="
+              (profileForm.get('state')?.touched ||
+                profileForm.get('state')?.dirty) &&
+              profileForm.get('state')?.hasError('required') &&
+              addressEdit
+                ? 'is-invalid'
+                : ''
+            "
+          >
+            <option
+              *ngFor="let state of states"
+              [ngValue]="state"
+              [disabled]="!addressEdit"
+            >
+              {{ state }}
+            </option>
+          </select>
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("state")?.hasError("required")
+                ? "State is required"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="zipcode" class="form-label"
+            >Zip<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
-            formControlName="state"
-            [readonly]="addressEdit"
+            formControlName="zipcode"
+            [readonly]="!addressEdit"
+            [ngClass]="
+              (profileForm.get('zipcode')?.touched ||
+                profileForm.get('zipcode')?.dirty) &&
+              profileForm.get('zipcode')?.hasError('required') &&
+              addressEdit
+                ? 'is-invalid'
+                : ''
+            "
           />
-        </div>
-        <div class="col-12">
-          <label for="zip" class="form-label">Zip</label>
-          <input
-            type="number"
-            class="form-control"
-            formControlName="zip"
-            [readonly]="addressEdit"
-          />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("zipcode")?.hasError("required")
+                ? "Zip is required"
+                : ""
+            }}
+          </div>
         </div>
         <h3 class="fw-bold">Contact Info</h3>
         <div class="col-12">
           <button
-            *ngIf="contactEdit"
+            *ngIf="!contactEdit"
             (click)="edit('contact')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!contactEdit"
-            (click)="edit('contact')"
+            *ngIf="contactEdit"
+            (click)="cancel('contact')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!contactEdit" class="btn btn-success mx-2">
+          <button
+            (click)="save('contact')"
+            *ngIf="contactEdit"
+            class="btn btn-success mx-2"
+          >
             Save
           </button>
         </div>
         <div class="col-12">
-          <label for="cellPhoneNum" class="form-label">Cell Phone Number</label>
+          <label for="phone" class="form-label"
+            >Cell Phone Number<span class="text-danger">*</span></label
+          >
           <input
             type="tel"
             class="form-control"
-            formControlName="cellPhoneNum"
-            [readonly]="contactEdit"
+            formControlName="phone"
+            [readonly]="!contactEdit"
+            [ngClass]="
+              (profileForm.get('phone')?.touched ||
+                profileForm.get('phone')?.dirty) &&
+              profileForm.get('phone')?.hasError('required') &&
+              contactEdit
+                ? 'is-invalid'
+                : ''
+            "
           />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("phone")?.hasError("required")
+                ? "Phone is required"
+                : ""
+            }}
+          </div>
         </div>
         <div class="col-12">
-          <label for="workPhoneNum" class="form-label">Work Phone Number</label>
+          <label for="workPhone" class="form-label">Work Phone Number</label>
           <input
             type="tel"
             class="form-control"
-            formControlName="workPhoneNum"
-            [readonly]="contactEdit"
+            formControlName="workPhone"
+            [readonly]="!contactEdit"
           />
         </div>
         <h3 class="fw-bold">Employment</h3>
         <div class="col-12">
           <button
-            *ngIf="employmentEdit"
+            *ngIf="!employmentEdit"
             (click)="edit('employment')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!employmentEdit"
-            (click)="edit('employment')"
+            *ngIf="employmentEdit"
+            (click)="cancel('employment')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!employmentEdit" class="btn btn-success mx-2">
+          <button
+            (click)="save('employment')"
+            *ngIf="employmentEdit"
+            class="btn btn-success mx-2"
+          >
             Save
           </button>
         </div>
@@ -194,7 +335,7 @@
             type="text"
             class="form-control"
             formControlName="visaTitle"
-            [readonly]="employmentEdit"
+            [readonly]="!employmentEdit"
           />
         </div>
         <div class="col-12">
@@ -203,7 +344,7 @@
             type="date"
             class="form-control"
             formControlName="startDate"
-            [readonly]="employmentEdit"
+            [readonly]="!employmentEdit"
           />
         </div>
         <div class="col-12">
@@ -212,86 +353,327 @@
             type="date"
             class="form-control"
             formControlName="endDate"
-            [readonly]="employmentEdit"
+            [readonly]="!employmentEdit"
           />
         </div>
         <h3 class="fw-bold">Emgergency Contact</h3>
         <div class="col-12">
           <button
-            *ngIf="emergencyEdit"
+            *ngIf="!emergencyEdit"
             (click)="edit('emergency')"
             class="btn btn-primary"
           >
             Edit
           </button>
           <button
-            *ngIf="!emergencyEdit"
-            (click)="edit('emergency')"
+            *ngIf="emergencyEdit"
+            (click)="cancel('emergency')"
             class="btn btn-danger"
           >
             Cancel
           </button>
-          <button *ngIf="!emergencyEdit" class="btn btn-success mx-2">
+          <button
+            (click)="save('emergency')"
+            *ngIf="emergencyEdit"
+            class="btn btn-success mx-2"
+          >
             Save
           </button>
         </div>
+        <h6 class="fw-bold">Emergency Contact 1</h6>
         <div class="col-12">
-          <label for="efirstName" class="form-label">First Name</label>
+          <label for="emergencyFirstName" class="form-label"
+            >First Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
-            formControlName="efirstName"
-            [readonly]="emergencyEdit"
+            formControlName="emergencyFirstName"
+            [readonly]="!emergencyEdit"
+            [ngClass]="
+              (profileForm.get('emergencyFirstName')?.touched ||
+                profileForm.get('emergencyFirstName')?.dirty) &&
+              profileForm.get('emergencyFirstName')?.hasError('required') &&
+              emergencyEdit
+                ? 'is-invalid'
+                : ''
+            "
           />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("emergencyFirstName")?.hasError("required")
+                ? "First name is required"
+                : ""
+            }}
+          </div>
         </div>
         <div class="col-12">
-          <label for="emiddleName" class="form-label">Middle Name</label>
+          <label for="emergencyMiddleName" class="form-label"
+            >Middle Name</label
+          >
           <input
             type="text"
             class="form-control"
-            formControlName="emiddleName"
-            [readonly]="emergencyEdit"
+            formControlName="emergencyMiddleName"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="elastName" class="form-label">Last Name</label>
+          <label for="emergencyLastName" class="form-label"
+            >Last Name<span class="text-danger">*</span></label
+          >
           <input
             type="text"
             class="form-control"
-            formControlName="elastName"
-            [readonly]="emergencyEdit"
+            formControlName="emergencyLastName"
+            [readonly]="!emergencyEdit"
+            [ngClass]="
+              (profileForm.get('emergencyLastName')?.touched ||
+                profileForm.get('emergencyLastName')?.dirty) &&
+              profileForm.get('emergencyLastName')?.hasError('required') &&
+              emergencyEdit
+                ? 'is-invalid'
+                : ''
+            "
+          />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("emergencyLastName")?.hasError("required")
+                ? "Last name is required"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="emergencyPhone" class="form-label"
+            >Cell Phone Number<span class="text-danger">*</span></label
+          >
+          <input
+            type="tel"
+            class="form-control"
+            formControlName="emergencyPhone"
+            [readonly]="!emergencyEdit"
+            [ngClass]="
+              (profileForm.get('emergencyPhone')?.touched ||
+                profileForm.get('emergencyPhone')?.dirty) &&
+              profileForm.get('emergencyPhone')?.hasError('required') &&
+              emergencyEdit
+                ? 'is-invalid'
+                : ''
+            "
+          />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("emergencyPhone")?.hasError("required")
+                ? "Cell phone is required"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="emergencyEmail" class="form-label"
+            >Email<span class="text-danger">*</span></label
+          >
+          <input
+            type="email"
+            class="form-control"
+            formControlName="emergencyEmail"
+            [readonly]="!emergencyEdit"
+            [ngClass]="
+              (profileForm.get('emergencyEmail')?.touched ||
+                profileForm.get('emergencyEmail')?.dirty) &&
+              profileForm.get('emergencyEmail')?.hasError('required') &&
+              emergencyEdit
+                ? 'is-invalid'
+                : ''
+            "
+          />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("emergencyEmail")?.hasError("required")
+                ? "Email is required"
+                : ""
+            }}
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="emergencyRelationship" class="form-label"
+            >Relationship<span class="text-danger">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="emergencyRelationship"
+            [readonly]="!emergencyEdit"
+            [ngClass]="
+              (profileForm.get('emergencyRelationship')?.touched ||
+                profileForm.get('emergencyRelationship')?.dirty) &&
+              profileForm.get('emergencyRelationship')?.hasError('required') &&
+              emergencyEdit
+                ? 'is-invalid'
+                : ''
+            "
+          />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("emergencyRelationship")?.hasError("required")
+                ? "Relationship is required"
+                : ""
+            }}
+          </div>
+        </div>
+        <h6 class="fw-bold">Emergency Contact 2</h6>
+        <div class="col-12">
+          <label for="emergency2FirstName" class="form-label">First Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="emergency2FirstName"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="ecellPhoneNum" class="form-label"
+          <label for="emergency2MiddleName" class="form-label"
+            >Middle Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            formControlName="emergency2MiddleName"
+            [readonly]="!emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="emergency2LastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="emergency2LastName"
+            [readonly]="!emergencyEdit"
+          />
+        </div>
+        <div class="col-12">
+          <label for="emergency2Phone" class="form-label"
             >Cell Phone Number</label
           >
           <input
             type="tel"
             class="form-control"
-            formControlName="ecellPhoneNum"
-            [readonly]="emergencyEdit"
+            formControlName="emergency2Phone"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="email" class="form-label">Email</label>
+          <label for="emergency2Email" class="form-label">Email</label>
           <input
             type="email"
             class="form-control"
-            formControlName="email"
-            [readonly]="emergencyEdit"
+            formControlName="emergency2Email"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <div class="col-12">
-          <label for="relationship" class="form-label">Relationship</label>
+          <label for="emergency2Relationship" class="form-label"
+            >Relationship</label
+          >
           <input
             type="text"
             class="form-control"
-            formControlName="relationship"
-            [readonly]="emergencyEdit"
+            formControlName="emergency2Relationship"
+            [readonly]="!emergencyEdit"
           />
         </div>
         <h3 class="fw-bold">Documents</h3>
+        <label class="form-label" *ngIf="user?.profile?.driverLicense?.file"
+          >Driver License :
+          <a
+            href="{{ user?.profile?.driverLicense?.file }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.driverLicense?.file)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.profilePicture"
+          >Profile Picture :
+          <a
+            href="{{ user?.profile?.profilePicture }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.profilePicture)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optReceipt"
+          >OPT Reciept :
+          <a
+            href="{{ user?.profile?.optFiles?.optReceipt }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.optFiles?.optReceipt)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optEAD"
+          >OPT EAD :
+          <a
+            href="{{ user?.profile?.optFiles?.optEAD }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.optFiles?.optEAD)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optEAD"
+          >OPT I-983 :
+          <a
+            href="{{ user?.profile?.optFiles?.optI983 }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            href="{{ user?.profile?.optFiles?.optI983 }}"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
+        <label class="form-label" *ngIf="user?.profile?.optFiles?.optI20"
+          >OPT I-20 :
+          <a
+            href="{{ user?.profile?.optFiles?.optI20 }}"
+            class="text-decoration-none mx-3"
+            target="_blank"
+            >preview</a
+          >
+          <a
+            (click)="download(user?.profile?.optFiles?.optI20)"
+            class="text-decoration-none"
+            download
+            >download</a
+          ></label
+        >
       </div>
     </form>
   </div>

@@ -35,7 +35,8 @@
     <div class="registrationTable-container mx-5">
     <h2 class="text-center">Sent Tokens</h2>
       <hr />
-      <table class="registrationTable text-center w-100 my-4">
+      <div class="overflow-x-auto">
+      <table class="table registrationTable text-center w-100 my-4 table-responsive">
         <thead>
           <tr>
             <th>Email</th>
@@ -46,7 +47,7 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let regisToken of regisTokens$ |async" class=>
+            <tr *ngFor="let regisToken of regisTokens$ |async" class="overflow-x-scroll" >
                 <td>{{regisToken.email}}</td>
                 <td>{{regisToken.name}}</td>
                 <td>{{regisToken.registrationLink}}</td>
@@ -58,5 +59,30 @@
         </tbody>
       </table>
     </div>
+    </div>
   </div>
 </div>
+
+<div class="mt-5 overflow-x-auto">
+  <h2 class="text-center">Onboarding Application Review</h2>
+  <hr />
+  <table class="table text-center w-100 my-4 table-responsive">
+    <thead>
+      <tr>
+        <th>Full Name/Username</th>
+        <th>User Email</th>
+        <th>View Application</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of profiles$ |async">
+            <td *ngIf="user.profile">{{user.profile?.firstName}} {{user.profile?.lastName}}</td>
+            <td *ngIf="!user.profile">{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td *ngIf="user.profile"><button class="btn btn-primary" (click)="viewProfile(user.profile._id)">View Application</button></td>
+            <td *ngIf="!user.profile" class="text-danger">Profile Not Submitted</td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+

@@ -15,5 +15,8 @@ export const userReducer = createReducer(
   }),
   on(UserAction.logOutUser, (state, { user }) => {
     return { ...user, isLoggedIn: false };
+  }),
+  on(UserAction.updateUser, (state, { user }) => {
+    return { ...user, isLoggedIn: true };
   })
 );

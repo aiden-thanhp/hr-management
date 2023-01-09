@@ -1,5 +1,5 @@
-const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+const path = require('path');
+require('dotenv').config(path.join(__dirname, '../.env'));
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 const { DATABASE_URL } = process.env;
@@ -8,10 +8,12 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const House = require("../models/House");
 const RegistrationToken = require("../models/RegistrationToken");
-const Report = require("../models/Report");
-const Comment = require("../models/Comment");
+const Comment = require('../models/Comment');
+const Profile = require('../models/Profile');
+const Report = require('../models/Report');
 
 async function run() {
+  console.log(DATABASE_URL)
   try {
     await mongoose.connect(DATABASE_URL);
     console.log("Connected to DB.");
@@ -22,6 +24,7 @@ async function run() {
       RegistrationToken.collection.drop(),
       Comment.collection.drop(),
       Report.collection.drop(),
+      Profile.collection.drop(),
     ]);
 
     const pass = await bcrypt.hash("admin1Pass@", Number(process.env.SALT));
