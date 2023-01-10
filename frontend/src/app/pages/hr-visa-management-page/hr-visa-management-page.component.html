@@ -1,3 +1,259 @@
 <div>
-    
+    <h3 class="mb-3 text-center">In Progress</h3>
+
+    <table class="table text-center w-100 mb-4 table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Work Authorization</th>
+                <th>Next step</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of onprogressList">
+                <td>{{ user.profile?.firstName }} {{ user.profile?.lastName }}</td>
+
+                <td>
+                    <p><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
+                    <p><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
+                    <p><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
+                    <p><span class="fw-bold fst-italic">Remaning:</span> {{ countDays(user.profile.workAuthorization.endDate) }} days</p>
+                </td>
+
+                <!-- Next step checking for H1B -->
+                <td *ngIf="user.profile.optStatus.optI20 == 'Pending'">
+                    Review I20 Document
+                </td>
+                <td *ngIf="((user.profile.optStatus.optI20 == 'Never Submitted'
+                    && user.profile.optStatus.optI983 == 'Approved')
+                    || user.profile.optStatus.optI20 == 'Rejected')
+                ">
+                    Awaiting I20 Document
+                </td>
+                <td *ngIf="user.profile.optStatus.optI983 == 'Pending'">
+                    Review I983 Document
+                </td>
+                <td *ngIf="((user.profile.optStatus.optI983 == 'Never Submitted'
+                    && user.profile.optStatus.optEAD == 'Approved')
+                    || user.profile.optStatus.optI983 == 'Rejected')
+                ">
+                    Awaiting I983 Document
+                </td>
+                <td *ngIf="user.profile.optStatus.optEAD == 'Pending'">
+                    Review EAD Document
+                </td>
+                <td *ngIf="((user.profile.optStatus.optEAD == 'Never Submitted'
+                    && user.profile.optStatus.optReceipt == 'Approved')
+                    || user.profile.optStatus.optEAD == 'Rejected')
+                ">
+                    Awaiting EAD Document
+                </td>
+                <td *ngIf="user.profile.optStatus.optReceipt == 'Pending'">
+                    Review OPT Receipt Document
+                </td>
+                <td *ngIf="user.profile.optStatus.optReceipt == 'Rejected'">
+                    Awaiting OPT Receipt Document
+                </td>
+                
+
+                <!-- For Action -->
+                <td *ngIf="user.profile.optStatus.optI20 == 'Pending'">
+                    <a [href]="user.profile.optFiles.optI20" target="_blank">Preview I20</a>
+                    <div class="mb-2">
+                        <form [formGroup]="commentForm">
+                            <input id="comment" type="text" class="my-2 form-control" placeholder="Comment" formControlName="comment">
+                        </form>
+                        <button class="btn btn-primary mx-1" (click)="onAccept('i20', user.profile)">Accept</button>
+                        <button class="btn btn-danger mx-1" (click)="onReject('i20', user.profile)">Reject</button>
+                    </div>
+                </td>
+                <td *ngIf="((user.profile.optStatus.optI20 == 'Never Submitted'
+                    && user.profile.optStatus.optI983 == 'Approved')
+                    || user.profile.optStatus.optI20 == 'Rejected')
+                ">
+                    <button class="btn btn-warning" (click)="onEmailSend(user.profile.email, 'I-20',  user.profile.firstName)">Remind</button>
+                </td>
+                <td *ngIf="user.profile.optStatus.optI983 == 'Pending'">
+                    <a [href]="user.profile.optFiles.optI983" target="_blank">Preview I983</a>
+                    <div class="mb-2">
+                        <form [formGroup]="commentForm">
+                            <input id="comment" type="text" class="my-2 form-control" placeholder="Comment" formControlName="comment">
+                        </form>
+                        <button class="btn btn-primary mx-1" (click)="onAccept('i983', user.profile)">Accept</button>
+                        <button class="btn btn-danger mx-1" (click)="onReject('i983', user.profile)">Reject</button>
+                    </div>
+                </td>
+                <td *ngIf="((user.profile.optStatus.optI983 == 'Never Submitted'
+                    && user.profile.optStatus.optEAD == 'Approved')
+                    || user.profile.optStatus.optI983 == 'Rejected')
+                ">
+                    <button class="btn btn-warning" (click)="onEmailSend(user.profile.email, 'I-983',  user.profile.firstName)">Remind</button>
+                </td>
+                <td *ngIf="user.profile.optStatus.optEAD == 'Pending'">
+                    <a [href]="user.profile.optFiles.optEAD" target="_blank">Preview EAD</a>
+                    <div class="mb-2">
+                        <form [formGroup]="commentForm">
+                            <input id="comment" type="text" class="my-2 form-control" placeholder="Comment" formControlName="comment">
+                        </form>
+                        <button class="btn btn-primary mx-1" (click)="onAccept('ead', user.profile)">Accept</button>
+                        <button class="btn btn-danger mx-1" (click)="onReject('ead', user.profile)">Reject</button>
+                    </div>
+                </td>
+                <td *ngIf="((user.profile.optStatus.optEAD == 'Never Submitted'
+                    && user.profile.optStatus.optReceipt == 'Approved')
+                    || user.profile.optStatus.optEAD == 'Rejected')
+                ">
+                    <button class="btn btn-warning" (click)="onEmailSend(user.profile.email, 'EAD Card',  user.profile.firstName)">Remind</button>
+                </td>
+                <td *ngIf="user.profile.optStatus.optReceipt == 'Pending'">
+                    <a [href]="user.profile.optFiles.optReceipt" target="_blank">Preview OPT Receipt</a>
+                    <div class="mb-2">
+                        <form [formGroup]="commentForm">
+                            <input id="comment" type="text" class="my-2 form-control" placeholder="Comment" formControlName="comment">
+                        </form>
+                        <button class="btn btn-primary mx-1" (click)="onAccept('receipt', user.profile)">Accept</button>
+                        <button class="btn btn-danger mx-1" (click)="onReject('receipt', user.profile)">Reject</button>
+                    </div>
+                </td>
+                <td *ngIf="user.profile.optStatus.optReceipt == 'Rejected'">
+                    <button class="btn btn-warning" (click)="onEmailSend(user.profile.email, 'OPT Receipt',  user.profile.firstName)">Remind</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div>
+    <h3 class="mb-3 text-center">All Employee</h3>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <input
+                type="text"
+                class="form-control mb-3"
+                placeholder="Search employees.."
+                [(ngModel)]="searchText"
+            />
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <hr />
+        <table class="table text-center w-100 mb-4 table-responsive">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Work Authorization</th>
+                    <th>Next step</th>
+                    <th>Documents</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userlist | search : searchText">
+                    <td *ngIf="user.profile">
+                        {{ user.profile?.firstName }} {{ user.profile?.lastName }}
+                    </td>
+                    <td *ngIf="!user.profile">
+                        {{ user.username }}
+                    </td>
+
+
+                    <td *ngIf="user.profile && user.profile.residency == 'Non-resident'">
+                        <p><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
+                        <p><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
+                        <p><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
+                        <p><span class="fw-bold fst-italic">Remaning:</span> {{ countDays(user.profile.workAuthorization.endDate) }} days</p>
+                    </td>
+
+                    <!-- Next step checking for non-H1B -->
+                    <td *ngIf="user.profile 
+                        && user.profile.residency == 'Non-resident'
+                        && user.profile.workAuthorization.visaType != 'H1B'
+
+                    ">
+                        N/A
+                    </td>
+
+                    <!-- Next step checking for H1B -->
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && user.profile.optStatus.optI20 == 'Pending'
+                    ">
+                        Review I20 Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && ((user.profile.optStatus.optI20 == 'Never Submitted'
+                        && user.profile.optStatus.optI983 == 'Approved')
+                        || user.profile.optStatus.optI20 == 'Rejected')
+                    ">
+                        Awaiting I20 Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && user.profile.optStatus.optI983 == 'Pending'
+                    ">
+                        Review I983 Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && ((user.profile.optStatus.optI983 == 'Never Submitted'
+                        && user.profile.optStatus.optEAD == 'Approved')
+                        || user.profile.optStatus.optI983 == 'Rejected')
+                    ">
+                        Awaiting I983 Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && user.profile.optStatus.optEAD == 'Pending'
+                    ">
+                        Review EAD Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && ((user.profile.optStatus.optEAD == 'Never Submitted'
+                        && user.profile.optStatus.optReceipt == 'Approved')
+                        || user.profile.optStatus.optEAD == 'Rejected')
+                    ">
+                        Awaiting EAD Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && user.profile.optStatus.optReceipt == 'Pending'
+                    ">
+                        Review OPT Receipt Document
+                    </td>
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && user.profile.optStatus.optReceipt == 'Rejected'
+                    ">
+                        Awaiting OPT Receipt Document
+                    </td>
+                    
+
+                    <!-- For Resident -->
+                    <td *ngIf="user.profile && user.profile.residency != 'Non-resident'">{{ user.profile.residency }}</td>
+                    <td *ngIf="user.profile && user.profile.residency != 'Non-resident'">
+                        N/A
+                    </td>
+
+
+                    <td *ngIf="user.profile">
+                        All documents:
+                        <ul>
+                            <li *ngIf="user.profile?.driverLicense.file"><a [href]="user.profile.driverLicense.file" target="_blank">Driver License</a></li>
+                            <li *ngIf="user.profile?.profilePicture"><a [href]="user.profile.profilePicture" target="_blank">Profile Picture</a></li>
+                            <li *ngIf="user.profile?.optFiles.optReceipt"><a [href]="user.profile.optFiles.optReceipt" target="_blank">OPT Receipt</a></li>
+                            <li *ngIf="user.profile?.optFiles.optEAD"><a [href]="user.profile.optFiles.optEAD" target="_blank">EAD</a></li>
+                            <li *ngIf="user.profile?.optFiles.optI983"><a [href]="user.profile.optFiles.optI983" target="_blank">I-983</a></li>
+                            <li *ngIf="user.profile?.optFiles.optI20"><a [href]="user.profile.optFiles.optI20" target="_blank">I-20</a></li>
+                        </ul>
+                    </td>
+
+                    <td *ngIf="!user.profile" class="text-danger" colspan="3">Profile has not beed created</td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

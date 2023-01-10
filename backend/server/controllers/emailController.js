@@ -2,6 +2,7 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const nodemailer = require('nodemailer');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 const RegistrationToken = require('../models/RegistrationToken');
 const passwordForMAC = 'pmsyvtqjtnrutlyg';
 const passwordForPC = 'dzbbhumircagrgci';
@@ -66,3 +67,22 @@ exports.send_token = async (req, res) => {
     console.error(error);
   }
 };
+
+exports.send_email = async (req, res) => {
+  const { email, subject, text } = req.body;
+  const options = {
+    from: process.env.EMAIL,
+    to: email,
+    subject,
+    text,
+  };
+
+  transporter.sendMail(options, (err, info) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log('sent: ' + info.response);
+  });
+  res.json({ email: email })
+}

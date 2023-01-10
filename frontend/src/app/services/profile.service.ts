@@ -37,4 +37,10 @@ export class ProfileService {
   updateProfile(newProfile: any, profileId: string): Observable<any> {
     return this.http.put(`http://localhost:3000/profile/${profileId}`, { newProfile: newProfile }, httpOptions);
   }
+
+  onEmailSend(email: string, subject: string, text: string): Observable<any> {
+    return this.http.post(`http://localhost:3000/profile/email`, {
+      email, subject, text
+    }, httpOptions)
+  }
 }
