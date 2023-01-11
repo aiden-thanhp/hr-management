@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL,
     pass: passwordForMAC,
+    // pass: passwordForPC,
   },
 });
 exports.send_token = async (req, res) => {
@@ -23,8 +24,8 @@ exports.send_token = async (req, res) => {
       { email: email, name: name, timeStamp: timeStamp },
       process.env.JWT_KEY,
       {
-        expiresIn: 60, // token expired time for testing
-        // expiresIn: 60*60*3, // actual expired time for the demo
+        expiresIn: 60, // token expired time for demo
+        // expiresIn: 60*60*3, // actual expired time for the application
       }
     );
     const options = {

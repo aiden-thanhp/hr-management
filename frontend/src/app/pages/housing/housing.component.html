@@ -11,7 +11,13 @@
           <div class="housing-body-details" >
             <h2>Address: {{userHouse.address}}</h2>
             <h3>List of Roomates:</h3>
-            <p *ngFor="let resident of userHouse.residents">{{resident.username}}</p>
+            <ng-container *ngIf="userHouse.residents">
+              <p *ngFor="let resident of userHouse.residents">
+                <ng-container *ngIf="resident.profile">
+                  {{resident.profile.firstName}} {{resident.profile.lastName}}
+                </ng-container>
+              </p>
+            </ng-container>
           </div>
         </div>
       </div>
