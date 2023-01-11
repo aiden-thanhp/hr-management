@@ -56,17 +56,26 @@
             *ngFor="let resident of (house$ | async).residents"
             class="basicInfo p-2 col-2"
           >
+          <ng-container *ngIf="resident.profile">
             <span class="fw-bold">Name: </span>
-            <a routerLink="/profile/{{resident._id}}">{{ resident.profile.firstName }} {{resident.profile.lastName}}</a>
+            <a routerLink="/profile/{{ resident._id }}"
+              >{{ resident.profile.firstName }}
+              {{ resident.profile.lastName }}</a
+            >
             <br />
             <span class="fw-bold">Phone: </span>
-            <span>{{resident.profile.phone}}</span>
+            <span>{{ resident.profile.phone }}</span>
             <br />
             <span class="fw-bold">Email: </span>
             <span>{{ resident.profile.email }}</span>
             <br />
             <span class="fw-bold">Car: </span>
-            <span>{{resident.profile.car.make}} {{resident.profile.car.model}} {{resident.profile.car.color}}</span>
+            <span
+              >{{ resident.profile.car.make }}
+              {{ resident.profile.car.model }}
+              {{ resident.profile.car.color }}</span
+            >
+          </ng-container>
           </div>
         </div>
       </div>
@@ -94,32 +103,35 @@
               </tr>
             </thead>
             <tbody>
-              
-                <tr *ngFor="let report of (house$ | async).reports">
-                  <td>{{ report.title }}</td>
-                  <td>{{ report.description }}</td>
-                  <td>
-                    <select
-                      name="status"
-                      id="status{{report._id}}"
-                      value="{{ report.status }}"
-                    >
-                      <option value="Open">Open</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Closed">Closed</option>
-                    </select>
-                  </td>
-                  <td>{{ report.createdBy.username }}</td>
-                  <td>{{ report.createdAt }}</td>
-                  <td>
-                    <a routerLink="/report/HR/{{report._id}}"
-                      ><button class="btn btn-secondary">View</button></a
-                    >
-                    <button class="btn btn-info mx-2" (click)="changeStatusClick(report._id)">Change Status</button>
-                  </td>
-                  <br /><br />
-                </tr>
-                
+              <tr *ngFor="let report of (house$ | async).reports">
+                <td>{{ report.title }}</td>
+                <td>{{ report.description }}</td>
+                <td>
+                  <select
+                    name="status"
+                    id="status{{ report._id }}"
+                    value="{{ report.status }}"
+                  >
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Closed">Closed</option>
+                  </select>
+                </td>
+                <td>{{ report.createdBy.username }}</td>
+                <td>{{ report.createdAt }}</td>
+                <td>
+                  <a routerLink="/report/HR/{{ report._id }}"
+                    ><button class="btn btn-secondary">View</button></a
+                  >
+                  <button
+                    class="btn btn-info mx-2"
+                    (click)="changeStatusClick(report._id)"
+                  >
+                    Change Status
+                  </button>
+                </td>
+                <br /><br />
+              </tr>
             </tbody>
           </table>
         </div>
