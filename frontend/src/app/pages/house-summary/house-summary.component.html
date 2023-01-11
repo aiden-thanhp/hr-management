@@ -57,16 +57,16 @@
             class="basicInfo p-2 col-2"
           >
             <span class="fw-bold">Name: </span>
-            <a href="#">{{ resident.username }}</a>
+            <a routerLink="/profile/{{resident._id}}">{{ resident.profile.firstName }} {{resident.profile.lastName}}</a>
             <br />
             <span class="fw-bold">Phone: </span>
-            <span>asd</span>
+            <span>{{resident.profile.phone}}</span>
             <br />
             <span class="fw-bold">Email: </span>
-            <span>{{ resident.email }}</span>
+            <span>{{ resident.profile.email }}</span>
             <br />
             <span class="fw-bold">Car: </span>
-            <span>asd</span>
+            <span>{{resident.profile.car.make}} {{resident.profile.car.model}} {{resident.profile.car.color}}</span>
           </div>
         </div>
       </div>

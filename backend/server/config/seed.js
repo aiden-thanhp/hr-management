@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config(path.join(__dirname, '../.env'));
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 const { DATABASE_URL } = process.env;
@@ -45,6 +45,26 @@ async function run() {
     ];
     const createdUsers = await User.create(users);
     console.log("createdUsers = ", createdUsers);
+    const testProfile = {
+      firstName: "Test First",
+        lastName: "Test Last",
+        middleName: "",
+        preferredName:  "Test Preferred",
+        car: {
+          make: "Maketest",
+          model: "Modeltest",
+          color: "Colortest",
+        },
+        email: "user1@gmail.com",
+        address: '45 Gabriel Trail',
+        phone: '9991991999',
+        ssn: '1111111111',
+        dob: new Date(),
+        gender: 'Male',
+        residency: 'Citizen'
+    }
+    const createdProfile = await Profile.create(testProfile);
+    await User.findOneAndUpdate({username: "user1"}, {profile: createdProfile})
 
     const houses = [
       {

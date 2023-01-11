@@ -1,13 +1,23 @@
 const House = require("../models/House");
 const Report = require("../models/Report");
 const Comment = require("../models/Comment");
+const Profile = require("../models/Profile")
 const User = require("../models/User");
 
 exports.get_house = async (req, res) => {
   try {
     const id = req.params._id;
     const house = await House.findOne({ _id: id })
-      .populate("residents")
+      .populate({
+        path: "residents",
+        model: "User",
+        populate: [
+          {
+            path: "profile",
+            model: "Profile",
+          },
+        ],
+      })
       .populate({
         path: "reports",
         model: "Report",
