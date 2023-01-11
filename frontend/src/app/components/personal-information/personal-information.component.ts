@@ -6,6 +6,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { UserAction } from 'src/app/store/user/user.actions';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 
 @Component({
   selector: 'app-personal-information',
@@ -80,6 +81,9 @@ export class PersonalInformationComponent implements OnInit {
   employmentEdit: boolean = false;
   emergencyEdit: boolean = false;
   user: any;
+  target: string = '';
+  fileObj: any;
+
   profileForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     middleName: new FormControl(''),
@@ -99,13 +103,21 @@ export class PersonalInformationComponent implements OnInit {
     emergencyMiddleName: new FormControl('', [Validators.required]),
     emergencyLastName: new FormControl('', [Validators.required]),
     emergencyPhone: new FormControl('', [Validators.required]),
-    emergencyEmail: new FormControl('', [Validators.required]),
+    emergencyEmail: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      this.emailValidator,
+    ]),
     emergencyRelationship: new FormControl('', [Validators.required]),
     emergency2FirstName: new FormControl(''),
     emergency2MiddleName: new FormControl(''),
     emergency2LastName: new FormControl(''),
     emergency2Phone: new FormControl(''),
-    emergency2Email: new FormControl(''),
+    emergency2Email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+      this.emailValidator,
+    ]),
     emergency2Relationship: new FormControl(''),
     driverLicense: new FormControl(''),
   });
@@ -114,7 +126,8 @@ export class PersonalInformationComponent implements OnInit {
     private store: Store,
     private profileService: ProfileService,
     private httpClient: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fileUploadService: FileUploadService
   ) {}
 
   ngOnInit(): void {
@@ -155,6 +168,19 @@ export class PersonalInformationComponent implements OnInit {
       }
     });
   }
+
+  // custom validators
+
+  emailValidator(control: FormControl) {
+    if (control.value.length === 0) {
+      return null;
+    } else if (control.value.length < 10 || control.value.length > 40) {
+      return { emailValidator: true };
+    } else {
+      return null;
+    }
+  }
+
   // Store input value when click edit button
 
   nameValues = {
@@ -217,6 +243,46 @@ export class PersonalInformationComponent implements OnInit {
           })
         );
       });
+  }
+
+  onFilePicked(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const FILE = (target.files as FileList)[0];
+    this.fileObj = FILE;
+    console.log(this.fileObj);
+  }
+  onFileUpload(event: Event) {
+    event.preventDefault();
+    if (!this.fileObj) {
+      return;
+    }
+    this.fileUploadService
+      .getPresignedUrl(this.fileObj.name, this.fileObj.type)
+      .subscribe((res: any) => {
+        console.log(res);
+        const fileUploadUrl = res.data;
+        this.fileUploadService
+          .uploadfileAWSS3(fileUploadUrl, this.fileObj?.type, this.fileObj)
+          .subscribe();
+
+        const newProfile = { ...this.user.profile };
+        newProfile.profilePicture = fileUploadUrl.split('?')[0];
+
+        this.profileService
+          .updateProfile(newProfile, this.user.profile._id)
+          .subscribe((data) => {
+            if (data.success) {
+              this.toastr.success('Profile image successfully updated');
+              const user = { ...this.user };
+              user.profile = newProfile;
+              this.store.dispatch(UserAction.updateUser({ user }));
+            }
+          });
+      });
+  }
+
+  targetChange(section: string): void {
+    this.target = section;
   }
 
   edit(section: string): void {
@@ -290,11 +356,11 @@ export class PersonalInformationComponent implements OnInit {
 
   // restore to the inital value
 
-  cancel(section: string): void {
-    switch (section) {
+  cancel(): void {
+    switch (this.target) {
       case 'name':
         this.nameEdit = false;
-        alert('discard all changes?');
+        this.toastr.warning('Discard name field changes');
         this.profileForm.patchValue({
           firstName: this.nameValues.firstName,
           middleName: this.nameValues.middleName,
@@ -304,7 +370,7 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'address':
         this.addressEdit = false;
-        alert('discard all changes?');
+        this.toastr.warning('Discard address field changes');
         this.profileForm.patchValue({
           address: this.addressValues.address,
           apartment: this.addressValues.apartment,
@@ -315,7 +381,7 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'contact':
         this.contactEdit = false;
-        alert('discard all changes?');
+        this.toastr.warning('Discard contact field changes');
         this.profileForm.patchValue({
           phone: this.contactValues.phone,
           workPhone: this.contactValues.workPhone,
@@ -323,7 +389,7 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'employment':
         this.employmentEdit = false;
-        alert('discard all changes?');
+        this.toastr.warning('Discard employment field changes');
         this.profileForm.patchValue({
           visaTitle: this.employmentValues.visaTitle,
           startDate: this.employmentValues.startDate,
@@ -332,7 +398,7 @@ export class PersonalInformationComponent implements OnInit {
         break;
       case 'emergency':
         this.emergencyEdit = false;
-        alert('discard all changes?');
+        this.toastr.warning('Discard emergency field changes');
         this.profileForm.patchValue({
           emergencyFirstName: this.emgencyValues.emergencyFirstName,
           emergencyMiddleName: this.emgencyValues.emergencyMiddleName,
@@ -354,6 +420,13 @@ export class PersonalInformationComponent implements OnInit {
   save(section: string): void {
     switch (section) {
       case 'name':
+        if (
+          !this.profileForm?.get('firstName')?.valid ||
+          !this.profileForm?.get('lastName')?.valid
+        ) {
+          this.toastr.error('Name field inputs are invalid');
+          return;
+        }
         this.nameEdit = false;
         const nameProfile = { ...this.user.profile };
         nameProfile.firstName = this.profileForm.get('firstName')?.value;
@@ -365,7 +438,7 @@ export class PersonalInformationComponent implements OnInit {
           .updateProfile(nameProfile, this.user.profile._id)
           .subscribe((data) => {
             if (data.success) {
-              this.toastr.success('Name field successfully updated');
+              this.toastr.success('Name field was successfully updated');
               const user = { ...this.user };
               user.profile = nameProfile;
               this.store.dispatch(UserAction.updateUser({ user }));
@@ -373,6 +446,15 @@ export class PersonalInformationComponent implements OnInit {
           });
         break;
       case 'address':
+        if (
+          !this.profileForm?.get('address')?.valid ||
+          !this.profileForm?.get('city')?.valid ||
+          !this.profileForm?.get('state')?.valid ||
+          !this.profileForm?.get('zipcode')?.valid
+        ) {
+          this.toastr.error('Address field inputs are invalid');
+          return;
+        }
         this.addressEdit = false;
         const addressProfile = { ...this.user.profile };
         const address = `${this.profileForm.get('address')?.value}/${
@@ -385,7 +467,7 @@ export class PersonalInformationComponent implements OnInit {
           .updateProfile(addressProfile, this.user.profile._id)
           .subscribe((data) => {
             if (data.success) {
-              this.toastr.success('Address field successfully updated');
+              this.toastr.success('Address field was successfully updated');
               const user = { ...this.user };
               user.profile = addressProfile;
               this.store.dispatch(UserAction.updateUser({ user }));
@@ -393,6 +475,10 @@ export class PersonalInformationComponent implements OnInit {
           });
         break;
       case 'contact':
+        if (!this.profileForm?.get('phone')?.valid) {
+          this.toastr.error('Contact field inputs are invalid');
+          return;
+        }
         this.contactEdit = false;
         const contactProfile = { ...this.user.profile };
         contactProfile.phone = this.profileForm.get('phone')?.value;
@@ -401,7 +487,7 @@ export class PersonalInformationComponent implements OnInit {
           .updateProfile(contactProfile, this.user.profile._id)
           .subscribe((data) => {
             if (data.success) {
-              this.toastr.success('Contact field successfully updated');
+              this.toastr.success('Contact field was successfully updated');
               const user = { ...this.user };
               user.profile = contactProfile;
               this.store.dispatch(UserAction.updateUser({ user }));
@@ -418,7 +504,7 @@ export class PersonalInformationComponent implements OnInit {
           .updateProfile(employmentProfile, this.user.profile._id)
           .subscribe((data) => {
             if (data.success) {
-              this.toastr.success('Employment field successfully updated');
+              this.toastr.success('Employment field was successfully updated');
               const user = { ...this.user };
               user.profile = employmentProfile;
               this.store.dispatch(UserAction.updateUser({ user }));
@@ -426,6 +512,16 @@ export class PersonalInformationComponent implements OnInit {
           });
         break;
       case 'emergency':
+        if (
+          !this.profileForm?.get('emergencyFirstName')?.valid ||
+          !this.profileForm?.get('emergencyLastName')?.valid ||
+          !this.profileForm?.get('emergencyPhone')?.valid ||
+          !this.profileForm?.get('emergencyEmail')?.valid ||
+          !this.profileForm?.get('emergencyRelationship')?.valid
+        ) {
+          this.toastr.error('Emergency field inputs are invalid');
+          return;
+        }
         this.emergencyEdit = false;
         const emergencyProfile = { ...this.user.profile };
         emergencyProfile.emergencyContacts = [
@@ -455,7 +551,7 @@ export class PersonalInformationComponent implements OnInit {
           .subscribe((data) => {
             if (data.success) {
               this.toastr.success(
-                'Emergency contact field successfully updated'
+                'Emergency contact field was successfully updated'
               );
               const user = { ...this.user };
               user.profile = emergencyProfile;

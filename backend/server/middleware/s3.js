@@ -8,11 +8,11 @@ const bucketName = 'hr-management-jay1423';
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
-aws.config.update({
-  accessKeyId: 'AKIA6GMCDQGN2SDOY37M',
-  secretAccessKey: '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',
-  // "region": "us-east-1"
-});
+// aws.config.update({
+//   accessKeyId: 'AKIA6GMCDQGN2SDOY37M',
+//   secretAccessKey: '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',
+//   // "region": "us-east-1"
+// });
 
 aws.config.update({
   accessKeyId,
