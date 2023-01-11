@@ -1,7 +1,7 @@
 <div>
     <h3 class="mb-3 text-center">In Progress</h3>
 
-    <table class="table text-center w-100 mb-4 table-responsive">
+    <table class="table text-left w-100 mb-4 table-responsive">
         <thead>
             <tr>
                 <th>Name</th>
@@ -14,11 +14,11 @@
             <tr *ngFor="let user of onprogressList">
                 <td>{{ user.profile?.firstName }} {{ user.profile?.lastName }}</td>
 
-                <td>
-                    <p><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
-                    <p><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
-                    <p><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
-                    <p><span class="fw-bold fst-italic">Remaning:</span> {{ countDays(user.profile.workAuthorization.endDate) }} days</p>
+                <td class="row">
+                    <p class="my-0 py-0"><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
+                    <p class="my-0 py-0"><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
+                    <p class="my-0 py-0"><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
+                    <p class="my-0 py-0"><span class="fw-bold fst-italic">Remaning:</span> {{ countDays(user.profile.workAuthorization.endDate) }} days</p>
                 </td>
 
                 <!-- Next step checking for H1B -->
@@ -126,7 +126,7 @@
 
 
 <div>
-    <h3 class="mb-3 text-center">All Employee</h3>
+    <h3 class="mb-3 text-center">All Employees</h3>
     <div class="row justify-content-center">
         <div class="col-6">
             <input
@@ -140,7 +140,7 @@
 
     <div class="overflow-x-auto">
         <hr />
-        <table class="table text-center w-100 mb-4 table-responsive">
+        <table class="table text-left w-100 mb-4 table-responsive">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -160,10 +160,10 @@
 
 
                     <td *ngIf="user.profile && user.profile.residency == 'Non-resident'">
-                        <p><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
-                        <p><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
-                        <p><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
-                        <p><span class="fw-bold fst-italic">Remaning:</span> {{ countDays(user.profile.workAuthorization.endDate) }} days</p>
+                        <p class="my-0 py-0"><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
+                        <p class="my-0 py-0"><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
+                        <p class="my-0 py-0"><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
+                        <p class="my-0 py-0"><span class="fw-bold fst-italic">Remaning:</span> {{ countDays(user.profile.workAuthorization.endDate) }} days</p>
                     </td>
 
                     <!-- Next step checking for non-H1B -->
@@ -251,7 +251,7 @@
                         </ul>
                     </td>
 
-                    <td *ngIf="!user.profile" class="text-danger" colspan="3">Profile has not beed created</td> 
+                    <td *ngIf="!user.profile" class="text-danger fw-bold" colspan="3">Profile has not been created</td> 
                 </tr>
             </tbody>
         </table>

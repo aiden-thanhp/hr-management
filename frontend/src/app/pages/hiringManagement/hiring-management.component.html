@@ -2,15 +2,15 @@
   <div class="card generateToken-container">
     <div class="card-header generateToken-header" id="">
       <h5 class="mb-0">
-        <button class="btn" type="button">Generate Token and Send Email</button>
+        <h3 class="text-center fw-bold">Generate Token and Send Email</h3>
       </h5>
     </div>
 
     <div class="generateToken-body mx-2">
       <div class="card-body">
-        <form class="generateToken-body-form" [formGroup]="inputForm">
+        <form class="generateToken-body-form d-flex flex-column flex-sm-row" [formGroup]="inputForm">
           <input
-            class=""
+            class="form-control"
             type="email"
             name="email"
             id="email"
@@ -18,7 +18,7 @@
             formControlName="email"
           />
           <input
-            class="mx-3"
+            class="form-control mx-sm-2 my-2 my-sm-0"
             type="text"
             name="name"
             id="name"
@@ -52,8 +52,8 @@
                 <td>{{regisToken.name}}</td>
                 <td>{{regisToken.registrationLink}}</td>
                 <td>{{regisToken.timeStamp}}</td>
-                <td *ngIf="regisToken.user" class="text-success fw-bold">user created</td>
-                <td *ngIf="!regisToken.user" class="text-danger fw-bold">user not activate</td>
+                <td *ngIf="regisToken.user" class="text-success fw-bold">User Created</td>
+                <td *ngIf="!regisToken.user" class="text-danger fw-bold">User Not Activated</td>
                 <br><br>
             </tr>
         </tbody>
@@ -64,7 +64,7 @@
 </div>
 
 <div class="mt-5 overflow-x-auto">
-  <h2 class="text-center">Onboarding Application Review</h2>
+  <h2 class="text-center fs-bold">Onboarding Application Review</h2>
   <hr />
   <table class="table text-center w-100 my-4 table-responsive">
     <thead>
@@ -80,7 +80,7 @@
             <td *ngIf="!user.profile">{{user.username}}</td>
             <td>{{user.email}}</td>
             <td *ngIf="user.profile"><button class="btn btn-primary" (click)="viewProfile(user.profile._id)">View Application</button></td>
-            <td *ngIf="!user.profile" class="text-danger">Profile Not Submitted</td>
+            <td *ngIf="!user.profile" class="text-danger fw-bold">Profile Not Submitted</td>
         </tr>
     </tbody>
   </table>
