@@ -9,6 +9,41 @@
   <div class="col-6">
     <form [formGroup]="profileForm">
       <div class="row g-3">
+        <h3 class="fw-bold">Profile</h3>
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img
+                src="{{ user?.profile?.profilePicture }}"
+                alt="profile image"
+                class="rounded-circle img-fluid"
+                style="width: 200px"
+              />
+              <h5 class="my-3">
+                {{ user?.profile?.firstName }} {{ user?.profile?.lastName }}
+              </h5>
+              <p class="text-muted mb-1">Employee</p>
+              <p class="text-muted mb-4">Software Engineer</p>
+              <div class="d-flex justify-content-center mb-2">
+                <button type="button" class="btn btn-outline-primary ms-1">
+                  Edit profile image
+                </button>
+              </div>
+              <input
+                (change)="onFilePicked($event)"
+                class="form-control"
+                type="file"
+                accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+              />
+              <button
+                (click)="onFileUpload($event)"
+                class="m-3 btn btn-primary"
+              >
+                Upload
+              </button>
+            </div>
+          </div>
+        </div>
         <h3 class="fw-bold">Name</h3>
         <div class="col-12">
           <button
@@ -20,8 +55,11 @@
           </button>
           <button
             *ngIf="nameEdit"
-            (click)="cancel('name')"
+            type="button"
             class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="targetChange('name')"
           >
             Cancel
           </button>
@@ -114,8 +152,11 @@
           </button>
           <button
             *ngIf="addressEdit"
-            (click)="cancel('address')"
+            type="button"
             class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="targetChange('address')"
           >
             Cancel
           </button>
@@ -257,8 +298,11 @@
           </button>
           <button
             *ngIf="contactEdit"
-            (click)="cancel('contact')"
+            type="button"
             class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="targetChange('contact')"
           >
             Cancel
           </button>
@@ -316,8 +360,11 @@
           </button>
           <button
             *ngIf="employmentEdit"
-            (click)="cancel('employment')"
+            type="button"
             class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="targetChange('employment')"
           >
             Cancel
           </button>
@@ -367,8 +414,11 @@
           </button>
           <button
             *ngIf="emergencyEdit"
-            (click)="cancel('emergency')"
+            type="button"
             class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="targetChange('emergency')"
           >
             Cancel
           </button>
@@ -482,8 +532,12 @@
             [ngClass]="
               (profileForm.get('emergencyEmail')?.touched ||
                 profileForm.get('emergencyEmail')?.dirty) &&
-              profileForm.get('emergencyEmail')?.hasError('required') &&
-              emergencyEdit
+              profileForm.get('emergencyEmail')?.hasError('required')
+                ? 'is-invalid'
+                : '' ||
+                  profileForm.get('emergencyEmail')?.hasError('emailValidator')
+                ? 'is-invalid'
+                : '' || profileForm.get('emergencyEmail')?.hasError('pattern')
                 ? 'is-invalid'
                 : ''
             "
@@ -492,6 +546,16 @@
             {{
               profileForm.get("emergencyEmail")?.hasError("required")
                 ? "Email is required"
+                : ""
+            }}
+            {{
+              profileForm.get("emergencyEmail")?.hasError("emailValidator")
+                ? "Email must be greater than 10 and less than 40 characters"
+                : ""
+            }}
+            {{
+              profileForm.get("emergencyEmail")?.hasError("pattern")
+                ? "Input must be email type"
                 : ""
             }}
           </div>
@@ -570,7 +634,26 @@
             class="form-control"
             formControlName="emergency2Email"
             [readonly]="!emergencyEdit"
+            [ngClass]="
+              profileForm.get('emergency2Email')?.hasError('emailValidator')
+                ? 'is-invalid'
+                : '' || profileForm.get('emergency2Email')?.hasError('pattern')
+                ? 'is-invalid'
+                : ''
+            "
           />
+          <div class="invalid-feedback">
+            {{
+              profileForm.get("emergency2Email")?.hasError("emailValidator")
+                ? "Email must be greater than 10 and less than 40 characters"
+                : ""
+            }}
+            {{
+              profileForm.get("emergency2Email")?.hasError("pattern")
+                ? "Input must be email type"
+                : ""
+            }}
+          </div>
         </div>
         <div class="col-12">
           <label for="emergency2Relationship" class="form-label"
@@ -676,5 +759,41 @@
         >
       </div>
     </form>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Discard changes</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Do you want to discard all of your changes?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          (click)="cancel()"
+          data-bs-dismiss="modal"
+          class="btn btn-danger"
+        >
+          Discard
+        </button>
+      </div>
+    </div>
   </div>
 </div>
