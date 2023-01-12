@@ -138,7 +138,7 @@ export class PersonalInformationComponent implements OnInit {
       this.user = user;
 
       if (user.isLoggedIn && !user.profile) {
-        this.router.navigateByUrl('/onboarding')
+        this.router.navigateByUrl('/onboarding');
       }
 
       if (this.user.profile) {
@@ -247,7 +247,7 @@ export class PersonalInformationComponent implements OnInit {
       .get(url, { responseType: 'blob' as 'json' })
       .subscribe((res: any) => {
         const file = new Blob([res], { type: res.type });
-        console.log(file)
+        console.log(file);
         const blob = window.URL.createObjectURL(file);
         const link = document.createElement('a');
         link.href = blob;
@@ -515,9 +515,16 @@ export class PersonalInformationComponent implements OnInit {
       case 'employment':
         this.employmentEdit = false;
         const employmentProfile = { ...this.user.profile };
-        employmentProfile.visaTitle = this.profileForm.get('visaTitle')?.value;
-        employmentProfile.startDate = this.profileForm.get('startDate')?.value;
-        employmentProfile.startDate = this.profileForm.get('endDate')?.value;
+        employmentProfile.workAuthorization = {
+          ...this.user.profile.workAuthorization,
+        };
+        employmentProfile.workAuthorization.visaTitle =
+          this.profileForm.get('visaTitle')?.value;
+        employmentProfile.workAuthorization.startDate =
+          this.profileForm.get('startDate')?.value;
+        employmentProfile.workAuthorization.endDate =
+          this.profileForm.get('endDate')?.value;
+        console.log(employmentProfile);
         this.profileService
           .updateProfile(employmentProfile, this.user.profile._id)
           .subscribe((data) => {
