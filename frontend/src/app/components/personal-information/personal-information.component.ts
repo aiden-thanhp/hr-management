@@ -83,6 +83,7 @@ export class PersonalInformationComponent implements OnInit {
   user: any;
   target: string = '';
   fileObj: any;
+  toggle: boolean = false;
 
   profileForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -169,6 +170,9 @@ export class PersonalInformationComponent implements OnInit {
     });
   }
 
+  toggleView(): void {
+    this.toggle = !this.toggle;
+  }
   // custom validators
 
   emailValidator(control: FormControl) {
@@ -229,7 +233,6 @@ export class PersonalInformationComponent implements OnInit {
       .get(url, { responseType: 'blob' as 'json' })
       .subscribe((res: any) => {
         const file = new Blob([res], { type: res.type });
-
         const blob = window.URL.createObjectURL(file);
         const link = document.createElement('a');
         link.href = blob;
@@ -259,7 +262,6 @@ export class PersonalInformationComponent implements OnInit {
     this.fileUploadService
       .getPresignedUrl(this.fileObj.name, this.fileObj.type)
       .subscribe((res: any) => {
-        console.log(res);
         const fileUploadUrl = res.data;
         this.fileUploadService
           .uploadfileAWSS3(fileUploadUrl, this.fileObj?.type, this.fileObj)
@@ -279,6 +281,7 @@ export class PersonalInformationComponent implements OnInit {
             }
           });
       });
+    this.toggle = !this.toggle;
   }
 
   targetChange(section: string): void {
