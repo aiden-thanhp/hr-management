@@ -7,6 +7,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { UserAction } from 'src/app/store/user/user.actions';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-visa-status-management',
@@ -23,13 +24,17 @@ export class VisaStatusManagementComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private profileService: ProfileService,
     private toastr: ToastrService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.user$.subscribe((user) => {
       this.user = user;
-      console.log(this.user);
+
+      if (user.isLoggedIn && !user.profile) {
+        this.router.navigateByUrl('/personalInformation')
+      }
     });
   }
 

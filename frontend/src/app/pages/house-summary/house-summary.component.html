@@ -2,13 +2,13 @@
   <div class="card houseSummary-container">
     <div class="card-header houseSummary-header" id="">
       <h5 class="mb-0">
-        <button class="btn" type="button">House Details</button>
+        <h3 class="fw-bold text-center">House Details</h3>
       </h5>
     </div>
     <div class="houseSummary-body mx-2">
       <div class="card-body">
         <div class="houseSummary-body-details row">
-          <div class="basicInfo p-2 col-2">
+          <div class="basicInfo p-2 col-12 col-md-8">
             <h3 class="py-2">Basic Info</h3>
             <span class="fw-bold">Address: </span>
             <span>{{ (house$ | async).address }}</span>
@@ -25,7 +25,7 @@
             <span class="fw-bold">Number of Residents: </span>
             <span>{{ (house$ | async).residents.length }}</span>
           </div>
-          <div class="FacilityInfo p-2 col-2">
+          <div class="FacilityInfo p-2 col-12 col-md-4">
             <h3 class="py-2">Facility Info</h3>
             <span class="fw-bold">Beds: </span>
             <span>{{ (house$ | async).facility.beds }}</span>
@@ -46,37 +46,36 @@
   <div class="card houseSummary-employees-container my-2">
     <div class="card-header houseSummary-employees-header" id="">
       <h5 class="mb-0">
-        <button class="btn" type="button">Employee Details</button>
+        <h3 class="fw-bold text-center">Employee Details</h3>
       </h5>
     </div>
     <div class="houseSummary-employees-body mx-2">
       <div class="card-body">
-        <div class="houseSummary-body-details row">
-          <div
-            *ngFor="let resident of (house$ | async).residents"
-            class="basicInfo p-2 col-2"
-          >
-          <ng-container *ngIf="resident.profile">
-            <span class="fw-bold">Name: </span>
-            <a routerLink="/profile/{{ resident._id }}"
-              >{{ resident.profile.firstName }}
-              {{ resident.profile.lastName }}</a
-            >
-            <br />
-            <span class="fw-bold">Phone: </span>
-            <span>{{ resident.profile.phone }}</span>
-            <br />
-            <span class="fw-bold">Email: </span>
-            <span>{{ resident.profile.email }}</span>
-            <br />
-            <span class="fw-bold">Car: </span>
-            <span
-              >{{ resident.profile.car.make }}
-              {{ resident.profile.car.model }}
-              {{ resident.profile.car.color }}</span
-            >
-          </ng-container>
-          </div>
+        <div class="houseSummary-body-details overflow-x-auto">
+          <table class="table text-center w-100 my-4 table-responsive">
+            <thead> 
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Car</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let resident of (house$ | async).residents">
+                <td *ngIf="resident.profile"><a routerLink="/profile/{{ resident._id }}"
+                    >{{ resident.profile.firstName }}
+                    {{ resident.profile.lastName }}</a
+                  >
+                </td>
+                <td *ngIf="!resident.profile" colspan="4">{{ resident.username }}</td>
+                <td *ngIf="resident.profile">{{ resident.profile.phone }}</td>
+                <td *ngIf="resident.profile">{{ resident.email }}</td>
+                <td *ngIf="resident.profile">{{ resident.profile.car.make }} - {{ resident.profile.car.model }} - {{ resident.profile.car.color }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -84,14 +83,14 @@
   <div class="card houseSummaryReports-container my-2">
     <div class="card-header houseSummaryReports-header" id="">
       <h5 class="mb-0">
-        <button class="btn" type="button">Reports</button>
+        <h3 class="fw-bold text-center">Reports</h3>
       </h5>
     </div>
 
     <div class="houseSummaryReports-body mx-2">
       <div class="card-body">
-        <div class="houseSummaryTable-container mx-5">
-          <table class="houseSummaryTable text-center w-100 my-4">
+        <div class="houseSummaryTable-container overflow-x-auto">
+          <table class="houseSummaryTable table text-center w-100 my-4 table-responsive">
             <thead>
               <tr>
                 <th>Titles</th>
@@ -118,7 +117,7 @@
                   </select>
                 </td>
                 <td>{{ report.createdBy.username }}</td>
-                <td>{{ report.createdAt }}</td>
+                <td>{{ report.createdAt | date:'short' }}</td>
                 <td>
                   <a routerLink="/report/HR/{{ report._id }}"
                     ><button class="btn btn-secondary">View</button></a

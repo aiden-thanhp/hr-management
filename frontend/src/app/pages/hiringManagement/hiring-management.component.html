@@ -1,63 +1,65 @@
-<div class="hiring-container" id="">
+<div class="hiring-container">
   <div class="card generateToken-container">
-    <div class="card-header generateToken-header" id="">
+    <div class="card-header generateToken-header" data-toggle="collapse" data-target="#collapse1" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <h5 class="mb-0">
         <h3 class="text-center fw-bold">Generate Token and Send Email</h3>
       </h5>
     </div>
 
-    <div class="generateToken-body mx-2">
-      <div class="card-body">
-        <form class="generateToken-body-form d-flex flex-column flex-sm-row" [formGroup]="inputForm">
-          <input
-            class="form-control"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Please enter email..."
-            formControlName="email"
-          />
-          <input
-            class="form-control mx-sm-2 my-2 my-sm-0"
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Please enter name..."
-            formControlName="name"
-          />
-          <button class="mb-1 btn btn-primary rounded" (click)="sendEmail()">
-            Send
-          </button>
-        </form>
+    <div class="collapse" id="collapse1">
+      <div class="generateToken-body mx-2">
+        <div class="card-body">
+          <form class="generateToken-body-form d-flex flex-column flex-sm-row" [formGroup]="inputForm">
+            <input
+              class="form-control"
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Please enter email..."
+              formControlName="email"
+            />
+            <input
+              class="form-control mx-sm-2 my-2 my-sm-0"
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Please enter name..."
+              formControlName="name"
+            />
+            <button class="mb-1 btn btn-primary rounded" (click)="sendEmail()">
+              Send
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
 
-    <div class="registrationTable-container mx-5">
-    <h2 class="text-center">Sent Tokens</h2>
-      <hr />
-      <div class="overflow-x-auto">
-      <table class="table registrationTable text-center w-100 my-4 table-responsive">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Registration Link</th>
-            <th>Time Created/Updated</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let regisToken of regisTokens$ |async" class="overflow-x-scroll" >
-                <td>{{regisToken.email}}</td>
-                <td>{{regisToken.name}}</td>
-                <td>{{regisToken.registrationLink}}</td>
-                <td>{{regisToken.timeStamp}}</td>
-                <td *ngIf="regisToken.user" class="text-success fw-bold">User Created</td>
-                <td *ngIf="!regisToken.user" class="text-danger fw-bold">User Not Activated</td>
-                <br><br>
+      <div class="registrationTable-container mx-5">
+      <h2 class="text-center">Sent Tokens</h2>
+        <hr />
+        <div class="overflow-x-auto">
+        <table class="table registrationTable text-center w-100 my-4 table-responsive">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Registration Link</th>
+              <th>Time Created/Updated</th>
+              <th>Status</th>
             </tr>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+              <tr *ngFor="let regisToken of regisTokens$ |async" class="overflow-x-scroll" >
+                  <td>{{regisToken.email}}</td>
+                  <td>{{regisToken.name}}</td>
+                  <td>{{regisToken.registrationLink}}</td>
+                  <td>{{regisToken.timeStamp}}</td>
+                  <td *ngIf="regisToken.user" class="text-success fw-bold">User Created</td>
+                  <td *ngIf="!regisToken.user" class="text-danger fw-bold">User Not Activated</td>
+                  <br><br>
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     </div>
   </div>

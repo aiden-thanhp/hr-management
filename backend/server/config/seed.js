@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config({path: path.join(__dirname, '../.env')});
+require('dotenv').config({path: path.join(__dirname, '../../.env')});
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 const { DATABASE_URL } = process.env;
@@ -35,36 +35,39 @@ async function run() {
         password: pass,
         email: "admin1@gmail.com",
         isHR: true,
-      },
-      {
-        username: "user1",
-        password: pass2,
-        email: "user1@gmail.com",
-        isHR: false,
-      },
+      }
     ];
     const createdUsers = await User.create(users);
     console.log("createdUsers = ", createdUsers);
-    const testProfile = {
-      firstName: "Test First",
-        lastName: "Test Last",
-        middleName: "",
-        preferredName:  "Test Preferred",
-        car: {
-          make: "Maketest",
-          model: "Modeltest",
-          color: "Colortest",
-        },
-        email: "user1@gmail.com",
-        address: '45 Gabriel Trail',
-        phone: '9991991999',
-        ssn: '1111111111',
-        dob: new Date(),
-        gender: 'Male',
-        residency: 'Citizen'
-    }
-    const createdProfile = await Profile.create(testProfile);
-    await User.findOneAndUpdate({username: "user1"}, {profile: createdProfile})
+    // const testProfile = {
+    //     firstName: "Test First",
+    //     lastName: "Test Last",
+    //     middleName: "",
+    //     preferredName:  "Test Preferred",
+    //     car: {
+    //       make: "Maketest",
+    //       model: "Modeltest",
+    //       color: "Colortest",
+    //     },
+    //     email: "user1@gmail.com",
+    //     address: '45 Gabriel Trail',
+    //     phone: '9991991999',
+    //     ssn: '1111111111',
+    //     dob: new Date(),
+    //     gender: 'Male',
+    //     residency: 'Citizen'
+    // };
+    // const regToken = {
+    //   email: "user1@gmail.com",
+    //   name: "Test 1",
+    //   registrationLink: "user.com/user1somelinkhere",
+    //   registrationToken: "aspdoihgpowqie012398PS",
+    // };
+
+    // const createdProfile = await Profile.create(testProfile);
+    // const createdRegToken = await RegistrationToken.create(regToken);
+    // const user = await User.findOneAndUpdate({username: "user1"}, {profile: createdProfile, regisToken: createdRegToken }, { new: true })
+    // await RegistrationToken.findOneAndUpdate({ email: "user1@gmail.com" }, { user: user })
 
     const houses = [
       {
@@ -104,57 +107,57 @@ async function run() {
     const createdHouse = await House.create(houses);
     console.log("createdHouse = ", createdHouse);
 
-    const comments = [
-      {
-        description: "Desciption Test1 by user1",
-        createdBy:'user1'
-      },
-      {
-        description: "This report is now working",
-        createdBy:'admin1'
-      },
-      {
-        description: "Description Test2 by user1",
-        createdBy:'user1'
-      },
-    ];
-    await Comment.create(comments);
-    const user1 = await User.findOne({ username: "user1" });
-    const comment1 = await Comment.findOne({
-      description: "Desciption Test1 by user1",
-    });
-    const comment1_1 = await Comment.findOne({
-      description: "This report is now working",
-    })
-    const comment2 = await Comment.findOne({
-      description: "Description Test2 by user1",
-    });
-    const reports = [
-      {
-        title: "Bed is broken",
-        description: "Bed is broken is now working",
-        status: "Open",
-        createdBy: user1,
-        comments: [comment1, comment1_1],
-      },
-      {
-        title: "Table is broken",
-        description: "Table is broken description test",
-        status: "Open",
-        createdBy: user1,
-        comments: [comment2],
-      },
-    ];
-    await Report.create(reports);
-    const report1 = await Report.findOne({title: "Bed is broken"});
-    const report2 = await Report.findOne({title: "Table is broken"});
-    const house1 = await House.findOneAndUpdate({
-      address: "123 This Street, That City, AB, 12345",
-    }, {
-      reports: [report1, report2],
-      residents: [user1]
-    });
-    await User.findOneAndUpdate({username: "user1"}, {house: house1});
+    // const comments = [
+    //   {
+    //     description: "Desciption Test1 by user1",
+    //     createdBy:'user1'
+    //   },
+    //   {
+    //     description: "This report is now working",
+    //     createdBy:'admin1'
+    //   },
+    //   {
+    //     description: "Description Test2 by user1",
+    //     createdBy:'user1'
+    //   },
+    // ];
+    // await Comment.create(comments);
+    // const user1 = await User.findOne({ username: "user1" });
+    // const comment1 = await Comment.findOne({
+    //   description: "Desciption Test1 by user1",
+    // });
+    // const comment1_1 = await Comment.findOne({
+    //   description: "This report is now working",
+    // })
+    // const comment2 = await Comment.findOne({
+    //   description: "Description Test2 by user1",
+    // });
+    // const reports = [
+    //   {
+    //     title: "Bed is broken",
+    //     description: "Bed is broken is now working",
+    //     status: "Open",
+    //     createdBy: user1,
+    //     comments: [comment1, comment1_1],
+    //   },
+    //   {
+    //     title: "Table is broken",
+    //     description: "Table is broken description test",
+    //     status: "Open",
+    //     createdBy: user1,
+    //     comments: [comment2],
+    //   },
+    // ];
+    // await Report.create(reports);
+    // const report1 = await Report.findOne({title: "Bed is broken"});
+    // const report2 = await Report.findOne({title: "Table is broken"});
+    // const house1 = await House.findOneAndUpdate({
+    //   address: "123 This Street, That City, AB, 12345",
+    // }, {
+    //   reports: [report1, report2],
+    //   residents: [user1]
+    // });
+    // await User.findOneAndUpdate({username: "user1"}, {house: house1});
   } catch (error) {
     console.log("seed.js error = ", error);
   } finally {

@@ -50,7 +50,7 @@
             <tr *ngFor="let comment of (report$ | async).comments">
               <td>{{ comment.description }}</td>
               <td>{{ comment.createdBy }}</td>
-              <td>{{ comment.createdAt }}</td>
+              <td>{{ comment.createdAt | date:'short' }}</td>
               <br /><br />
             </tr>
           </tbody>

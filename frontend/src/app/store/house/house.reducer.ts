@@ -1,9 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { HouseAction } from './house.actions';
 
-export const initialState = {
-  isLoggedIn: false,
-};
+export const initialState = {};
 
 export const HouseReducer = createReducer(
   initialState,

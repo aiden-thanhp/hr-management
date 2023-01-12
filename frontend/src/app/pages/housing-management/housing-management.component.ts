@@ -18,6 +18,7 @@ export class HousingManagementComponent implements OnInit {
 
   user$: Observable<any> = this.store.select(selectUser);
   houses$: Observable<any> = this.store.select(selectHouse);
+  houses: any;
   constructor(private store: Store,
     private fb: FormBuilder,
     private router: Router,
@@ -39,6 +40,10 @@ export class HousingManagementComponent implements OnInit {
       if (user) {
         this.getHouses();
       }
+    });
+
+    this.store.select(selectHouse).subscribe((data: any) => {
+      if (data.length > 0) this.houses = data;
     })
   }
   getHouses() {

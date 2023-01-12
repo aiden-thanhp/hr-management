@@ -1,3 +1,23 @@
 .link {
   cursor: pointer;
 }
+
+.maxwidth-500 {
+  max-width: 500px;
+}
+
+.ssn {
+  display: none;
+}
+
+.cover {
+  display: block;
+}
+
+.ssn-td:hover .ssn {
+  display: block;
+}
+
+.ssn-td:hover .cover {
+  display: none;
+}

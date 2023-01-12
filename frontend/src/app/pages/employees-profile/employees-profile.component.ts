@@ -18,7 +18,6 @@ export class EmployeesProfileComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(selectProfiles)
       .subscribe((data: any) => {
-        console.log(data)
         this.users = data
       })
   }

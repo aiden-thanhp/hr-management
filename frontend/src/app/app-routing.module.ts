@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OnboardingComponent } from './pages/onboarding/onboarding.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { PersonalInformationComponent } from './components/personal-information/personal-information.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { PersonalInformationComponent } from './pages/personal-information/personal-information.component';
 import { HiringManagementComponent } from './pages/hiringManagement/hiring-management.component';
 import { NoTokenFoundComponent } from './pages/errors/no-token-found/no-token-found.component';
 import { RegisTokenGuard } from './guards/regisToken.guard';

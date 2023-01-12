@@ -1,51 +1,85 @@
 <div class="housingManagement-container" id="">
-    <div class="card housingManagement-container">
-      <div class="card-header housingManagement-header" id="">
-        <h5 class="mb-0">
-          <button class="btn" type="button">Houses</button>
-        </h5>
-      </div>
-      <div class="housingManagementTable-container mx-5">
-        <div class="addHouse-box w-25 mx-auto my-2">
-            <h4 class="text-center">Create New House</h4>
-            <form action="" [formGroup]="houseForm">
-                <input class="w-100 my-1" type="text" placeholder="address" formControlName="address">
-                <input class="w-100 my-1" type="text" placeholder="landlordName" formControlName="landlordName">
-                <input class="w-100 my-1" type="number" placeholder="landlordPhone" formControlName="landlordPhone">
-                <input class="w-100 my-1" type="email" placeholder="landlordEmail" formControlName="landlordEmail">
-                <input class="w-100 my-1" type="number" placeholder="beds" formControlName="beds">
-                <input class="w-100 my-1" type="number" placeholder="mattress" formControlName="mattress">
-                <input class="w-100 my-1" type="number" placeholder="tables" formControlName="tables">
-                <input class="w-100 my-1" type="number" placeholder="chairs" formControlName="chairs">
-                <button class="w-100 mx-auto btn btn-info my-1" (click)="createHouse()">Create</button>
-            </form>
-        </div>
-        <hr />
-        <table class="housingManagementTable text-center w-100 my-4">
-          <thead>
-            <tr>
-              <th>Address</th>
-              <th>Landlord Name</th>
-              <th>Landlord Phone</th>
-              <th>Landlord Email</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let house of houses$ |async">
-                    <td>{{house.address}}</td>
-                    <td>{{house.landlord.name}}</td>
-                    <td>{{house.landlord.phone}}</td>
-                    <td>{{house.landlord.email}}</td>
-                    <td><a routerLink="/housingManagement/{{house._id}}"><button class="mx-1 btn btn-secondary">View</button></a>
-                        <button class="mx-1 btn btn-danger" (click)="deleteClick(house._id)">Delete</button></td>
-                    <br><br>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      
+  <div class="card housingManagement-container">
+    <div class="card-header housingManagement-header" data-toggle="collapse" data-target="#collapse1" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <h5 class="mb-0">
+        <h3 class="text-center fw-bold">Create New House</h3>
+      </h5>
     </div>
+      <div class="housingManagementTable-container mx-5 mt-4 collapse" id="collapse1">
+        <div class="addHouse-box mx-auto my-2 w-75 maxwidth-750">
+            <form [formGroup]="houseForm">
+              <div class="mb-3">
+                <label class="form-label">Address:</label>
+                <input class="form-control" type="text" formControlName="address">
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Landlord Name:</label>
+                <input class="form-control" type="text" formControlName="landlordName">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Landlord Phone Number:</label>
+                <input class="form-control" type="number"  formControlName="landlordPhone">
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Landlord Email:</label>
+                <input class="form-control" type="email" formControlName="landlordEmail">
+              </div>
+
+              <p class="fw-bold">Facility:</p>
+              <div class="row">
+                <div class="mb-3 col-6 col-sm-3">
+                  <label class="form-label">Beds:</label>
+                  <input class="form-control" type="number" formControlName="beds">
+                </div>
+
+                <div class="mb-3 col-6 col-sm-3">
+                  <label class="form-label">Mattress:</label>
+                  <input class="form-control" type="number" formControlName="mattress">
+                </div>
+
+                <div class="mb-3 col-6 col-sm-3">
+                  <label class="form-label">Tables:</label>
+                  <input class="form-control" type="number" formControlName="tables">
+                </div>
+                
+                <div class="mb-3 col-6 col-sm-3">
+                  <label class="form-label">Chairs:</label>
+                  <input class="form-control" type="number" formControlName="chairs">
+                </div>
+              </div>
+
+              <button class="w-100 mx-auto btn btn-primary my-3" (click)="createHouse()">Create</button>
+            </form>
+        </div>        
+      </div>
+    </div>
+
+    <h3 class="text-center mt-5 fw-bold">All Houses</h3>
+    <table class="housingManagementTable table text-center w-100 my-4">
+      <thead>
+        <tr>
+          <th>Address</th>
+          <th>Landlord Name</th>
+          <th>Landlord Phone</th>
+          <th>Landlord Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let house of houses">
+                <td>{{house.address}}</td>
+                <td>{{house.landlord.name}}</td>
+                <td>{{house.landlord.phone}}</td>
+                <td>{{house.landlord.email}}</td>
+                <td><a routerLink="/housingManagement/{{house._id}}"><button class="mx-1 btn btn-secondary mb-2">View</button></a>
+                    <button class="mx-1 btn btn-danger mb-2" (click)="deleteClick(house._id)">Delete</button></td>
+                <br><br>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
   

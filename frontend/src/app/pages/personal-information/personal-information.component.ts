@@ -4,9 +4,17 @@ import { selectUser } from 'src/app/store/user/user.selector';
 import { Store } from '@ngrx/store';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserAction } from 'src/app/store/user/user.actions';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { Router } from '@angular/router';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  }),
+};
 
 @Component({
   selector: 'app-personal-information',
@@ -127,12 +135,18 @@ export class PersonalInformationComponent implements OnInit {
     private profileService: ProfileService,
     private httpClient: HttpClient,
     private toastr: ToastrService,
-    private fileUploadService: FileUploadService
+    private fileUploadService: FileUploadService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.store.select(selectUser).subscribe((user) => {
+    this.store.select(selectUser).subscribe((user: any) => {
       this.user = user;
+
+      if (user.isLoggedIn && !user.profile) {
+        this.router.navigateByUrl('/personalInformation')
+      }
+
       if (this.user.profile) {
         const addresses = this.user.profile.address.split('/');
         this.profileForm.patchValue({
@@ -229,7 +243,7 @@ export class PersonalInformationComponent implements OnInit {
       .get(url, { responseType: 'blob' as 'json' })
       .subscribe((res: any) => {
         const file = new Blob([res], { type: res.type });
-
+        console.log(file)
         const blob = window.URL.createObjectURL(file);
         const link = document.createElement('a');
         link.href = blob;

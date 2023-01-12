@@ -33,9 +33,15 @@ export class HousingComponent implements OnInit {
   })
   ngOnInit(): void {
     this.user$.subscribe(user => {
+
+      if (user.isLoggedIn && !user.profile) {
+        this.router.navigateByUrl('/personalInformation')
+      }
       this.userID = user.id;
       this.houseID = user.house._id;
       this.getCurrentHouse();
+
+      
     })
   }
   getCurrentHouse() {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { FileUploadService } from 'src/app/services/file-upload.service';
@@ -78,7 +79,8 @@ export class OnboardingComponent implements OnInit {
     private fileUploadService: FileUploadService,
     private store: Store,
     private profileService: ProfileService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   user: any;
@@ -366,7 +368,7 @@ export class OnboardingComponent implements OnInit {
           optI20: '',
         },
         optStatus: {
-          optReceipt: this.optReceipt ? 'Pending' : 'Never Submitted',
+          optReceipt: 'Pending',
           optEAD: 'Never Submitted',
           optI983: 'Never Submitted',
           optI20: 'Never Submitted',
@@ -387,15 +389,17 @@ export class OnboardingComponent implements OnInit {
         this.profileService
           .updateProfile(newProfile, this.user?.profile?._id)
           .subscribe((response: any) => {
-            console.log(response);
+            console.log(response)
           });
+          this.router.navigate(['/personalInformation'])
       } else {
         this.profileService
           .createProfile(newProfile, this.user?.id)
           .subscribe((response: any) => {
             console.log(response);
           });
-      }
+        this.router.navigate(['/personalInformation'])
+      };
     } else {
       this.toastr.error('Please fill all the required fields.');
       console.log('error');

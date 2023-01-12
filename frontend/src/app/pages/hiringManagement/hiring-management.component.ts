@@ -34,6 +34,9 @@ export class HiringManagementComponent implements OnInit {
       }),
     };
     this.getRegistrationTokens();
+    this.regisTokens$.subscribe((data: any) => {
+      console.log(data)
+    })
 
     // this.store.select(selectProfiles)
     //   .subscribe((data: any) => {
@@ -45,6 +48,7 @@ export class HiringManagementComponent implements OnInit {
   getRegistrationTokens() {
     this.http.get('http://localhost:3000/hr/regisTokens', this.httpOptionsWithToken).subscribe({
       next: (data) => {
+        console.log(data)
         this.store.dispatch(RegisTokenAction.getRegistrationtoken({ data }));
       },
       error: (err) => {

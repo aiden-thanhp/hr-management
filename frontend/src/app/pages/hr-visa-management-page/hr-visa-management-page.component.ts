@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
+import { ProfilesAction } from 'src/app/store/profiles/profiles.action';
 import { selectProfiles } from 'src/app/store/profiles/profiles.selector';
 
 @Component({
@@ -26,9 +27,23 @@ export class HrVisaManagementPageComponent implements OnInit {
     this.store.select(selectProfiles)
       .subscribe((data:any) => {
         this.userlist = data;
-        this.onprogressList = data?.filter((user: any) => user.profile?.workAuthorization.visaType == 'H1B')
+        this.onprogressList = data?.filter((user: any) => user.profile?.workAuthorization.visaType == 'H1B' && user.profile?.optStatus.optI20 != 'Approved')
         console.log(data)
       })
+  }
+
+  onInProgress(): void {
+    document.getElementById("inprogress")?.classList.add('d-block');
+    document.getElementById("inprogress")?.classList.remove('d-none');
+    document.getElementById("all")?.classList.add('d-none');
+    document.getElementById("all")?.classList.remove('d-block');
+  };
+
+  onAll(): void {
+    document.getElementById("inprogress")?.classList.add('d-none');
+    document.getElementById("inprogress")?.classList.remove('d-block');
+    document.getElementById("all")?.classList.add('d-block');
+    document.getElementById("all")?.classList.remove('d-none');
   }
 
   countDays(date: Date): number {
@@ -58,6 +73,11 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     } else if (type == 'ead') {
       this.profileService.updateProfile({
@@ -76,6 +96,11 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     } else if (type == 'i983') {
       this.profileService.updateProfile({
@@ -94,6 +119,11 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     } else if (type == 'i20') {
       this.profileService.updateProfile({
@@ -112,6 +142,10 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     };
   };
@@ -134,6 +168,11 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     } else if (type == 'ead') {
       this.profileService.updateProfile({
@@ -152,6 +191,11 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     } else if (type == 'i983') {
       this.profileService.updateProfile({
@@ -170,6 +214,11 @@ export class HrVisaManagementPageComponent implements OnInit {
       }, profile._id)
         .subscribe((data: any) => {
           console.log(data)
+        });
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     } else if (type == 'i20') {
       this.profileService.updateProfile({
@@ -186,8 +235,23 @@ export class HrVisaManagementPageComponent implements OnInit {
           optI20: this.commentForm.get('comment')?.value || ''
         }
       }, profile._id)
-        .subscribe((data: any) => {
-          console.log(data)
+        .subscribe((response: any) => {
+          console.log(response);
+          // const newUserList = { ...this.userlist };
+          // newUserList.forEach((item: any) => {
+          //   if (item._id == user._id) {
+          //     item.profile = response.data;
+          //   };
+          // });
+          // console.log(newUserList)
+          // // this.store.dispatch(ProfilesAction.getProfiles({ data: newUserList }));
+          // this.userlist = newUserList;
+          // this.onprogressList = newUserList?.filter((item: any) => item.profile?.workAuthorization.visaType == 'H1B')
+        })
+      this.profileService.getAllUsers()
+        .subscribe((response: any) => {
+          console.log(response);
+          this.store.dispatch(ProfilesAction.getProfiles({ data: response.data }))
         })
     };
   }

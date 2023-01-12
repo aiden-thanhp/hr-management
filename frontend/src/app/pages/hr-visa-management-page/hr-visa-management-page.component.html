@@ -1,5 +1,10 @@
-<div>
-    <h3 class="mb-3 text-center">In Progress</h3>
+<div class="px-4 py-5 my-5 ">
+
+<a class="text-primary fw-bold link" (click)="onInProgress()">In Progress</a>
+<a class="mx-3 text-primary fw-bold link" (click)="onAll()">All Employees</a>
+
+<div id="inprogress" class="d-none">
+    <h2 class="mb-5 fw-bold text-center">In Progress</h2>
 
     <table class="table text-left w-100 mb-4 table-responsive">
         <thead>
@@ -14,7 +19,7 @@
             <tr *ngFor="let user of onprogressList">
                 <td>{{ user.profile?.firstName }} {{ user.profile?.lastName }}</td>
 
-                <td class="row">
+                <td>
                     <p class="my-0 py-0"><span class="fw-bold fst-italic">Type:</span> {{ user.profile.workAuthorization.visaType }}</p>
                     <p class="my-0 py-0"><span class="fw-bold fst-italic">Start Date:</span> {{ user.profile.workAuthorization.startDate.split("T")[0] }}</p>
                     <p class="my-0 py-0"><span class="fw-bold fst-italic">End Date:</span> {{ user.profile.workAuthorization.endDate.split("T")[0] }}</p>
@@ -22,6 +27,9 @@
                 </td>
 
                 <!-- Next step checking for H1B -->
+                <td *ngIf="user.profile.optStatus.optI20 == 'Approved'" colspan="2">
+                    Process is finished.
+                </td>
                 <td *ngIf="user.profile.optStatus.optI20 == 'Pending'">
                     Review I20 Document
                 </td>
@@ -125,13 +133,13 @@
 </div>
 
 
-<div>
-    <h3 class="mb-3 text-center">All Employees</h3>
-    <div class="row justify-content-center">
-        <div class="col-6">
+<div id="all">
+    <h2 class="mb-5 fw-bold text-center">All Employees</h2>
+    <div class="d-flex justify-content-center">
+        <div class="maxwidth-500 w-100">
             <input
                 type="text"
-                class="form-control mb-3"
+                class="form-control"
                 placeholder="Search employees.."
                 [(ngModel)]="searchText"
             />
@@ -170,12 +178,17 @@
                     <td *ngIf="user.profile 
                         && user.profile.residency == 'Non-resident'
                         && user.profile.workAuthorization.visaType != 'H1B'
-
                     ">
                         N/A
                     </td>
 
                     <!-- Next step checking for H1B -->
+                    <td *ngIf="user.profile 
+                        && user.profile.workAuthorization.visaType == 'H1B'
+                        && user.profile.optStatus.optI20 == 'Approved'
+                    ">
+                        Process is finished.
+                    </td>
                     <td *ngIf="user.profile 
                         && user.profile.workAuthorization.visaType == 'H1B'
                         && user.profile.optStatus.optI20 == 'Pending'
@@ -210,7 +223,7 @@
                     ">
                         Review EAD Document
                     </td>
-                    <td *ngIf="user.profile 
+                    <td *ngIf="user.profile
                         && user.profile.workAuthorization.visaType == 'H1B'
                         && ((user.profile.optStatus.optEAD == 'Never Submitted'
                         && user.profile.optStatus.optReceipt == 'Approved')
@@ -224,7 +237,7 @@
                     ">
                         Review OPT Receipt Document
                     </td>
-                    <td *ngIf="user.profile 
+                    <td *ngIf="user.profile
                         && user.profile.workAuthorization.visaType == 'H1B'
                         && user.profile.optStatus.optReceipt == 'Rejected'
                     ">
@@ -242,7 +255,7 @@
                     <td *ngIf="user.profile">
                         All documents:
                         <ul>
-                            <li *ngIf="user.profile?.driverLicense.file"><a [href]="user.profile.driverLicense.file" target="_blank">Driver License</a></li>
+                            <li *ngIf="user.profile?.driverLicense.file"><a [href]="user.profile.driverLicense?.file" target="_blank">Driver License</a></li>
                             <li *ngIf="user.profile?.profilePicture"><a [href]="user.profile.profilePicture" target="_blank">Profile Picture</a></li>
                             <li *ngIf="user.profile?.optFiles.optReceipt"><a [href]="user.profile.optFiles.optReceipt" target="_blank">OPT Receipt</a></li>
                             <li *ngIf="user.profile?.optFiles.optEAD"><a [href]="user.profile.optFiles.optEAD" target="_blank">EAD</a></li>
@@ -256,4 +269,6 @@
             </tbody>
         </table>
     </div>
+</div>
+
 </div>
