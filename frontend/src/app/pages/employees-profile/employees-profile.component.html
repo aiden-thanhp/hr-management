@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users | search : searchText">
+        <tr *ngFor="let user of users | search : searchText | sort">
           <td *ngIf="user.profile" class="link" (click)="viewProfile(user.profile._id)">
             {{ user.profile?.firstName }} {{ user.profile?.lastName }}
           </td>

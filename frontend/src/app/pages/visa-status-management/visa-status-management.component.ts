@@ -31,6 +31,7 @@ export class VisaStatusManagementComponent implements OnInit {
   ngOnInit(): void {
     this.user$.subscribe((user) => {
       this.user = user;
+      console.log(user)
 
       if (user.isLoggedIn && !user.profile) {
         this.router.navigateByUrl('/personalInformation')

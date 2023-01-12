@@ -25,17 +25,32 @@
               <p class="text-muted mb-1">Employee</p>
               <p class="text-muted mb-4">Software Engineer</p>
               <div class="d-flex justify-content-center mb-2">
-                <button type="button" class="btn btn-outline-primary ms-1">
+                <button
+                  *ngIf="!toggle"
+                  (click)="toggleView()"
+                  type="button"
+                  class="btn btn-outline-primary mb-2"
+                >
                   Edit profile image
+                </button>
+                <button
+                  *ngIf="toggle"
+                  (click)="toggleView()"
+                  type="button"
+                  class="btn btn-outline-primary mb-2"
+                >
+                  Close
                 </button>
               </div>
               <input
+                *ngIf="toggle"
                 (change)="onFilePicked($event)"
                 class="form-control"
                 type="file"
                 accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
               />
               <button
+                *ngIf="toggle"
                 (click)="onFileUpload($event)"
                 class="m-3 btn btn-primary"
               >

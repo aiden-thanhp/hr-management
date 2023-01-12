@@ -62,14 +62,13 @@
             }}
             {{
               loginForm.get("password")?.hasError("passwordValidator")
-                ? "Password must contain upper and lowercase, number, and special
-            characters: length should be between 4 and 12"
+                ? "Password must contain upper and lowercase, number, and special characters: length should be between 4 and 12"
                 : ""
             }}
           </div>
         </div>
         <div class="col-12">
-          <button (click)="login()" class="btn btn-primary">Sign in</button>
+          <button (click)="login()" class="btn btn-primary w-100">Sign in</button>
         </div>
       </div>
     </form>

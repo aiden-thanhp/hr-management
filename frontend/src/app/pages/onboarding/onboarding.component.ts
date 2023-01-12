@@ -391,7 +391,7 @@ export class OnboardingComponent implements OnInit {
           .subscribe((response: any) => {
             console.log(response)
           });
-          this.router.navigate(['/personalInformation'])
+        this.router.navigate(['/personalInformation'])
       } else {
         this.profileService
           .createProfile(newProfile, this.user?.id)

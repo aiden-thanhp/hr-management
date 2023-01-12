@@ -35,6 +35,7 @@ import { EmployeesProfileComponent } from './pages/employees-profile/employees-p
 import { SearchPipe } from './pipes/search.pipe';
 import { VisaStatusManagementComponent } from './pages/visa-status-management/visa-status-management.component';
 import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/hr-visa-management-page.component';
+import { SortPipe } from './pipes/sort.pipe';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { HrVisaManagementPageComponent } from './pages/hr-visa-management-page/h
     SearchPipe,
     VisaStatusManagementComponent,
     HrVisaManagementPageComponent,
+    SortPipe,
 ],
   imports: [
     BrowserAnimationsModule,

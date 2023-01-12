@@ -4,17 +4,10 @@ import { selectUser } from 'src/app/store/user/user.selector';
 import { Store } from '@ngrx/store';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UserAction } from 'src/app/store/user/user.actions';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { Router } from '@angular/router';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  }),
-};
 
 @Component({
   selector: 'app-personal-information',
@@ -91,6 +84,7 @@ export class PersonalInformationComponent implements OnInit {
   user: any;
   target: string = '';
   fileObj: any;
+  toggle: boolean = false;
 
   profileForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -144,7 +138,7 @@ export class PersonalInformationComponent implements OnInit {
       this.user = user;
 
       if (user.isLoggedIn && !user.profile) {
-        this.router.navigateByUrl('/personalInformation')
+        this.router.navigateByUrl('/onboarding')
       }
 
       if (this.user.profile) {
@@ -181,6 +175,10 @@ export class PersonalInformationComponent implements OnInit {
         });
       }
     });
+  }
+
+  toggleView(): void {
+    this.toggle = !this.toggle;
   }
 
   // custom validators

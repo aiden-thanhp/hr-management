@@ -1,64 +1,61 @@
-<div class="housing-container" id="">
-    <div class="card housing-container">
-      <div class="card-header housing-header" id="">
-        <h5 class="mb-0">
-          <h3 class="text-center fw-bold">Housing Details</h3>
-        </h5>
-      </div>
-  
-      <div class="housing-body mx-2">
-        <div class="card-body">
-          <div class="housing-body-details" >
-            <h2>Address: {{userHouse.address}}</h2>
-            <h3>List of Roomates:</h3>
-            <ng-container *ngIf="userHouse.residents">
-              <p *ngFor="let resident of userHouse.residents">
-                <ng-container *ngIf="resident.profile">
-                  {{resident.profile.firstName}} {{resident.profile.lastName}}
-                </ng-container>
-              </p>
+<div class="card housing-container">
+  <div class="card-header housing-header">
+    <h5 class="mb-0">
+      <h3 class="text-center fw-bold">Housing Details</h3>
+    </h5>
+  </div>
+
+  <div class="card-body">
+    <h3>Address: {{userHouse.address}}</h3>
+    <div class="housing-body-details row" >
+      <div class="col-12 col-md-8">
+        <h4>List of Roomates:</h4>
+        <ng-container *ngIf="userHouse.residents">
+          <p *ngFor="let resident of userHouse.residents">
+            <ng-container *ngIf="resident.profile">
+              {{resident.profile.firstName}} {{resident.profile.lastName}}
             </ng-container>
-          </div>
-        </div>
+          </p>
+        </ng-container>
       </div>
-  
-      <div class="housingTable-container mx-5">
-        <div class="addReport-box w-25 mx-auto my-2">
-            <h4 class="text-center">Create New Facility Report</h4>
-            <form action="" [formGroup]="reportForm">
-                <input class="w-100 my-1" type="text" placeholder="title" formControlName="title">
-                <input class="w-100 my-1" type="text" placeholder="description" formControlName="description">
-                <button class="w-100 mx-auto btn btn-info my-1" (click)="createReport()">Create</button>
-            </form>
-        </div>
-      
+      <div class="housingTable-container col-12 col-md-4">
+        <h4 class="text-center">Create New Facility Report</h4>
+        <form action="" [formGroup]="reportForm">
+          <label class="form-label">Title:</label>
+          <input class="form-control" type="text" formControlName="title">
+          <label class="form-label">Description:</label>
+          <input class="form-control" type="text" formControlName="description">
+          <button class="w-100 mx-auto btn btn-primary my-3" (click)="createReport()">Create</button>
+        </form>
       </div>
     </div>
-    <h3 class="text-center fw-bold mt-3">Submitted Reports</h3>
-    <div class="overflow-x-auto">
-        <table class="housingTable table text-center w-100 my-4 table-responsive">
-          <thead>
-            <tr>
-              <th>Titles</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Time Created/Updated</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let report of userHouse.reports">
-                <ng-container *ngIf="report.createdBy._id == (user$|async)?.id" class=>
-                    <td>{{report.title}}</td>
-                    <td>{{report.description}}</td>
-                    <td>{{report.status}}</td>
-                    <td>{{report.createdAt | date:'short'}}</td>
-                    <td><a routerLink="/report/{{report._id}}"><button class="btn btn-secondary">View</button></a></td>
-                    <br><br>
-                </ng-container>
-            </tr>
-          </tbody>
-        </table>
-      </div>
   </div>
+</div>
+
+<h3 class="text-center fw-bold mt-3">Submitted Reports</h3>
+<div class="overflow-x-auto">
+  <table class="housingTable table text-center w-100 my-4 table-responsive">
+    <thead>
+      <tr>
+        <th>Titles</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Time Created/Updated</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let report of userHouse.reports">
+          <ng-container *ngIf="report.createdBy._id == (user$|async)?.id" class=>
+              <td>{{report.title}}</td>
+              <td>{{report.description}}</td>
+              <td>{{report.status}}</td>
+              <td>{{report.createdAt | date:'short'}}</td>
+              <td><a routerLink="/report/{{report._id}}"><button class="btn btn-secondary">View</button></a></td>
+              <br><br>
+          </ng-container>
+      </tr>
+    </tbody>
+  </table>
+</div>
   

@@ -10,7 +10,9 @@
     <!-- Resident Type -->
 
     <div
-      *ngIf="user?.profile?.residency !== 'Non-resident'"
+      *ngIf="user?.profile?.residency !== 'Non-resident'
+      || (user?.profile?.residency == 'Non-resident'
+      && user?.profile?.workAuthorization.visaType !== 'H1B')"
       class="card text-center"
     >
       <div class="card-header">Status : N/A</div>
@@ -23,6 +25,9 @@
     <!-- Non Resident Type -->
 
     <!-- OPT Receipt -->
+    <div *ngIf="user?.profile?.residency == 'Non-resident' && user?.profile?.workAuthorization.visaType == 'H1B'">
+
+    
     <div
       class="progress mb-4"
       *ngIf="user?.profile?.optStatus?.optReceipt !== 'Approved'"
@@ -423,6 +428,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </div>
