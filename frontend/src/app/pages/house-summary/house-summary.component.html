@@ -64,7 +64,7 @@
 
             <tbody>
               <tr *ngFor="let resident of (house$ | async).residents">
-                <td *ngIf="resident.profile"><a routerLink="/profile/{{ resident._id }}"
+                <td *ngIf="resident.profile"><a routerLink="/profile/{{ resident.profile._id }}"
                     >{{ resident.profile.firstName }}
                     {{ resident.profile.lastName }}</a
                   >
