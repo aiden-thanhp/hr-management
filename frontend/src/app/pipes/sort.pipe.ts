@@ -10,8 +10,8 @@ export class SortPipe implements PipeTransform {
     const sortedValue = [...value];
 
     return sortedValue.sort((a: any, b: any) => {
-      let x = a?.profile?.firstName.toLowerCase();
-      let y = b?.profile?.firstName.toLowerCase();
+      let x = a?.profile?.lastName.toLowerCase();
+      let y = b?.profile?.lastName.toLowerCase();
 
       if (x < y) return -1;
       else if (x > y) return 1;
