@@ -391,14 +391,14 @@ export class OnboardingComponent implements OnInit {
           .subscribe((response: any) => {
             console.log(response)
           });
-        this.router.navigate(['/personalInformation'])
+          window.location.reload()
       } else {
         this.profileService
           .createProfile(newProfile, this.user?.id)
           .subscribe((response: any) => {
             console.log(response);
           });
-        this.router.navigate(['/personalInformation'])
+        window.location.reload()
       };
     } else {
       this.toastr.error('Please fill all the required fields.');
