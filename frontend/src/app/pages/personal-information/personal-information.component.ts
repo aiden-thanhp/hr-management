@@ -155,6 +155,12 @@ export class PersonalInformationComponent implements OnInit {
           zipcode: addresses[4],
           phone: this.user.profile.phone,
           workPhone: this.user.profile.workPhone,
+          visaTitle: this.user.profile.workAuthorization.visaType,
+          startDate:
+            this.user.profile.workAuthorization.startDate?.split('T')[0] ||
+            Date,
+          endDate:
+            this.user.profile.workAuthorization.endDate?.split('T')[0] || Date,
           emergencyFirstName: this.user.profile.emergencyContacts[0].firstName,
           emergencyMiddleName:
             this.user.profile.emergencyContacts[0].middleName,
